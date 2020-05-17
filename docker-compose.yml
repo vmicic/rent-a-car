@@ -1,0 +1,22 @@
+version: '3'
+services:
+
+  consul-server:
+    image: consul-server
+    build:
+      context: ./consul-server
+      dockerfile: Dockerfile
+    tty: true
+    ports: 
+      - "8500:8500"
+    networks:
+      static-network:
+        ipv4_address: 172.20.0.2
+        
+
+
+networks:
+  static-network:
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
