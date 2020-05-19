@@ -10,4 +10,9 @@ spring:
         locator:
           enabled: true
       routes:
-        
+        - id: auth
+          uri: lb://auth
+          predicates:
+            - Path=/auth/**
+          filters:
+            - RewritePath=/auth/(?<path>.*), /$\{path}
