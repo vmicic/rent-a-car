@@ -1,4 +1,4 @@
-package com.rentacar.authservice;
+package com.rentacar.userservice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

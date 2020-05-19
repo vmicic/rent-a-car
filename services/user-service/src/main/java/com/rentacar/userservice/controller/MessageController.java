@@ -1,4 +1,4 @@
-package com.rentacar.authservice.controller;
+package com.rentacar.userservice.controller;
 
 import org.springframework.web.bind.annotation.*;
 

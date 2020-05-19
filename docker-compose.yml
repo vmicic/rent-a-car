@@ -13,10 +13,10 @@ services:
       static-network:
         ipv4_address: 172.20.0.2
     
-  auth-service:
-    image: auth-service
+  user-service:
+    image: user-service
     build:
-      context: ./services/auth-service
+      context: ./services/user-service
       dockerfile: Dockerfile
     tty: true
     networks:

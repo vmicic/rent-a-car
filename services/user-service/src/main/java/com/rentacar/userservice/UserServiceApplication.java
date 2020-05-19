@@ -1,4 +1,4 @@
-package com.rentacar.authservice;
+package com.rentacar.userservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @SpringBootApplication
 @RestController
-public class AuthServiceApplication {
+public class UserServiceApplication {
 
 	@RequestMapping("/health")
 	public String home() {
@@ -15,7 +15,7 @@ public class AuthServiceApplication {
 	}
 
 	public static void main(String[] args) {
-		SpringApplication.run(AuthServiceApplication.class, args);
+		SpringApplication.run(UserServiceApplication.class, args);
 	}
 
 }

@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.rentacar</groupId>
-	<artifactId>auth-service</artifactId>
+	<artifactId>user-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>auth-service</name>
-	<description>Auth microservice</description>
+	<name>user-service</name>
+	<description>User microservice</description>
 
 	<properties>
 		<java.version>8</java.version>
