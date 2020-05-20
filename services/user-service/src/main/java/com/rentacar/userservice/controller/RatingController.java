@@ -1,6 +1,6 @@
 package com.rentacar.userservice.controller;
 
-import com.rentacar.userservice.dto.RatingDTO;
+import com.rentacar.userservice.domain.dto.RatingDTO;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

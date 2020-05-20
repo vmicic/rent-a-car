@@ -1,4 +1,4 @@
-package com.rentacar.userservice.dto;
+package com.rentacar.searchservice.domain.dto;
 
 public class MessageDTO {
 

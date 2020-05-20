@@ -1,6 +1,6 @@
 package com.rentacar.userservice.controller;
 
-import com.rentacar.userservice.dto.MessageDTO;
+import com.rentacar.userservice.domain.dto.MessageDTO;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

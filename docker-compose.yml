@@ -24,6 +24,17 @@ services:
     depends_on:
       - consul-server
 
+  search-service:
+    image: search-service
+    build:
+      context: ./services/search-service
+      dockerfile: Dockerfile
+    tty: true
+    networks:
+      - static-network
+    depends_on:
+      - consul-server
+
   gateway:
     image: gateway
     build:
