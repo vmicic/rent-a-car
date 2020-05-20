@@ -97,4 +97,12 @@ public class User extends BaseEntity{
     public void setPriceLists(List<PriceList> priceLists) {
         this.priceLists = priceLists;
     }
+
+    public List<Car> getCars() {
+        return cars;
+    }
+
+    public void setCars(List<Car> cars) {
+        this.cars = cars;
+    }
 }

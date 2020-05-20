@@ -36,6 +36,10 @@ public class Advertisement extends BaseEntity{
     @JoinColumn(name = "user_id")
     private User user;
 
+    @ManyToOne
+    @JoinColumn(name = "company_id", referencedColumnName = "id")
+    private Company company;
+
     public Advertisement() {
     }
 
@@ -93,5 +97,21 @@ public class Advertisement extends BaseEntity{
 
     public void setPriceList(PriceList priceList) {
         this.priceList = priceList;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
     }
 }

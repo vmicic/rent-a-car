@@ -1,5 +1,6 @@
 package com.rentacar.userservice.controller;
 
+import com.rentacar.userservice.dto.MessageDTO;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -7,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 public class MessageController {
 
     @PostMapping
-    public void createMessage() {
+    public void createMessage(@RequestBody MessageDTO messageDTO) {
 
     }
 

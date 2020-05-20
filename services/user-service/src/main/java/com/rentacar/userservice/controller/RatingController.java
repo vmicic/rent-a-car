@@ -1,5 +1,6 @@
 package com.rentacar.userservice.controller;
 
+import com.rentacar.userservice.dto.RatingDTO;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -7,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 public class RatingController {
 
     @PostMapping
-    public void createRating() {
+    public void createRating(@RequestBody RatingDTO ratingDTO) {
 
     }
 
@@ -18,6 +19,16 @@ public class RatingController {
 
     @GetMapping
     public void getAllRatings() {
+
+    }
+
+    @PutMapping("/{id}")
+    public void approveRating(@PathVariable Long id) {
+
+    }
+
+    @PostMapping("/reply/{id}")
+    public void replyToRanking(@PathVariable Long id, @RequestBody String reply) {
 
     }
 

@@ -26,4 +26,24 @@ public class UserController {
     public void suspendUserFromRenting(@PathVariable Long id) {
 
     }
+
+    @PutMapping("/activate/{id}")
+    public void activateUser(@PathVariable Long id){
+
+    }
+
+    @PutMapping("/deactivate/{id}")
+    public void deactivateUser(@PathVariable Long id) {
+
+    }
+
+    @PutMapping("/user/{id}/{permissionId}")
+    public void addPermission(@PathVariable Long id, @PathVariable Long permissionId) {
+
+    }
+
+    @DeleteMapping("/user/{id}/{permissionId}")
+    public void removePermission(@PathVariable Long id, @PathVariable Long permissionId) {
+
+    }
 }
