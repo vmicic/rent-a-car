@@ -34,6 +34,17 @@ services:
       - static-network
     depends_on:
       - consul-server
+	  
+  order-service:
+    image: order-service
+    build:
+      context: ./services/order-service
+      dockerfile: Dockerfile
+    tty: true
+    networks:
+      - static-network
+    depends_on:
+      - consul-server
 
   advertisement-service:
     image: advertisement-service
