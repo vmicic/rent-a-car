@@ -34,7 +34,7 @@ services:
       - static-network
     depends_on:
       - consul-server
-	  
+
   order-service:
     image: order-service
     build:
