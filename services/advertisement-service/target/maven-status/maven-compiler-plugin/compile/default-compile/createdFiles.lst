@@ -1,6 +1,5 @@
 com\rentacar\advertisementservice\domain\Message.class
 com\rentacar\advertisementservice\domain\FuelType.class
-com\rentacar\advertisementservice\domain\dto\MessageDTO.class
 com\rentacar\advertisementservice\domain\BaseEntity.class
 com\rentacar\advertisementservice\domain\Discount.class
 com\rentacar\advertisementservice\domain\Advertisement.class
@@ -11,8 +10,6 @@ com\rentacar\advertisementservice\domain\CarBrand.class
 com\rentacar\advertisementservice\domain\CarClass.class
 com\rentacar\advertisementservice\domain\CarModel.class
 com\rentacar\advertisementservice\domain\JwtAuthenticationRequest.class
-com\rentacar\advertisementservice\domain\dto\RatingDTO.class
-com\rentacar\advertisementservice\domain\dto\UserDTO.class
 com\rentacar\advertisementservice\domain\Report.class
 com\rentacar\advertisementservice\domain\PriceList.class
 com\rentacar\advertisementservice\controller\AdvertisementController.class
