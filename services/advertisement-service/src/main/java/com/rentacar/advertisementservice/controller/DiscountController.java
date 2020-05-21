@@ -15,17 +15,17 @@ import com.rentacar.advertisementservice.domain.dto.DiscountDTO;
 public class DiscountController {
 	
 	@PostMapping
-	public void createAdvertisement(@RequestBody DiscountDTO ratingDTO) {
+	public void createDiscount(@RequestBody DiscountDTO ratingDTO) {
 
     }
 	
 	@DeleteMapping("/{id}")
-    public void deleteAdvertisement(@PathVariable Long id) {
+    public void deleteDiscount(@PathVariable Long id) {
 
     }
 	
 	@GetMapping
-    public void getAllAdvertisements() {
+    public void getAllDiscounts() {
 
     }
 	
