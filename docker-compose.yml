@@ -35,6 +35,17 @@ services:
     depends_on:
       - consul-server
 
+  advertisement-service:
+    image: advertisement-service
+    build:
+      context: ./services/advertisement-service
+      dockerfile: Dockerfile
+    tty: true
+    networks:
+      - static-network
+    depends_on:
+      - consul-server
+
   gateway:
     image: gateway
     build:
