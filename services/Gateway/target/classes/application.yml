@@ -16,3 +16,4 @@ spring:
             - Path=/auth/**
           filters:
             - RewritePath=/auth/(?<path>.*), /$\{path}
+       
