@@ -2,6 +2,8 @@ package com.rentacar.userservice.domain;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Reservation extends BaseEntity {
@@ -16,9 +18,8 @@ public class Reservation extends BaseEntity {
 
     private Double price;
 
-    @OneToOne
-    @JoinColumn(name = "report_id", referencedColumnName = "id")
-    private Report report;
+    @OneToMany(mappedBy = "reservation")
+    private List<Report> report = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "car_id")
@@ -79,11 +80,11 @@ public class Reservation extends BaseEntity {
         this.price = price;
     }
 
-    public Report getReport() {
+    public List<Report> getReport() {
         return report;
     }
 
-    public void setReport(Report report) {
+    public void setReport(List<Report> report) {
         this.report = report;
     }
 

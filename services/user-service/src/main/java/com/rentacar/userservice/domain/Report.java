@@ -2,6 +2,7 @@ package com.rentacar.userservice.domain;
 
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 @Entity
@@ -11,7 +12,7 @@ public class Report extends BaseEntity {
 
     private String comment;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "reservation_id", referencedColumnName = "id")
     private Reservation reservation;
 
