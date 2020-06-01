@@ -7,6 +7,7 @@ spring:
         url: jdbc:h2:mem:myDb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false;MV_STORE=FALSE
         username: sa
         password:
+        initialization-mode: always
 
     h2:
         console:
@@ -16,7 +17,7 @@ spring:
             path: /h2-console
 
     jpa:
-        show-sql: true
+        show-sql: false
         hibernate:
             ddl-auto: create-drop
         properties:
@@ -24,5 +25,5 @@ spring:
                 dialect: org.hibernate.dialect.H2Dialect
 
 server:
-    port: 8080
+    port: 8081
 
