@@ -21,3 +21,8 @@ INSERT INTO transmission_type(name) VALUES
     ('Automatic'),
     ('Manual'),
     ('Semi-automatic');
+
+INSERT INTO car_model(name, car_brand_id) VALUES
+    ('X1', '1'),
+    ('X2', '1'),
+    ('A4', '2');
