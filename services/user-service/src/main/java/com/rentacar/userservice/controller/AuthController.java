@@ -64,7 +64,6 @@ public class AuthController {
     @GetMapping("/role/{token}")
     public ResponseEntity<?> getRole(@PathVariable String token) {
         String role = tokenUtils.getRole(token);
-        logger.info("Role je: " + role);
 
         return new ResponseEntity<>(role, HttpStatus.OK);
     }

@@ -19,7 +19,7 @@ public class PreFilter extends AbstractGatewayFilterFactory<PreFilter.Config> {
     @Override
     public GatewayFilter apply(Config config) {
         return (exchange, chain) -> {
-            System.out.println("Request is: " + exchange.getRequest().getHeaders());
+            System.out.println("Request header is: " + exchange.getRequest().getHeaders());
 
             if(exchange.getRequest().getHeaders().get("Authorization") == null) {
                 return chain.filter(exchange);
@@ -27,17 +27,15 @@ public class PreFilter extends AbstractGatewayFilterFactory<PreFilter.Config> {
 
             String authorizationHeader = (Objects.requireNonNull(exchange.getRequest().getHeaders().get("Authorization"))).get(0);
 
-            String token = authorizationHeader.substring(7, authorizationHeader.length());
+            String token = authorizationHeader.substring(7);
 
             RestTemplate restTemplate = new RestTemplate();
             String username = restTemplate.getForObject("http://localhost:8081/auth/username/{token}", String.class, token);
+            String role = restTemplate.getForObject("http://localhost:8081/auth/role/{token}", String.class, token);
+
             System.out.println("Username is:" + username);
 
-            String role = restTemplate.getForObject("http://localhost:8081/auth/role/{token}", String.class, token);
-            System.out.println("Role is:" + role);
-
             ServerHttpRequest request = exchange.getRequest().mutate().header("Username", username).header("Role", role).build();
-            System.out.println(request.getHeaders());
 
             return chain.filter(exchange.mutate().request(request).build());
         };

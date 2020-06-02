@@ -17,21 +17,32 @@ spring:
           filters:
             - name: PreFilter
             - RewritePath=/user-service/(?<path>.*), /$\{path}
+
         - id: search-service
           uri: lb://search-service
           predicates:
             - Path=/search-service/**
           filters:
-            - RewritePath=/search-service/(?<path>.*), /$\{path}        
+            - RewritePath=/search-service/(?<path>.*), /$\{path}
+
         - id: advertisement-service
           uri: lb://advertisement-service
           predicates:
             - Path=/advertisement-service/**
           filters:
-            - RewritePath=/advertisement-service/(?<path>.*), /$\{path}        
+            - RewritePath=/advertisement-service/(?<path>.*), /$\{path}
+
         - id: order-service
           uri: lb://order-service
           predicates:
             - Path=/order-service/**
           filters:
-            - RewritePath=/order-service/(?<path>.*), /$\{path}       
+            - RewritePath=/order-service/(?<path>.*), /$\{path}
+
+        - id: administrator-service
+          uri: lb://administrator-service
+          predicates:
+            - Path=/administrator-service/**
+          filters:
+            - name: PreFilter
+            - RewritePath=/administrator-service/(?<path>.*), /$\{path}
