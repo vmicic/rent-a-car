@@ -3,7 +3,6 @@ package com.rentacar.administratorservice.service;
 import com.rentacar.administratorservice.domain.CarBrand;
 
 import java.util.List;
-import java.util.Set;
 
 public interface CarBrandService {
 

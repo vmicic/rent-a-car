@@ -14,7 +14,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/brand")
 public class CarBrandController {
-    
+
     private static Logger logger = LoggerFactory.getLogger(CarBrandController.class);
 
     private final CarBrandService carBrandService;
