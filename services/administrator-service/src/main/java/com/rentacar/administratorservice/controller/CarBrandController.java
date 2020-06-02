@@ -24,7 +24,7 @@ public class CarBrandController {
     }
 
 
-    @PostMapping("/create")
+    @PostMapping
     @PreAuthorize("hasRole('ROLE_ADMINISTRATOR')")
     public ResponseEntity<?> createBrand(@RequestBody CarBrand carBrand) {
         CarBrand carBrandCreated = this.carBrandService.create(carBrand);

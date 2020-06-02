@@ -21,7 +21,7 @@ public class CarClassController {
     }
 
 
-    @PostMapping("/create")
+    @PostMapping
     @PreAuthorize("hasRole('ROLE_ADMINISTRATOR')")
     public ResponseEntity<?> createClass(@RequestBody CarClass carClass) {
         CarClass carClassCreated = this.carClassService.create(carClass);
