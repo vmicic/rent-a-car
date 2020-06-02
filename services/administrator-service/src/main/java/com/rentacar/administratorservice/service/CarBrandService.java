@@ -15,7 +15,9 @@ public interface CarBrandService {
 
     CarBrand findByName(String name);
 
-    CarBrand update(CarBrand carBrand);
+    CarBrand update(Long id, CarBrand carBrand);
 
     void delete(Long id);
+
+    boolean exists(Long id);
 }

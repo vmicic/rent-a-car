@@ -14,6 +14,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/brand")
 public class CarBrandController {
+    
     private static Logger logger = LoggerFactory.getLogger(CarBrandController.class);
 
     private final CarBrandService carBrandService;
@@ -37,5 +38,29 @@ public class CarBrandController {
         List<CarBrand> carBrands = this.carBrandService.findAll();
 
         return new ResponseEntity<>(carBrands, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMINISTRATOR')")
+    public ResponseEntity<?> getOne(@PathVariable Long id) {
+        CarBrand carBrand = this.carBrandService.findById(id);
+
+        return new ResponseEntity<>(carBrand, HttpStatus.OK);
+    }
+
+    @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMINISTRATOR')")
+    public ResponseEntity<?> updateCarBrand(@PathVariable Long id, @RequestBody CarBrand carBrand) {
+        this.carBrandService.update(id, carBrand);
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMINISTRATOR')")
+    public ResponseEntity<?> deleteCarBrand(@PathVariable Long id) {
+        this.carBrandService.delete(id);
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
