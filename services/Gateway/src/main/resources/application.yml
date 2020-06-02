@@ -23,6 +23,7 @@ spring:
           predicates:
             - Path=/search-service/**
           filters:
+            - name: PreFilter
             - RewritePath=/search-service/(?<path>.*), /$\{path}
 
         - id: advertisement-service
@@ -30,14 +31,8 @@ spring:
           predicates:
             - Path=/advertisement-service/**
           filters:
+            - name: PreFilter
             - RewritePath=/advertisement-service/(?<path>.*), /$\{path}
-
-        - id: order-service
-          uri: lb://order-service
-          predicates:
-            - Path=/order-service/**
-          filters:
-            - RewritePath=/order-service/(?<path>.*), /$\{path}
 
         - id: administrator-service
           uri: lb://administrator-service
@@ -46,3 +41,11 @@ spring:
           filters:
             - name: PreFilter
             - RewritePath=/administrator-service/(?<path>.*), /$\{path}
+
+        - id: message-service
+          uri: lb://message-service
+          predicates:
+            - Path=/message-service/**
+          filters:
+            - name: PreFilter
+            - RewritePath=/message-service/(?<path>.*), /$\{path}
