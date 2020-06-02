@@ -15,6 +15,7 @@ spring:
           predicates:
             - Path=/user-service/**
           filters:
+            - name: PreFilter
             - RewritePath=/user-service/(?<path>.*), /$\{path}
         - id: search-service
           uri: lb://search-service

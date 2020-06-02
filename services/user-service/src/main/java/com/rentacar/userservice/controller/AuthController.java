@@ -1,5 +1,6 @@
 package com.rentacar.userservice.controller;
 
+import com.rentacar.userservice.domain.Authority;
 import com.rentacar.userservice.domain.User;
 import com.rentacar.userservice.domain.UserTokenState;
 import com.rentacar.userservice.security.TokenUtils;
@@ -13,9 +14,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.rentacar.userservice.domain.JwtAuthenticationRequest;
 import com.rentacar.userservice.domain.dto.UserDTO;
@@ -37,7 +36,7 @@ public class AuthController {
         this.userService = userService;
     }
 
-    @RequestMapping("/login")
+    @PostMapping("/login")
     public ResponseEntity login(@RequestBody JwtAuthenticationRequest jwtAuthenticationRequest) {
         try{
             final Authentication authentication = authenticationManager.authenticate(new
@@ -47,8 +46,7 @@ public class AuthController {
 
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
-            User user = userService.findOneByEmail(jwtAuthenticationRequest.getUsername());
-            String jwt = tokenUtils.generateToken(user.getUsername());
+            String jwt = tokenUtils.generateToken(jwtAuthenticationRequest.getUsername());
             Long expiresIn = tokenUtils.getExpiredIn();
 
             return ResponseEntity.ok(new UserTokenState(jwt, expiresIn));
@@ -58,8 +56,23 @@ public class AuthController {
         }
     }
 
-    @RequestMapping("/register")
+    @PostMapping("/register")
     public void register(@RequestBody UserDTO userDTO) {
 
+    }
+
+    @GetMapping("/role/{token}")
+    public ResponseEntity<?> getRole(@PathVariable String token) {
+        String role = tokenUtils.getRole(token);
+        logger.info("Role je: " + role);
+
+        return new ResponseEntity<>(role, HttpStatus.OK);
+    }
+
+    @GetMapping("/username/{token}")
+    public ResponseEntity<?> getUsername(@PathVariable String token) {
+        String username = tokenUtils.getUsernameFromToken(token);
+
+        return new ResponseEntity<>(username, HttpStatus.OK);
     }
 }

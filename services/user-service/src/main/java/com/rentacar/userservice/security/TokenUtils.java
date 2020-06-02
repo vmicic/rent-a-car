@@ -171,4 +171,9 @@ public class TokenUtils {
             return true;
         }
     }
+
+    public String getRole(String token) {
+        final Claims claims = this.getAllClaimsFromToken(token);
+        return claims.get("role").toString();
+    }
 }
