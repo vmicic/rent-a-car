@@ -25,10 +25,10 @@ public class TokenUtils {
     @Value("web-shop")
     private String APP_NAME;
 
-    @Value("secret_test")
+    @Value("${security.jwt.token.secret-key:SECRET_TEST}")
     public String SECRET;
 
-    @Value("300000000000")
+    @Value("${security.jwt.token.expire-length:20000000}")
     private Long EXPIRES_IN;
 
     @Value("Authorization")
