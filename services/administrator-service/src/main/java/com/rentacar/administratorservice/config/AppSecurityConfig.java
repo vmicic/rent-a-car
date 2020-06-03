@@ -1,5 +1,6 @@
 package com.rentacar.administratorservice.config;
 
+import com.rentacar.administratorservice.client.UserServiceClient;
 import com.rentacar.administratorservice.filter.TokenAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,11 +11,12 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    private final UserServiceClient userServiceClient;
 
     private static final String[] AUTH_WHITELIST = {
             "/webjars/**",
@@ -24,12 +26,13 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
     };
 
 
-    public AppSecurityConfig() {
+    public AppSecurityConfig(UserServiceClient userServiceClient) {
+        this.userServiceClient = userServiceClient;
     }
 
     @Bean
     public TokenAuthenticationFilter authenticationFilter() throws Exception {
-        TokenAuthenticationFilter tokenAuthenticationFilter = new TokenAuthenticationFilter();
+        TokenAuthenticationFilter tokenAuthenticationFilter = new TokenAuthenticationFilter(userServiceClient);
 
         tokenAuthenticationFilter.setAuthenticationManager(authenticationManagerBean());
         return tokenAuthenticationFilter;

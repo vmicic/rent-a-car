@@ -1,5 +1,7 @@
 package rs.ac.uns.ftn.gateway.gateway.filter;
 
+import org.springframework.beans.factory.ObjectProvider;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.http.server.reactive.ServerHttpRequest;
@@ -10,6 +12,7 @@ import java.util.Objects;
 
 @Component
 public class PreFilter extends AbstractGatewayFilterFactory<PreFilter.Config> {
+
 
     public PreFilter() {
         super(Config.class);
@@ -24,9 +27,12 @@ public class PreFilter extends AbstractGatewayFilterFactory<PreFilter.Config> {
                 return chain.filter(exchange);
             }
 
+
             String authorizationHeader = (Objects.requireNonNull(exchange.getRequest().getHeaders().get("Authorization"))).get(0);
 
             String token = authorizationHeader.substring(7);
+
+
 
             RestTemplate restTemplate = new RestTemplate();
             String username = restTemplate.getForObject("http://localhost:8081/auth/username/{token}", String.class, token);
@@ -34,12 +40,11 @@ public class PreFilter extends AbstractGatewayFilterFactory<PreFilter.Config> {
 
             System.out.println("Username is:" + username);
 
-            ServerHttpRequest request = exchange.getRequest().mutate().header("Username", username).header("Role", role).build();
+            //ServerHttpRequest request = exchange.getRequest().mutate().header("Username", username).header("Role", role).build();
 
-            return chain.filter(exchange.mutate().request(request).build());
+            return chain.filter(exchange.mutate().request(exchange.getRequest()).build());
         };
     }
-
 
 
     public static class Config {

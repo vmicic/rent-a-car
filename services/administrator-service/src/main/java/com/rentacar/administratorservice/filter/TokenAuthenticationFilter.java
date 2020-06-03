@@ -1,5 +1,6 @@
 package com.rentacar.administratorservice.filter;
 
+import com.rentacar.administratorservice.client.UserServiceClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -16,34 +17,38 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
-public class TokenAuthenticationFilter extends UsernamePasswordAuthenticationFilter{
+public class TokenAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     private static Logger logger = LoggerFactory.getLogger(TokenAuthenticationFilter.class);
 
-    public TokenAuthenticationFilter() {
+    private final UserServiceClient userServiceClient;
 
+    public TokenAuthenticationFilter(UserServiceClient userServiceClient) {
+        this.userServiceClient = userServiceClient;
     }
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
 
-        String username = httpServletRequest.getHeader("Username");
-        String role = httpServletRequest.getHeader("Role");
+        String authorizationHeader = httpServletRequest.getHeader("Authorization");
+        if (authorizationHeader != null) {
 
+            String token = authorizationHeader.substring(7);
 
-        //need to check because consul sends requests
-        if(username != null && role != null) {
-            logger.info("Username is: " + username + " , role is: " + role);
+            String role = userServiceClient.getRole(token);
+            String username = userServiceClient.getUsername(token);
+
             Set<SimpleGrantedAuthority> authorities = new HashSet<>();
 
             authorities.add(new SimpleGrantedAuthority(role));
-
             UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(username, null, authorities);
 
             SecurityContextHolder.getContext().setAuthentication(auth);
         }
+
         chain.doFilter(request, response);
+
     }
 
 }
