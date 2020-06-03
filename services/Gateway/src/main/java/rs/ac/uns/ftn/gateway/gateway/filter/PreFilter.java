@@ -2,7 +2,6 @@ package rs.ac.uns.ftn.gateway.gateway.filter;
 
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
-import org.springframework.cloud.gateway.filter.factory.AbstractNameValueGatewayFilterFactory;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -40,6 +39,8 @@ public class PreFilter extends AbstractGatewayFilterFactory<PreFilter.Config> {
             return chain.filter(exchange.mutate().request(request).build());
         };
     }
+
+
 
     public static class Config {
         private String name;

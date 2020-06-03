@@ -1,6 +1,5 @@
 package com.rentacar.userservice.controller;
 
-import com.rentacar.userservice.domain.Authority;
 import com.rentacar.userservice.domain.User;
 import com.rentacar.userservice.domain.UserTokenState;
 import com.rentacar.userservice.security.TokenUtils;
@@ -25,6 +24,9 @@ public class AuthController {
 
     private static Logger logger = LoggerFactory.getLogger(AuthController.class);
 
+    private static final int PASSWORD_MIN_LENGTH = 6;
+    private static final int PASSWORD_MAX_LENGTH = 80;
+
     private final AuthenticationManager authenticationManager;
     private final TokenUtils tokenUtils;
 
@@ -37,7 +39,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody JwtAuthenticationRequest jwtAuthenticationRequest) {
+    public ResponseEntity<UserTokenState> login(@RequestBody JwtAuthenticationRequest jwtAuthenticationRequest) {
         try{
             final Authentication authentication = authenticationManager.authenticate(new
                     UsernamePasswordAuthenticationToken(jwtAuthenticationRequest.getUsername(),
@@ -52,13 +54,23 @@ public class AuthController {
             return ResponseEntity.ok(new UserTokenState(jwt, expiresIn));
         }catch (BadCredentialsException e) {
             e.printStackTrace();
-            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<UserTokenState>(HttpStatus.BAD_REQUEST);
         }
     }
 
     @PostMapping("/register")
-    public void register(@RequestBody UserDTO userDTO) {
+    public ResponseEntity<?> register(@RequestBody UserDTO userDTO) {
 
+        if(userService.emailExists(userDTO.getEmail())) {
+            return new ResponseEntity<>("Email already exists", HttpStatus.BAD_REQUEST);
+        }
+
+        if(userDTO.getPassword().length() < PASSWORD_MIN_LENGTH || userDTO.getPassword().length() > PASSWORD_MAX_LENGTH) {
+            return new ResponseEntity<>("Password size is not good", HttpStatus.BAD_REQUEST);
+        }
+
+        User user = userService.createUser(userDTO);
+        return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
 
     @GetMapping("/role/{token}")

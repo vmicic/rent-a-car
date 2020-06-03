@@ -40,6 +40,9 @@ public class User extends BaseEntity implements UserDetails {
     @OneToMany(mappedBy = "user")
     private List<Car> cars = new ArrayList<>();
 
+    private boolean enabled;
+
+    private boolean accountNonLocked;
 
     @JsonIgnore
     private Timestamp lastPasswordResetDate;
@@ -96,7 +99,11 @@ public class User extends BaseEntity implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return this.accountNonLocked;
+    }
+
+    public void setAccountNonLocked(boolean accountNonLocked) {
+        this.accountNonLocked = accountNonLocked;
     }
 
     @Override
@@ -106,8 +113,13 @@ public class User extends BaseEntity implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return this.enabled;
     }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
 
     public LocalDateTime getDateRegistered() {
         return dateRegistered;
