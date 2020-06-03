@@ -7,7 +7,12 @@ import javax.persistence.OneToOne;
 @Entity
 public class Report extends BaseEntity {
 
-    private Double kmTraveled;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 3078846576612888248L;
+
+	private Double kmTraveled;
 
     private String comment;
 

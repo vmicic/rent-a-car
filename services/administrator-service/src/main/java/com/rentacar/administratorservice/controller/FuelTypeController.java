@@ -28,7 +28,7 @@ public class FuelTypeController {
     }
 
     @GetMapping
-    @PreAuthorize("hasRole('ROLE_ADMINISTRATOR')")
+    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_AGENT','ROLE_COMPANY','ROLE_ADMINISTRATOR')")
     public ResponseEntity<?> getAll() {
         List<FuelType> fuelType = this.fuelTypeService.findAll();
 
@@ -36,7 +36,7 @@ public class FuelTypeController {
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasRole('ROLE_ADMINISTRATOR')")
+    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_AGENT','ROLE_COMPANY','ROLE_ADMINISTRATOR')")
     public ResponseEntity<?> getOne(@PathVariable Long id) {
         FuelType fuelType = this.fuelTypeService.findById(id);
 

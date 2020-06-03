@@ -30,7 +30,7 @@ public class TransmissionTypeController {
     }
 
     @GetMapping
-    @PreAuthorize("hasRole('ROLE_ADMINISTRATOR')")
+    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_AGENT','ROLE_COMPANY','ROLE_ADMINISTRATOR')")
     public ResponseEntity<?> getAll() {
         List<TransmissionType> transmissionTypes = this.transmissionTypeService.findAll();
 
@@ -38,7 +38,7 @@ public class TransmissionTypeController {
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasRole('ROLE_ADMINISTRATOR')")
+    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_AGENT','ROLE_COMPANY','ROLE_ADMINISTRATOR')")
     public ResponseEntity<?> getOne(@PathVariable Long id) {
         TransmissionType transmissionType = this.transmissionTypeService.findById(id);
 

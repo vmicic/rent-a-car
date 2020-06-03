@@ -1,6 +1,5 @@
 package com.rentacar.administratorservice.controller;
 
-import com.rentacar.administratorservice.domain.CarBrand;
 import com.rentacar.administratorservice.domain.CarClass;
 import com.rentacar.administratorservice.service.CarClassService;
 import org.springframework.http.HttpStatus;
@@ -30,7 +29,7 @@ public class CarClassController {
     }
 
     @GetMapping
-    @PreAuthorize("hasRole('ROLE_ADMINISTRATOR')")
+    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_AGENT','ROLE_COMPANY','ROLE_ADMINISTRATOR')")
     public ResponseEntity<?> getAll() {
         List<CarClass> carClasses = this.carClassService.findAll();
 
@@ -38,7 +37,7 @@ public class CarClassController {
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasRole('ROLE_ADMINISTRATOR')")
+    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_AGENT','ROLE_COMPANY','ROLE_ADMINISTRATOR')")
     public ResponseEntity<?> getOne(@PathVariable Long id) {
         CarClass carClass = this.carClassService.findById(id);
 

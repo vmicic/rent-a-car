@@ -33,7 +33,7 @@ public class CarBrandController {
     }
 
     @GetMapping
-    @PreAuthorize("hasRole('ROLE_ADMINISTRATOR')")
+    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_AGENT','ROLE_COMPANY','ROLE_ADMINISTRATOR')")
     public ResponseEntity<?> getAll() {
         List<CarBrand> carBrands = this.carBrandService.findAll();
 
@@ -41,7 +41,7 @@ public class CarBrandController {
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasRole('ROLE_ADMINISTRATOR')")
+    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_AGENT','ROLE_COMPANY','ROLE_ADMINISTRATOR')")
     public ResponseEntity<?> getOne(@PathVariable Long id) {
         CarBrand carBrand = this.carBrandService.findById(id);
 

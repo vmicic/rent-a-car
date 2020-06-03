@@ -7,9 +7,17 @@ import com.rentacar.advertisementservice.domain.dto.CarDTO;
 
 public interface CarService {
 	
-	Car createCar(CarDTO carDTO);
+	Car create(CarDTO carDTO);
 	
-	void deleteCar(Long id);
+	List<Car> findAll();
+	
+	List<Car> findAllByUser();
+	
+	Car findById(Long id);
+	
+	Car update(Long id, CarDTO carDTO);
+	
+	boolean delete(Long id);
 
-    List<Car> getAllCars();
+    boolean exists(Long id);
 }
