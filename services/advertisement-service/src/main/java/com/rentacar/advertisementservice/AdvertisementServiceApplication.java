@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class AdvertisementServiceApplication 
 {
 	@RequestMapping("/health")
-	public String home() {
-		return "Hello world";
+	public String healthTest() {
+		return "Alive";
 	}
 	
     public static void main( String[] args )
