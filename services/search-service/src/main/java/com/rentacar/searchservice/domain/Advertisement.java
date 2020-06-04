@@ -1,9 +1,9 @@
 package com.rentacar.searchservice.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +16,13 @@ public class Advertisement extends BaseEntity{
     private LocalDateTime toDate;
 
     private Double kmLimitPerDay;
+
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @ManyToMany
+    @JoinTable(name = "advertisement_pickup_spots",
+               joinColumns = @JoinColumn(name = "advertisement_id", referencedColumnName = "id"),
+               inverseJoinColumns = @JoinColumn(name = "pickup_spot_id", referencedColumnName = "id"))
+    private List<PickupSpot> pickupSpots;
 
     @OneToMany(mappedBy = "advertisement")
     private List<Reservation> reservations = new ArrayList<>();

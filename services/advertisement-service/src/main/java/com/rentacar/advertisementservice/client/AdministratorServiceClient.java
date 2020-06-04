@@ -9,6 +9,7 @@ import com.rentacar.advertisementservice.domain.CarClass;
 import com.rentacar.advertisementservice.domain.CarModel;
 import com.rentacar.advertisementservice.domain.FuelType;
 import com.rentacar.advertisementservice.domain.TransmissionType;
+import org.springframework.web.bind.annotation.RequestHeader;
 
 @FeignClient(name = "administrator-service")
 public interface AdministratorServiceClient {

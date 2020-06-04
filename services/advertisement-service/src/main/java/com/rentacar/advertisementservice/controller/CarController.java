@@ -1,5 +1,7 @@
 package com.rentacar.advertisementservice.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -18,6 +20,8 @@ import com.rentacar.advertisementservice.service.CarService;
 @RestController
 @RequestMapping("/cars")
 public class CarController {
+
+	private static Logger logger = LoggerFactory.getLogger(CarController.class);
 	
 	private final CarService carService;
 	
@@ -26,7 +30,7 @@ public class CarController {
 	}
 
 	@PostMapping
-	@PreAuthorize("hasAnyRole('ROLE_USER','ROLE_AGENT','ROLE_COMPANY','ROLE_ADMINISTRATOR')")
+	@PreAuthorize("hasAnyRole('ROLE_USER','ROLE_AGENT','ROLE_COMPANY')")
 	public ResponseEntity<?> createCar(@RequestBody CarDTO carDTO) {
 		
 		Car car = carService.create(carDTO);

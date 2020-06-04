@@ -9,4 +9,12 @@ public class FuelType extends BaseEntity {
 
     public FuelType() {
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }
