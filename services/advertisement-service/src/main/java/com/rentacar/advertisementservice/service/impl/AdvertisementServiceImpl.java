@@ -58,4 +58,14 @@ public class AdvertisementServiceImpl implements AdvertisementService {
     public List<Advertisement> getAllAdvertisements() {
         return null;
     }
+
+    @Override
+    public Advertisement findById(Long id) {
+        return this.advertisementRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public boolean exists(Long id) {
+        return this.advertisementRepository.existsById(id);
+    }
 }

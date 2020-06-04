@@ -15,6 +15,6 @@ public interface UserServiceClient {
     @GetMapping("/auth/username/{token}")
     String getUsername(@PathVariable String token);
     
-    @GetMapping("/loggedIn")
+    @GetMapping("/users/loggedIn")
     User getLoggedInUser();
 }

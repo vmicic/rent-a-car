@@ -20,7 +20,10 @@ public class User extends BaseEntity{
     private LocalDateTime dateRegistered;
 
     @OneToMany(mappedBy = "user")
-    private List<Reservation> reservations = new ArrayList<>();
+    private List<Reservation> reservationsRequested = new ArrayList<>();
+
+    @OneToMany(mappedBy = "userOwnerCar")
+    private List<Reservation> reservationReceived = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
     private List<Advertisement> advertisements = new ArrayList<>();
@@ -74,12 +77,12 @@ public class User extends BaseEntity{
         this.lastName = lastName;
     }
 
-    public List<Reservation> getReservations() {
-        return reservations;
+    public List<Reservation> getReservationsRequested() {
+        return reservationsRequested;
     }
 
-    public void setReservations(List<Reservation> reservations) {
-        this.reservations = reservations;
+    public void setReservationsRequested(List<Reservation> reservationsRequested) {
+        this.reservationsRequested = reservationsRequested;
     }
 
     public List<Advertisement> getAdvertisements() {
@@ -104,5 +107,13 @@ public class User extends BaseEntity{
 
     public void setCars(List<Car> cars) {
         this.cars = cars;
+    }
+
+    public List<Reservation> getReservationReceived() {
+        return reservationReceived;
+    }
+
+    public void setReservationReceived(List<Reservation> reservationReceived) {
+        this.reservationReceived = reservationReceived;
     }
 }

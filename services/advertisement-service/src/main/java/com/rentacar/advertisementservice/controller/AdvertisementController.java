@@ -3,6 +3,8 @@ package com.rentacar.advertisementservice.controller;
 import com.rentacar.advertisementservice.domain.Advertisement;
 import com.rentacar.advertisementservice.service.AdvertisementService;
 import com.rentacar.advertisementservice.service.PickupSpotService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -19,6 +21,8 @@ import com.rentacar.advertisementservice.domain.dto.AdvertisementDTO;
 @RestController
 @RequestMapping("/advertisement")
 public class AdvertisementController {
+
+    private static Logger logger = LoggerFactory.getLogger(AdvertisementController.class);
 
     private final PickupSpotService pickupSpotService;
     private final AdvertisementService advertisementService;

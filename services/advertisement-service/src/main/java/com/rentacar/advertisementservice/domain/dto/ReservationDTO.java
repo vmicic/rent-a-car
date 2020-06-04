@@ -1,69 +1,41 @@
 package com.rentacar.advertisementservice.domain.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class ReservationDTO {
-    private LocalDateTime creationDateTime;
 
-    private String status;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+    private LocalDateTime fromDate;
 
-    private LocalDateTime dateFrom;
-
-    private LocalDateTime dateTo;
-
-    private ArrayList<Long> reportIds;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+    private LocalDateTime toDate;
 
     private ArrayList<Long> carIds;
 
     private Long advertisementId;
 
-    private Long userId;
-
-    private Long companyId;
-
     public ReservationDTO() {
 
     }
 
-    public LocalDateTime getCreationDateTime() {
-        return creationDateTime;
+
+    public LocalDateTime getFromDate() {
+        return fromDate;
     }
 
-    public void setCreationDateTime(LocalDateTime creationDateTime) {
-        this.creationDateTime = creationDateTime;
+    public void setFromDate(LocalDateTime fromDate) {
+        this.fromDate = fromDate;
     }
 
-    public String getStatus() {
-        return status;
+    public LocalDateTime getToDate() {
+        return toDate;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public LocalDateTime getDateFrom() {
-        return dateFrom;
-    }
-
-    public void setDateFrom(LocalDateTime dateFrom) {
-        this.dateFrom = dateFrom;
-    }
-
-    public LocalDateTime getDateTo() {
-        return dateTo;
-    }
-
-    public void setDateTo(LocalDateTime dateTo) {
-        this.dateTo = dateTo;
-    }
-
-    public ArrayList<Long> getReportIds() {
-        return reportIds;
-    }
-
-    public void setReportIds(ArrayList<Long> reportIds) {
-        this.reportIds = reportIds;
+    public void setToDate(LocalDateTime toDate) {
+        this.toDate = toDate;
     }
 
     public ArrayList<Long> getCarIds() {
@@ -82,21 +54,14 @@ public class ReservationDTO {
         this.advertisementId = advertisementId;
     }
 
-    public Long getUserId() {
-        return userId;
+
+    @Override
+    public String toString() {
+        return "ReservationDTO{" +
+                "dateFrom=" + fromDate +
+                ", dateTo=" + toDate +
+                ", carIds=" + carIds +
+                ", advertisementId=" + advertisementId +
+                '}';
     }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    public Long getCompanyId() {
-        return companyId;
-    }
-
-    public void setCompanyId(Long companyId) {
-        this.companyId = companyId;
-    }
-
-
 }

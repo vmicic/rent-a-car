@@ -44,3 +44,9 @@ INSERT INTO advertisement_pickup_spots(advertisement_id, pickup_spot_id) VALUES
     ('1', '1'),
     ('1', '2'),
     ('2', '1');
+
+
+INSERT INTO user(date_registered, email, first_name, last_name) VALUES
+    ('2020-01-15', 'pera@gmail.com', 'petar', 'panin'),
+    ('2020-01-16', 'admin@gmail.com', 'Admin', 'adminini'),
+    ('2020-01-15', 'user@gmail.com', 'User', 'LastName');

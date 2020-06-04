@@ -1,5 +1,7 @@
 package com.rentacar.advertisementservice.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -18,6 +20,7 @@ public class Advertisement extends BaseEntity{
 
     private Double kmLimitPerDay;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "advertisement")
     private List<Reservation> reservations = new ArrayList<>();
 

@@ -12,4 +12,8 @@ public interface AdvertisementService {
 	void deleteAdvertisement(Long id);
 
     List<Advertisement> getAllAdvertisements();
+
+    Advertisement findById(Long id);
+
+    boolean exists(Long id);
 }
