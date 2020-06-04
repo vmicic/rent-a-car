@@ -2,19 +2,15 @@ package com.rentacar.advertisementservice.service.impl;
 
 import java.util.List;
 
+import com.rentacar.advertisementservice.domain.CarBrand;
+import com.rentacar.advertisementservice.service.CarModelService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.rentacar.advertisementservice.client.AdministratorServiceClient;
 import com.rentacar.advertisementservice.domain.Car;
-import com.rentacar.advertisementservice.domain.CarBrand;
-import com.rentacar.advertisementservice.domain.CarClass;
 import com.rentacar.advertisementservice.domain.CarModel;
-import com.rentacar.advertisementservice.domain.Company;
-import com.rentacar.advertisementservice.domain.FuelType;
-import com.rentacar.advertisementservice.domain.TransmissionType;
-import com.rentacar.advertisementservice.domain.User;
 import com.rentacar.advertisementservice.domain.dto.CarDTO;
 import com.rentacar.advertisementservice.repository.CarRepository;
 import com.rentacar.advertisementservice.service.CarService;
@@ -26,30 +22,38 @@ public class CarServiceImpl implements CarService {
 
 	private final CarRepository carRepository;
 	private final AdministratorServiceClient administratorServiceClient;
+
+	private final CarModelService carModelService;
 	
-	public CarServiceImpl(CarRepository carRepository, AdministratorServiceClient administratorServiceClient) {
+	public CarServiceImpl(CarRepository carRepository, AdministratorServiceClient administratorServiceClient, CarModelService carModelService) {
 		this.carRepository = carRepository;
 		this.administratorServiceClient = administratorServiceClient;
+		this.carModelService = carModelService;
 	}
 	
 	@Override
 	public Car create(CarDTO carDTO) {
-		
-		Car newCar = new Car();
+
 		logger.info("Creating a car");
-		CarModel carModel = administratorServiceClient.getModel(carDTO.getCarModel());
-		CarBrand carBrand = administratorServiceClient.getBrand(carDTO.getCarBrand());
+
+		Car newCar = new Car();
+
+		CarModel carModel = carModelService.findById(carDTO.getCarModelId());
+		newCar.setCarModel(carModel);
+
+
+		//newCar.setCarModel(carModel);
+
+/*		CarBrand carBrand = administratorServiceClient.getBrand(carDTO.getCarBrand());
 		FuelType fuelType = administratorServiceClient.getFuelType(carDTO.getFuelType());
 		TransmissionType transmissionType = administratorServiceClient.getTransmissionType(carDTO.getTransmissionType());
 		CarClass carClass = administratorServiceClient.getCarClass(carDTO.getCarClass());
 		User user = null; // TODO treba dodati usera iz request-a
 		Company company = null; // TODO treba dodati company is request-a
-		
-		/* TODO
-		 * Treba ubaciti jos sve moguce provere da li svi gore navedeni postoje
-		 */
-		
-		newCar.setCarModel(carModel);
+
+
+
+
 		newCar.setCarBrand(carBrand);
 		newCar.setFuelType(fuelType);
 		newCar.setTransmissionType(transmissionType);
@@ -57,7 +61,7 @@ public class CarServiceImpl implements CarService {
 		//newCar.setKmTraveled(carDTO.getKmTraveled());
 		newCar.setSeatsForKids(carDTO.getSeatsForKids());
 		//newCar.setUser(user);
-		//newCar.setCompany(company);
+		//newCar.setCompany(company);*/
 		
 		return carRepository.save(newCar);
 	}

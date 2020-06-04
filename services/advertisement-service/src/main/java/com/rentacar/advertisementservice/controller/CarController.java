@@ -32,7 +32,9 @@ public class CarController {
 	@PostMapping
 	@PreAuthorize("hasAnyRole('ROLE_USER','ROLE_AGENT','ROLE_COMPANY')")
 	public ResponseEntity<?> createCar(@RequestBody CarDTO carDTO) {
-		
+
+		//TODO see if every entity with specified id exists
+
 		Car car = carService.create(carDTO);
 		
 		if(car != null) {

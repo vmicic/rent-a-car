@@ -2,58 +2,58 @@ package com.rentacar.advertisementservice.domain.dto;
 
 public class CarDTO {
 
-	private Long carModel;
+	private Long carModelId;
 	
-	private Long carBrand;
+	private Long carBrandId;
 	
-	private Long fuelType;
+	private Long fuelTypeId;
 	
-	private Long transmissionType;
+	private Long transmissionTypeId;
 	
-	private Long carClass;
+	private Long carClassId;
 	
 	private Double kmTraveled;
 	
 	private Integer seatsForKids;
 
-	public Long getCarModel() {
-		return carModel;
+	public Long getCarModelId() {
+		return carModelId;
 	}
 
-	public void setCarModel(Long carModel) {
-		this.carModel = carModel;
+	public void setCarModelId(Long carModelId) {
+		this.carModelId = carModelId;
 	}
 
-	public Long getCarBrand() {
-		return carBrand;
+	public Long getCarBrandId() {
+		return carBrandId;
 	}
 
-	public void setCarBrand(Long carBrand) {
-		this.carBrand = carBrand;
+	public void setCarBrandId(Long carBrandId) {
+		this.carBrandId = carBrandId;
 	}
 
-	public Long getFuelType() {
-		return fuelType;
+	public Long getFuelTypeId() {
+		return fuelTypeId;
 	}
 
-	public void setFuelType(Long fuelType) {
-		this.fuelType = fuelType;
+	public void setFuelTypeId(Long fuelTypeId) {
+		this.fuelTypeId = fuelTypeId;
 	}
 
-	public Long getTransmissionType() {
-		return transmissionType;
+	public Long getTransmissionTypeId() {
+		return transmissionTypeId;
 	}
 
-	public void setTransmissionType(Long transmissionType) {
-		this.transmissionType = transmissionType;
+	public void setTransmissionTypeId(Long transmissionTypeId) {
+		this.transmissionTypeId = transmissionTypeId;
 	}
 
-	public Long getCarClass() {
-		return carClass;
+	public Long getCarClassId() {
+		return carClassId;
 	}
 
-	public void setCarClass(Long carClass) {
-		this.carClass = carClass;
+	public void setCarClassId(Long carClassId) {
+		this.carClassId = carClassId;
 	}
 
 	public Double getKmTraveled() {
