@@ -2,6 +2,7 @@ package com.rentacar.searchservice.domain;
 
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -11,8 +12,10 @@ import java.util.List;
 @Entity
 public class Advertisement extends BaseEntity{
 
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime fromDate;
 
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime toDate;
 
     private Double kmLimitPerDay;
@@ -120,5 +123,22 @@ public class Advertisement extends BaseEntity{
 
     public void setCompany(Company company) {
         this.company = company;
+    }
+
+    public List<PickupSpot> getPickupSpots() {
+        return pickupSpots;
+    }
+
+    public void setPickupSpots(List<PickupSpot> pickupSpots) {
+        this.pickupSpots = pickupSpots;
+    }
+
+    @Override
+    public String toString() {
+        return "Advertisement{" +
+                "fromDate=" + fromDate +
+                ", toDate=" + toDate +
+                ", pickupSpots=" + pickupSpots +
+                '}';
     }
 }

@@ -44,7 +44,8 @@ public class TokenAuthenticationFilter extends UsernamePasswordAuthenticationFil
             Set<SimpleGrantedAuthority> authorities = new HashSet<>();
 
             authorities.add(new SimpleGrantedAuthority(role));
-            UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(username, null, authorities);
+            TokenBasedAuthentification auth = new TokenBasedAuthentification(username, null, authorities);
+            auth.setToken(token);
 
             SecurityContextHolder.getContext().setAuthentication(auth);
         }
