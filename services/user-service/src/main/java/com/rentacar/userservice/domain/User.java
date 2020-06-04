@@ -19,29 +19,37 @@ public class User extends BaseEntity implements UserDetails {
 
     private String email;
 
+    @JsonIgnore
     private String password;
 
     private String firstName;
 
     private String lastName;
 
+    @JsonIgnore
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime dateRegistered;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<Reservation> reservations = new ArrayList<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<Advertisement> advertisements = new ArrayList<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<PriceList> priceLists = new ArrayList<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<Car> cars = new ArrayList<>();
 
+    @JsonIgnore
     private boolean enabled;
 
+    @JsonIgnore
     private boolean accountNonLocked;
 
     @JsonIgnore

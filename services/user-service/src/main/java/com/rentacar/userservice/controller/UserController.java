@@ -1,5 +1,6 @@
 package com.rentacar.userservice.controller;
 
+import com.rentacar.userservice.domain.User;
 import com.rentacar.userservice.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -7,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
 
 @RestController
 @RequestMapping("/users")
@@ -21,7 +24,12 @@ public class UserController {
 
     @GetMapping
     public void getAllUsers() {
-        System.out.println("POGODIO");
+    }
+
+    @GetMapping("/loggedIn")
+    public ResponseEntity<?> getLoggedUser(Principal user) {
+        User userInfo = userService.findOneByEmail(user.getName());
+        return new ResponseEntity<>(userInfo, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
