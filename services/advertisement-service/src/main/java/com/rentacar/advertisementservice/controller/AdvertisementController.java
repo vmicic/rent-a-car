@@ -1,5 +1,11 @@
 package com.rentacar.advertisementservice.controller;
 
+import com.rentacar.advertisementservice.domain.Advertisement;
+import com.rentacar.advertisementservice.service.AdvertisementService;
+import com.rentacar.advertisementservice.service.PickupSpotService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,9 +20,28 @@ import com.rentacar.advertisementservice.domain.dto.AdvertisementDTO;
 @RequestMapping("/advertisement")
 public class AdvertisementController {
 
-	@PostMapping
-	public void createAdvertisement(@RequestBody AdvertisementDTO ratingDTO) {
+    private final PickupSpotService pickupSpotService;
+    private final AdvertisementService advertisementService;
 
+    public AdvertisementController(PickupSpotService pickupSpotService, AdvertisementService advertisementService) {
+        this.pickupSpotService = pickupSpotService;
+        this.advertisementService = advertisementService;
+    }
+
+    @PostMapping
+    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_AGENT','ROLE_COMPANY')")
+	public ResponseEntity<?> createAdvertisement(@RequestBody AdvertisementDTO advertisementDTO) {
+        //TODO Implement check if car for advertisement is from user
+
+	    for(Long id : advertisementDTO.getPickupSpots()) {
+	        if(!pickupSpotService.exists(id)) {
+	            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+        }
+
+	    Advertisement advertisement = advertisementService.createAdvertisement(advertisementDTO);
+
+	    return new ResponseEntity<>(advertisement, HttpStatus.CREATED);
     }
 	
 	@DeleteMapping("/{id}")

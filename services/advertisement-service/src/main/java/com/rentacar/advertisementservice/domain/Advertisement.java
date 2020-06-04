@@ -1,13 +1,13 @@
 package com.rentacar.advertisementservice.domain;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
 @Entity
 public class Advertisement extends BaseEntity{
@@ -24,6 +24,13 @@ public class Advertisement extends BaseEntity{
     @ManyToOne
     @JoinColumn(name = "car_id")
     private Car car;
+
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @ManyToMany
+    @JoinTable(name = "advertisement_pickup_spots",
+            joinColumns = @JoinColumn(name = "advertisement_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "pickup_spot_id", referencedColumnName = "id"))
+    private List<PickupSpot> pickupSpots;
 
     @ManyToOne
     @JoinColumn(name = "discount_id")
@@ -114,5 +121,13 @@ public class Advertisement extends BaseEntity{
 
     public void setCompany(Company company) {
         this.company = company;
+    }
+
+    public List<PickupSpot> getPickupSpots() {
+        return pickupSpots;
+    }
+
+    public void setPickupSpots(List<PickupSpot> pickupSpots) {
+        this.pickupSpots = pickupSpots;
     }
 }
