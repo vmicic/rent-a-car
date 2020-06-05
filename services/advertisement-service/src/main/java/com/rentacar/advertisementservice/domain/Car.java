@@ -1,6 +1,7 @@
 package com.rentacar.advertisementservice.domain;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -128,5 +129,37 @@ public class Car extends BaseEntity {
 	public void setImage(List<Image> image) {
 		this.image = image;
 	}
-    
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Car car = (Car) o;
+        return  Objects.equals(this.getId(), car.getId()) &&
+                Objects.equals(carModel, car.carModel) &&
+                Objects.equals(carBrand, car.carBrand) &&
+                Objects.equals(fuelType, car.fuelType) &&
+                Objects.equals(transmissionType, car.transmissionType) &&
+                Objects.equals(carClass, car.carClass) &&
+                Objects.equals(kmTraveled, car.kmTraveled) &&
+                Objects.equals(seatsForKids, car.seatsForKids) &&
+                Objects.equals(user, car.user) &&
+                Objects.equals(company, car.company);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.getId(), carModel, carBrand, fuelType, transmissionType, carClass, kmTraveled, seatsForKids, user, company);
+    }
+
+    @Override
+    public String toString() {
+        return "Car{" +
+                "carModel=" + carModel +
+                ", carBrand=" + carBrand +
+                ", fuelType=" + fuelType +
+                ", transmissionType=" + transmissionType +
+                ", carClass=" + carClass +
+                '}';
+    }
 }

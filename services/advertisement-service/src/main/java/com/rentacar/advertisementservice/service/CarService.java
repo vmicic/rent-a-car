@@ -21,4 +21,6 @@ public interface CarService {
 
     boolean exists(Long id);
 
+    boolean loggedInUserOwner(Car car);
+
 }

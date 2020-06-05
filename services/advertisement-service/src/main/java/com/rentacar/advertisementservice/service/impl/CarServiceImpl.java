@@ -132,4 +132,14 @@ public class CarServiceImpl implements CarService {
 		return this.carRepository.existsById(id);
 	}
 
+	@Override
+	public boolean loggedInUserOwner(Car car) {
+		User user = userServiceClient.getLoggedInUser();
+
+		logger.info(user.toString());
+
+		logger.info("user from car: " + car.getUser().toString());
+
+		return car.getUser().equals(user);
+	}
 }

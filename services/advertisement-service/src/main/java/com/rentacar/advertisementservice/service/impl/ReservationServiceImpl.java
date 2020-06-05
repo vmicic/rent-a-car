@@ -1,7 +1,6 @@
 package com.rentacar.advertisementservice.service.impl;
 
 import com.rentacar.advertisementservice.client.UserServiceClient;
-import com.rentacar.advertisementservice.controller.ReservationController;
 import com.rentacar.advertisementservice.domain.*;
 import com.rentacar.advertisementservice.domain.dto.ReservationApprovedDTO;
 import com.rentacar.advertisementservice.domain.dto.ReservationDTO;
@@ -44,17 +43,17 @@ public class ReservationServiceImpl implements ReservationService {
         LocalDateTime toDate = reservationDTO.getToDate();
 
 
-        for(Reservation reservation : advertisement.getReservations()) {
+        for (Reservation reservation : advertisement.getReservations()) {
             //compare if from or to time is between some reservation
             // reservation.start <= fromDate <= reservation.end
-            if((fromDate.isAfter(reservation.getFromDate()) || fromDate.isEqual(reservation.getFromDate()) &&
+            if ((fromDate.isAfter(reservation.getFromDate()) || fromDate.isEqual(reservation.getFromDate()) &&
                     fromDate.isBefore(reservation.getToDate()) || fromDate.isEqual(reservation.getToDate()))) {
                 conflict = true;
                 break;
             }
 
             // reservation.start <= endDate <= reservation.end
-            if((toDate.isAfter(reservation.getFromDate()) || toDate.isEqual(reservation.getFromDate()) &&
+            if ((toDate.isAfter(reservation.getFromDate()) || toDate.isEqual(reservation.getFromDate()) &&
                     toDate.isBefore(reservation.getToDate()) || toDate.isEqual(reservation.getToDate()))) {
                 conflict = true;
                 break;
@@ -77,7 +76,7 @@ public class ReservationServiceImpl implements ReservationService {
         reservation.setAdvertisement(advertisement);
 
         List<Car> cars = new ArrayList<>();
-        for(Long id : reservationDTO.getCarIds()) {
+        for (Long id : reservationDTO.getCarIds()) {
             Car car = this.carService.findById(id);
             cars.add(car);
         }
@@ -92,15 +91,93 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     public Reservation createApprovedReservation(ReservationApprovedDTO reservationApprovedDTO) {
-        return null;
+        LocalDateTime fromDate = reservationApprovedDTO.getFromDate();
+        LocalDateTime toDate = reservationApprovedDTO.getToDate();
+
+        Reservation reservationNew = new Reservation();
+
+        reservationNew.setFromDate(fromDate);
+        reservationNew.setToDate(toDate);
+        reservationNew.setCreationDateTime(LocalDateTime.now());
+        reservationNew.setState(ReservationState.PAID);
+
+        Car car = this.carService.findById(reservationApprovedDTO.getCarId());
+        List<Car> cars = new ArrayList<>();
+
+        cars.add(car);
+        reservationNew.setCars(cars);
+
+        List<Reservation> reservations = this.reservationRepository.findAllByCarsContains(car);
+
+        for (Reservation reservation : reservations) {
+            //compare if from or to time is between some reservation
+            // reservation.start <= fromDate <= reservation.end
+            if ((fromDate.isAfter(reservation.getFromDate()) || fromDate.isEqual(reservation.getFromDate()) &&
+                    fromDate.isBefore(reservation.getToDate()) || fromDate.isEqual(reservation.getToDate()))) {
+                //There is conflict if reservation is already paid, but if it's pending it will be canceled
+                if (reservation.getState() == ReservationState.PENDING) {
+                    logger.info("Canceling reservation " + reservation.getId());
+                    this.cancelReservation(reservation.getId());
+                }
+            }
+
+            // reservation.start <= endDate <= reservation.end
+            if ((toDate.isAfter(reservation.getFromDate()) || toDate.isEqual(reservation.getFromDate()) &&
+                    toDate.isBefore(reservation.getToDate()) || toDate.isEqual(reservation.getToDate()))) {
+                if (reservation.getState() == ReservationState.PENDING) {
+                    logger.info("Canceling reservation " + reservation.getId());
+                    this.cancelReservation(reservation.getId());
+                }
+            }
+        }
+
+        return this.reservationRepository.save(reservationNew);
     }
 
     @Override
     public boolean reservationApprovedPossible(ReservationApprovedDTO reservationApprovedDTO) {
+        logger.info("Checking if approved reservation is possible");
 
+        Car car = this.carService.findById(reservationApprovedDTO.getCarId());
+        LocalDateTime fromDate = reservationApprovedDTO.getFromDate();
+        LocalDateTime toDate = reservationApprovedDTO.getToDate();
 
-        return true;
+        List<Reservation> reservations = this.reservationRepository.findAllByCarsContains(car);
+
+        boolean conflict = false;
+
+        for (Reservation reservation : reservations) {
+            //compare if from or to time is between some reservation
+            // reservation.start <= fromDate <= reservation.end
+            if ((fromDate.isAfter(reservation.getFromDate()) || fromDate.isEqual(reservation.getFromDate()) &&
+                    fromDate.isBefore(reservation.getToDate()) || fromDate.isEqual(reservation.getToDate()))) {
+                //There is conflict if reservation is already paid, but if it's pending it will be canceled
+                if (reservation.getState() == ReservationState.PAID) {
+                    conflict = true;
+                    break;
+                }
+            }
+
+            // reservation.start <= endDate <= reservation.end
+            if ((toDate.isAfter(reservation.getFromDate()) || toDate.isEqual(reservation.getFromDate()) &&
+                    toDate.isBefore(reservation.getToDate()) || toDate.isEqual(reservation.getToDate()))) {
+                if (reservation.getState() == ReservationState.PAID) {
+                    conflict = true;
+                    break;
+                }
+            }
+        }
+
+        return !conflict;
     }
 
+    @Override
+    public void cancelReservation(Long id) {
+        Reservation reservation = this.reservationRepository.findById(id).orElse(null);
 
+        if (reservation != null) {
+            reservation.setState(ReservationState.CANCELED);
+            this.reservationRepository.save(reservation);
+        }
+    }
 }

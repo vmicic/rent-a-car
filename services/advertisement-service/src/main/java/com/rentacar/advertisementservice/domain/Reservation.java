@@ -32,7 +32,7 @@ public class Reservation extends BaseEntity {
     @JsonIgnore
     @LazyCollection(LazyCollectionOption.FALSE)
     @ManyToMany
-    @JoinTable(name = "car_reservation_id",
+    @JoinTable(name = "car_reservation",
                 joinColumns = @JoinColumn(name = "reservation_id", referencedColumnName = "id"),
                 inverseJoinColumns = @JoinColumn(name = "car_id", referencedColumnName = "id"))
     private List<Car> cars = new ArrayList<>();
@@ -146,5 +146,13 @@ public class Reservation extends BaseEntity {
 
     public void setUserOwnerCar(User userOwnerCar) {
         this.userOwnerCar = userOwnerCar;
+    }
+
+    @Override
+    public String toString() {
+        return "Reservation{" +
+                "fromDate=" + fromDate +
+                ", toDate=" + toDate +
+                '}';
     }
 }

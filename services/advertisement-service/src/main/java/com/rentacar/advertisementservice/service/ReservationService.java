@@ -8,9 +8,11 @@ public interface ReservationService {
 
     Reservation createReservation(ReservationDTO reservationDTO);
 
-    Reservation createApprovedReservation(ReservationApprovedDTO reservationApprovedDTO);
-
     boolean reservationPossible(ReservationDTO reservationDTO);
 
+    Reservation createApprovedReservation(ReservationApprovedDTO reservationApprovedDTO);
+
     boolean reservationApprovedPossible(ReservationApprovedDTO reservationApprovedDTO);
+
+    void cancelReservation(Long id);
 }
