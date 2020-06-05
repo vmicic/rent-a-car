@@ -17,11 +17,7 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
 
     //check for manuel created reservations who's time overlaps with wanted reservation
     // check if reservationManual.start <= fromDate <= reservationManual.end or reservationManual.start <= toDate <= reservationManual.end
-    // advertisement is null means reservation is manually created and cars contains means to check only for reservation for specific car
-    List<Reservation> findAllByAdvertisementNullAndCarsContainsAndFromDateLessThanEqualAndToDateGreaterThanEqualOrAdvertisementNullAndCarsContainsAndFromDateLessThanEqualAndToDateGreaterThanEqual(Car car, LocalDateTime fromDate, LocalDateTime fromDateCopy, Car carCopy, LocalDateTime toDate, LocalDateTime toDateCopy);
-
-    List<Reservation> findAllByAdvertisementNullAndCarsContainsAndFromDateGreaterThanEqualAndToDateLessThanEqual(Car car, LocalDateTime fromDate, LocalDateTime toDate);
-
+    // cars contains means to check only for reservation for specific car
     List<Reservation> CarsContainsAndFromDateLessThanEqualAndToDateGreaterThanEqualAndStateEqualsOrAndCarsContainsAndFromDateLessThanEqualAndToDateGreaterThanEqualAndStateEquals(Car car, LocalDateTime fromDate, LocalDateTime fromDateCopy, ReservationState reservationState, Car carCopy, LocalDateTime toDate, LocalDateTime toDateCopy, ReservationState reservationStateCopy);
 
     List<Reservation> CarsContainsAndFromDateGreaterThanEqualAndToDateLessThanEqualAndStateEquals(Car car, LocalDateTime fromDate, LocalDateTime toDate, ReservationState reservationState);

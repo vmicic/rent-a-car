@@ -1,9 +1,6 @@
 package com.rentacar.searchservice.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
@@ -11,7 +8,8 @@ public class Reservation extends BaseEntity {
 
     private LocalDateTime creationDateTime;
 
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private ReservationState state;
 
     private LocalDateTime fromDate;
 
@@ -50,12 +48,12 @@ public class Reservation extends BaseEntity {
         this.creationDateTime = creationDateTime;
     }
 
-    public String getStatus() {
-        return status;
+    public ReservationState getState() {
+        return state;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setState(ReservationState state) {
+        this.state = state;
     }
 
     public LocalDateTime getFromDate() {

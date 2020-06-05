@@ -40,14 +40,22 @@ public class AdvertisementServiceImpl implements AdvertisementService {
                 logger.info("Reservation period: " + reservation.getFromDate() + " - " + reservation.getToDate());
                 //compare if from or to time is between some reservation
                 // reservation.start <= fromTime <= reservation.end
-                if((fromTime.isAfter(reservation.getFromDate()) || fromTime.isEqual(reservation.getFromDate()) &&
-                        fromTime.isBefore(reservation.getToDate()) || fromTime.isEqual(reservation.getToDate()))) {
+                if(checkIfTimeIsBetween(fromTime, reservation.getFromDate(), reservation.getToDate())) {
+                    logger.info("reservation.start <= fromTime <= reservation.end");
                     conflict = true;
                     break;
                 }
 
-                if((toTime.isAfter(reservation.getFromDate()) || toTime.isEqual(reservation.getFromDate()) &&
-                        toTime.isBefore(reservation.getToDate()) || toTime.isEqual(reservation.getToDate()))) {
+                if(checkIfTimeIsBetween(toTime, reservation.getFromDate(), reservation.getToDate())) {
+                    logger.info("reservation.start <= toTime <= reservation.end");
+                    conflict = true;
+                    break;
+                }
+
+                //if reservation completely overlaps another
+                if((fromTime.isBefore(reservation.getFromDate()) || fromTime.isEqual(reservation.getToDate())) &&
+                        (toTime.isAfter(reservation.getFromDate()) || toTime.isEqual(reservation.getToDate()))) {
+                    logger.info("overlaps");
                     conflict = true;
                     break;
                 }
@@ -79,5 +87,10 @@ public class AdvertisementServiceImpl implements AdvertisementService {
         }
 
         return validAdvertisements;
+    }
+
+    private boolean checkIfTimeIsBetween(LocalDateTime checkFor, LocalDateTime startTime, LocalDateTime endTime) {
+        return (checkFor.isAfter(startTime) || checkFor.isEqual(startTime)) &&
+                (checkFor.isBefore(endTime) || checkFor.isEqual(endTime));
     }
 }
