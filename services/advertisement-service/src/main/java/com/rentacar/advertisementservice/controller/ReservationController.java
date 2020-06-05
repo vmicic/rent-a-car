@@ -65,7 +65,10 @@ public class ReservationController {
 
     @PostMapping("/approved")
     public ResponseEntity<?> createApprovedReservation(@RequestBody ReservationApprovedDTO reservationApprovedDTO) {
-        //TODO check if user creating is user owning the car
+
+        if(reservationApprovedDTO.getFromDate().isAfter(reservationApprovedDTO.getToDate())) {
+            return new ResponseEntity<>("Requested date invalid, start date cannot be before end date", HttpStatus.BAD_REQUEST);
+        }
 
         if(!carService.exists(reservationApprovedDTO.getCarId())) {
             return new ResponseEntity<>("Requested car doesn't exist", HttpStatus.BAD_REQUEST);

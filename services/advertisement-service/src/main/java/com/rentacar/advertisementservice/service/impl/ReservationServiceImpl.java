@@ -38,29 +38,56 @@ public class ReservationServiceImpl implements ReservationService {
         logger.info("Checking if reservation is possible for time: " + reservationDTO.getFromDate() + " - " + reservationDTO.getToDate());
         Advertisement advertisement = advertisementService.findById(reservationDTO.getAdvertisementId());
 
-        boolean conflict = false;
         LocalDateTime fromDate = reservationDTO.getFromDate();
         LocalDateTime toDate = reservationDTO.getToDate();
 
-
+        //Check if reservation overlaps from some reservation from advertisement
         for (Reservation reservation : advertisement.getReservations()) {
             //compare if from or to time is between some reservation
             // reservation.start <= fromDate <= reservation.end
             if ((fromDate.isAfter(reservation.getFromDate()) || fromDate.isEqual(reservation.getFromDate()) &&
                     fromDate.isBefore(reservation.getToDate()) || fromDate.isEqual(reservation.getToDate()))) {
-                conflict = true;
-                break;
+                if(reservation.getState() == ReservationState.PAID) {
+                    return false;
+                }
             }
 
             // reservation.start <= endDate <= reservation.end
             if ((toDate.isAfter(reservation.getFromDate()) || toDate.isEqual(reservation.getFromDate()) &&
                     toDate.isBefore(reservation.getToDate()) || toDate.isEqual(reservation.getToDate()))) {
-                conflict = true;
-                break;
+                if(reservation.getState() == ReservationState.PAID) {
+                    return false;
+                }
             }
         }
 
-        return !conflict;
+
+        //check for manuel created reservations which time overlaps with wanted reservation
+        // check if reservationManual.start <= fromDate <= reservationManual.end or reservationManual.start <= toDate <= reservationManual.end
+        // advertisement is null means reservation is manually created and cars contains means to check only for reservation for specific car
+        for(Long id : reservationDTO.getCarIds()) {
+            Car car = this.carService.findById(id);
+            System.out.println("Trying to reserve for date: " + fromDate + " - " + toDate);
+            List<Reservation> reservationsManual = this.reservationRepository.
+                    findAllByAdvertisementNullAndCarsContainsAndFromDateLessThanEqualAndToDateGreaterThanEqualOrAdvertisementNullAndCarsContainsAndFromDateLessThanEqualAndToDateGreaterThanEqual
+                            (car, fromDate, fromDate, car, toDate, toDate);
+
+            if(reservationsManual.size() > 0) {
+                logger.info("Reservation is inside another already approved reservation");
+                return false;
+            }
+
+            //check for reservation which are completely inside requested reservation
+            List<Reservation> reservationsManualInside = this.reservationRepository.
+                    findAllByAdvertisementNullAndCarsContainsAndFromDateGreaterThanEqualAndToDateLessThanEqual(car, fromDate, toDate);
+
+            if(reservationsManualInside.size() > 0) {
+                logger.info("Some reservation is completely inside requested reservation");
+                return false;
+            }
+        }
+
+        return true;
     }
 
     @Override
@@ -136,7 +163,6 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     public boolean reservationApprovedPossible(ReservationApprovedDTO reservationApprovedDTO) {
-        logger.info("Checking if approved reservation is possible");
 
         Car car = this.carService.findById(reservationApprovedDTO.getCarId());
         LocalDateTime fromDate = reservationApprovedDTO.getFromDate();
