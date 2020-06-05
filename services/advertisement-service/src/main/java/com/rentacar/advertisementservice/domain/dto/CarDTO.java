@@ -19,7 +19,7 @@ public class CarDTO {
 	
 	private Integer seatsForKids;
 	
-	private String image;
+	private byte[] image;
 
 	public Long getCarModelId() {
 		return carModelId;
@@ -77,11 +77,11 @@ public class CarDTO {
 		this.seatsForKids = seatsForKids;
 	}
 
-	public String getImage() {
+	public byte[] getImage() {
 		return image;
 	}
 
-	public void setImage(String image) {
+	public void setImage(byte[] image) {
 		this.image = image;
 	}
 		

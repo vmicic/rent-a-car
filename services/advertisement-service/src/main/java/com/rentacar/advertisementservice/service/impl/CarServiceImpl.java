@@ -16,6 +16,7 @@ import com.rentacar.advertisementservice.client.UserServiceClient;
 import com.rentacar.advertisementservice.domain.Car;
 import com.rentacar.advertisementservice.domain.CarModel;
 import com.rentacar.advertisementservice.domain.FuelType;
+import com.rentacar.advertisementservice.domain.Image;
 import com.rentacar.advertisementservice.domain.TransmissionType;
 import com.rentacar.advertisementservice.domain.User;
 import com.rentacar.advertisementservice.domain.dto.CarDTO;
@@ -82,7 +83,14 @@ public class CarServiceImpl implements CarService {
 		newCar.setCarClass(carClass);
 		newCar.setKmTraveled(carDTO.getKmTraveled());
 		newCar.setSeatsForKids(carDTO.getSeatsForKids());
-		
+		if(carDTO.getImage()!=null) {
+			Image image = new Image();
+			image.setData(carDTO.getImage());
+			newCar.getImage().add(image);
+			System.out.println(image.getData());
+		}
+	
+
 		User owner = userServiceClient.getLoggedInUser();
 		
 		if(owner != null) {
