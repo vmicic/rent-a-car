@@ -27,10 +27,12 @@ INSERT INTO car_model(name, car_brand_id) VALUES
     ('X2', '1'),
     ('A4', '2');
 
+INSERT INTO image(name, data ,image_id) VALUES
+	('Picture1', ' [B@37bba400', '1');
 
-INSERT INTO car(car_model_id, car_brand_id, fuel_type_id, transmission_type_id, car_class_id) VALUES
-    ('1','1','1','1','1'),
-    ('2','1','1','2','2');
+INSERT INTO car(car_model_id, car_brand_id, fuel_type_id, transmission_type_id, car_class_id, image_id) VALUES
+    ('1','1','1','1','1','1'),
+    ('2','1','1','2','2','1');
 
 INSERT INTO pickup_spot(street, city) VALUES
     ('Aerodrom Nikola Tesla', 'Beograd'),

@@ -1,8 +1,12 @@
 package com.rentacar.advertisementservice.domain;
 
+import java.util.List;
+import java.util.Set;
+
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Car extends BaseEntity {
@@ -30,7 +34,7 @@ public class Car extends BaseEntity {
     private Double kmTraveled;
 
     private Integer seatsForKids;
-
+    
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
@@ -38,8 +42,11 @@ public class Car extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "company_id", referencedColumnName = "id")
     private Company company;
+    
+    @OneToMany(mappedBy = "image")
+    protected List<Image> image;
 
-    public Car() {
+	public Car() {
     }
 
     public CarModel getCarModel() {
@@ -113,4 +120,13 @@ public class Car extends BaseEntity {
     public void setCompany(Company company) {
         this.company = company;
     }
+
+	public List<Image> getImage() {
+		return image;
+	}
+
+	public void setImage(List<Image> image) {
+		this.image = image;
+	}
+    
 }

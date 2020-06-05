@@ -1,5 +1,8 @@
 package com.rentacar.advertisementservice.domain.dto;
 
+import java.awt.Image;
+import java.util.Set;
+
 public class CarDTO {
 
 	private Long carModelId;
@@ -15,6 +18,8 @@ public class CarDTO {
 	private Double kmTraveled;
 	
 	private Integer seatsForKids;
+	
+	private String image;
 
 	public Long getCarModelId() {
 		return carModelId;
@@ -71,6 +76,13 @@ public class CarDTO {
 	public void setSeatsForKids(Integer seatsForKids) {
 		this.seatsForKids = seatsForKids;
 	}
-	
-	
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+		
 }
