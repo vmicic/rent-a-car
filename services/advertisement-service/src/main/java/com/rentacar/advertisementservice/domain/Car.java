@@ -43,8 +43,8 @@ public class Car extends BaseEntity {
     @JoinColumn(name = "company_id", referencedColumnName = "id")
     private Company company;
     
-    @OneToMany(mappedBy = "image")
-    protected List<Image> image;
+    @OneToMany(mappedBy = "car")
+    private List<Image> image;
 
 	public Car() {
     }

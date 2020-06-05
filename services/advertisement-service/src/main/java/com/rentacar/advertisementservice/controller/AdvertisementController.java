@@ -27,6 +27,7 @@ public class AdvertisementController {
     private final PickupSpotService pickupSpotService;
     private final AdvertisementService advertisementService;
 
+
     public AdvertisementController(PickupSpotService pickupSpotService, AdvertisementService advertisementService) {
         this.pickupSpotService = pickupSpotService;
         this.advertisementService = advertisementService;
@@ -35,13 +36,14 @@ public class AdvertisementController {
     @PostMapping
     @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_AGENT','ROLE_COMPANY')")
 	public ResponseEntity<?> createAdvertisement(@RequestBody AdvertisementDTO advertisementDTO) {
-        //TODO Implement check if car for advertisement is from user
+        //TODO Implement check if car for advertisement is from user, make sure that user has max 3 advertisements
 
 	    for(Long id : advertisementDTO.getPickupSpots()) {
 	        if(!pickupSpotService.exists(id)) {
 	            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
         }
+
 
 	    Advertisement advertisement = advertisementService.createAdvertisement(advertisementDTO);
 
