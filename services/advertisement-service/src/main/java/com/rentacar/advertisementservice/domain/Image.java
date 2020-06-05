@@ -1,5 +1,7 @@
 package com.rentacar.advertisementservice.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,21 +12,16 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Image {
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
-	private Long id;
+public class Image extends BaseEntity {
 
 	@Column(name = "name")
 	private String name;
 
-
 	@Lob
 	@Column(name = "data")
 	private byte[] data;
-	
+
+	@JsonIgnore
 	@ManyToOne
     @JoinColumn(name = "car_id", referencedColumnName = "id")
     protected Car car;
@@ -32,22 +29,6 @@ public class Image {
 	public Image() {
 	}
 	
-	public Image(Long id, String name, byte[] data, Car car) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.data = data;
-		this.car = car;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
 	public String getName() {
 		return name;
 	}

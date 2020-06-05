@@ -1,9 +1,11 @@
 package com.rentacar.advertisementservice.service;
 
+import java.io.IOException;
 import java.util.List;
 
 import com.rentacar.advertisementservice.domain.Car;
 import com.rentacar.advertisementservice.domain.dto.CarDTO;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface CarService {
 	
@@ -23,4 +25,5 @@ public interface CarService {
 
     boolean loggedInUserOwner(Car car);
 
+    void saveImage(MultipartFile imageFile, Long id) throws IOException;
 }

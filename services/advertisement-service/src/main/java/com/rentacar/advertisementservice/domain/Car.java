@@ -1,5 +1,7 @@
 package com.rentacar.advertisementservice.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -35,7 +37,8 @@ public class Car extends BaseEntity {
     private Double kmTraveled;
 
     private Integer seatsForKids;
-    
+
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;

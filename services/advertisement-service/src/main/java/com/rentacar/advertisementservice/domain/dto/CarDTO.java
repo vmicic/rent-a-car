@@ -18,8 +18,6 @@ public class CarDTO {
 	private Double kmTraveled;
 	
 	private Integer seatsForKids;
-	
-	private byte[] image;
 
 	public Long getCarModelId() {
 		return carModelId;
@@ -75,14 +73,6 @@ public class CarDTO {
 
 	public void setSeatsForKids(Integer seatsForKids) {
 		this.seatsForKids = seatsForKids;
-	}
-
-	public byte[] getImage() {
-		return image;
-	}
-
-	public void setImage(byte[] image) {
-		this.image = image;
 	}
 		
 }
