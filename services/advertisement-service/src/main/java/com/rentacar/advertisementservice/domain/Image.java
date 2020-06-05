@@ -28,7 +28,7 @@ public class Image extends BaseEntity {
 	
 	public Image() {
 	}
-	
+
 	public String getName() {
 		return name;
 	}

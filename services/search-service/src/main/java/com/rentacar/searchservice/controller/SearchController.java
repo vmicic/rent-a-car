@@ -2,7 +2,6 @@ package com.rentacar.searchservice.controller;
 
 import com.rentacar.searchservice.domain.Advertisement;
 import com.rentacar.searchservice.domain.Car;
-import com.rentacar.searchservice.domain.PickupSpot;
 import com.rentacar.searchservice.service.AdvertisementService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,6 +46,10 @@ public class SearchController {
 
         if(dateFrom.isAfter(dateTo)) {
             return new ResponseEntity<>("Requested date invalid", HttpStatus.BAD_REQUEST);
+        }
+        
+        if(dateFrom.isBefore(LocalDateTime.now().plusDays(2))) {
+            return new ResponseEntity<>("Search should be at least two days in advance", HttpStatus.BAD_REQUEST);
         }
 
         List<Car> cars = new ArrayList<>();
