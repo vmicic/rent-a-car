@@ -83,12 +83,11 @@ public class CarServiceImpl implements CarService {
 		newCar.setCarClass(carClass);
 		newCar.setKmTraveled(carDTO.getKmTraveled());
 		newCar.setSeatsForKids(carDTO.getSeatsForKids());
-		if(carDTO.getImage()!=null) {
+		/*if(carDTO.getImage()!=null) {
 			Image image = new Image();
 			image.setData(carDTO.getImage());
 			newCar.getImage().add(image);
-			System.out.println(image.getData());
-		}
+		}*/
 	
 
 		User owner = userServiceClient.getLoggedInUser();
