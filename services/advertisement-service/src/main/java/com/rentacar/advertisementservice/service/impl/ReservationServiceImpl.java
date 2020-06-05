@@ -8,7 +8,6 @@ import com.rentacar.advertisementservice.repository.ReservationRepository;
 import com.rentacar.advertisementservice.service.AdvertisementService;
 import com.rentacar.advertisementservice.service.CarService;
 import com.rentacar.advertisementservice.service.ReservationService;
-import org.apache.tomcat.jni.Local;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -36,56 +35,46 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     public boolean reservationPossible(ReservationDTO reservationDTO) {
-        logger.info("Checking if reservation is possible for time: " + reservationDTO.getFromDate() + " - " + reservationDTO.getToDate());
-        Advertisement advertisement = advertisementService.findById(reservationDTO.getAdvertisementId());
 
         LocalDateTime fromDate = reservationDTO.getFromDate();
         LocalDateTime toDate = reservationDTO.getToDate();
 
-        //Check if reservation overlaps from some reservation from advertisement
-        for (Reservation reservation : advertisement.getReservations()) {
-            //compare if from or to time is between some reservation
-            // reservation.start <= fromDate <= reservation.end
-            if (checkIfTimeIsBetween(fromDate, reservation.getFromDate(), reservation.getToDate())) {
-                if(reservation.getState() == ReservationState.PAID) {
-                    return false;
-                }
-            }
-
-            // reservation.start <= endDate <= reservation.end
-            if (checkIfTimeIsBetween(toDate, reservation.getFromDate(), reservation.getToDate())) {
-                if(reservation.getState() == ReservationState.PAID) {
-                    return false;
-                }
-            }
-        }
-
-
-        //check for manuel created reservations which time overlaps with wanted reservation
-        // check if reservationManual.start <= fromDate <= reservationManual.end or reservationManual.start <= toDate <= reservationManual.end
-        // advertisement is null means reservation is manually created and cars contains means to check only for reservation for specific car
         for(Long id : reservationDTO.getCarIds()) {
+
             Car car = this.carService.findById(id);
-            System.out.println("Trying to reserve for date: " + fromDate + " - " + toDate);
-            List<Reservation> reservationsManual = this.reservationRepository.
-                    findAllByAdvertisementNullAndCarsContainsAndFromDateLessThanEqualAndToDateGreaterThanEqualOrAdvertisementNullAndCarsContainsAndFromDateLessThanEqualAndToDateGreaterThanEqual
-                            (car, fromDate, fromDate, car, toDate, toDate);
 
-            if(reservationsManual.size() > 0) {
-                logger.info("Reservation is inside another already approved reservation");
-                return false;
-            }
-
-            //check for reservation which are completely inside requested reservation
-            List<Reservation> reservationsManualInside = this.reservationRepository.
-                    findAllByAdvertisementNullAndCarsContainsAndFromDateGreaterThanEqualAndToDateLessThanEqual(car, fromDate, toDate);
-
-            if(reservationsManualInside.size() > 0) {
-                logger.info("Some reservation is completely inside requested reservation");
+            //checking if
+            //reservation.start <= fromDate <= reservation.end
+            //reservation.start <= endDate <= reservation.end
+            if (!ifReservationPossibleForCar(fromDate, toDate, car)) {
                 return false;
             }
         }
 
+        return true;
+    }
+
+    private boolean ifReservationPossibleForCar(LocalDateTime fromDate, LocalDateTime toDate, Car car) {
+        List<Reservation> reservations = this.reservationRepository.
+                CarsContainsAndFromDateLessThanEqualAndToDateGreaterThanEqualAndStateEqualsOrAndCarsContainsAndFromDateLessThanEqualAndToDateGreaterThanEqualAndStateEquals
+                        (car, fromDate, fromDate, ReservationState.PAID, car, toDate, toDate, ReservationState.PAID);
+
+        //checking if
+        //reservation.start <= fromDate <= reservation.end
+        //reservation.start <= endDate <= reservation.end
+        if (reservations.size() > 0) {
+            logger.info("Existing reservation which is already paid exists");
+            return false;
+        }
+
+        //check if there is reservation which requested reservation overlaps
+        List<Reservation> reservationInside = this.reservationRepository.
+                CarsContainsAndFromDateGreaterThanEqualAndToDateLessThanEqualAndStateEquals(car, fromDate, toDate, ReservationState.PAID);
+
+        if (reservationInside.size() > 0) {
+            logger.info("Existing reservation inside requested examination exists");
+            return false;
+        }
         return true;
     }
 
@@ -165,33 +154,9 @@ public class ReservationServiceImpl implements ReservationService {
         LocalDateTime fromDate = reservationApprovedDTO.getFromDate();
         LocalDateTime toDate = reservationApprovedDTO.getToDate();
 
-        List<Reservation> reservations = this.reservationRepository.findAllByCarsContains(car);
 
 
-        for (Reservation reservation : reservations) {
-            //compare if from or to time is between some reservation
-            // reservation.start <= fromDate <= reservation.end
-            if (checkIfTimeIsBetween(fromDate, reservation.getFromDate(), reservation.getToDate())) {
-                //There is conflict if reservation is already paid, but if it's pending it will be canceled
-                if (reservation.getState() == ReservationState.PAID) {
-                    logger.info(reservation.toString());
-                    logger.info("reservation.start <= fromDate <= reservation.end");
-                    return false;
-                }
-            }
-
-            // reservation.start <= endDate <= reservation.end
-            if (checkIfTimeIsBetween(toDate, reservation.getFromDate(), reservation.getToDate())) {
-                if (reservation.getState() == ReservationState.PAID) {
-                    logger.info(reservation.toString());
-                    logger.info("reservation.start <= endDate <= reservation.end");
-                    return false;
-                }
-            }
-        }
-
-        
-        return true;
+        return ifReservationPossibleForCar(fromDate, toDate, car);
     }
 
     @Override

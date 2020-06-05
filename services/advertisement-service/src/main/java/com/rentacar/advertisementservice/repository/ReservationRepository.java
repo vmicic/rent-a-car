@@ -2,6 +2,7 @@ package com.rentacar.advertisementservice.repository;
 
 import com.rentacar.advertisementservice.domain.Car;
 import com.rentacar.advertisementservice.domain.Reservation;
+import com.rentacar.advertisementservice.domain.ReservationState;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -21,5 +22,7 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
 
     List<Reservation> findAllByAdvertisementNullAndCarsContainsAndFromDateGreaterThanEqualAndToDateLessThanEqual(Car car, LocalDateTime fromDate, LocalDateTime toDate);
 
-    List<Reservation> findCarsContainsAndFromDateLessThanEqualAndToDateGreaterThanEqualAndCarsContainsAndFromDateLessThanEqualAndToDateGreaterThanEqual(Car car, LocalDateTime fromDate, LocalDateTime fromDateCopy, Car carCopy, LocalDateTime toDate, LocalDateTime toDateCopy);
+    List<Reservation> CarsContainsAndFromDateLessThanEqualAndToDateGreaterThanEqualAndStateEqualsOrAndCarsContainsAndFromDateLessThanEqualAndToDateGreaterThanEqualAndStateEquals(Car car, LocalDateTime fromDate, LocalDateTime fromDateCopy, ReservationState reservationState, Car carCopy, LocalDateTime toDate, LocalDateTime toDateCopy, ReservationState reservationStateCopy);
+
+    List<Reservation> CarsContainsAndFromDateGreaterThanEqualAndToDateLessThanEqualAndStateEquals(Car car, LocalDateTime fromDate, LocalDateTime toDate, ReservationState reservationState);
 }
