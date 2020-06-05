@@ -13,9 +13,9 @@ public class Reservation extends BaseEntity {
 
     private String status;
 
-    private LocalDateTime dateFrom;
+    private LocalDateTime fromDate;
 
-    private LocalDateTime dateTo;
+    private LocalDateTime toDate;
 
     private Double price;
 
@@ -58,20 +58,20 @@ public class Reservation extends BaseEntity {
         this.status = status;
     }
 
-    public LocalDateTime getDateFrom() {
-        return dateFrom;
+    public LocalDateTime getFromDate() {
+        return fromDate;
     }
 
-    public void setDateFrom(LocalDateTime dateFrom) {
-        this.dateFrom = dateFrom;
+    public void setFromDate(LocalDateTime fromDate) {
+        this.fromDate = fromDate;
     }
 
-    public LocalDateTime getDateTo() {
-        return dateTo;
+    public LocalDateTime getToDate() {
+        return toDate;
     }
 
-    public void setDateTo(LocalDateTime dateTo) {
-        this.dateTo = dateTo;
+    public void setToDate(LocalDateTime toDate) {
+        this.toDate = toDate;
     }
 
     public Double getPrice() {
@@ -120,5 +120,13 @@ public class Reservation extends BaseEntity {
 
     public void setCompany(Company company) {
         this.company = company;
+    }
+
+    @Override
+    public String toString() {
+        return "Reservation{" +
+                "dateFrom=" + fromDate +
+                ", dateTo=" + toDate +
+                '}';
     }
 }

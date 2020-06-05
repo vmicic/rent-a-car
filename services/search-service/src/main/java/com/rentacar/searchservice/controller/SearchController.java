@@ -44,22 +44,19 @@ public class SearchController {
                         @RequestParam(value = "collisionDamageWaiver",required = false) boolean cdw,
                         @RequestParam(value = "seatsForKids", required = false) Integer seatsForKids) {
 
-        List<Advertisement> validAdvertisement = new ArrayList<>();
+
+        if(dateFrom.isAfter(dateTo)) {
+            return new ResponseEntity<>("Requested date invalid", HttpStatus.BAD_REQUEST);
+        }
+
         List<Car> cars = new ArrayList<>();
 
         List<Advertisement> advertisements = advertisementService.findAdvertisementInRequestedDate(dateFrom, dateTo);
-        for(Advertisement advertisement : advertisements) {
-            List<PickupSpot> pickupSpots = advertisement.getPickupSpots();
-            for(PickupSpot pickupSpotAdv : pickupSpots) {
-                if(pickupSpotAdv.getId().equals(pickupSpotId)) {
-                    validAdvertisement.add(advertisement);
-                    break;
-                }
-            }
 
-        }
+        List<Advertisement> validAdvertisements = advertisementService.findAdvertisementsForPickupSpot(advertisements, pickupSpotId);
 
-        for(Advertisement advertisement : validAdvertisement) {
+
+        for(Advertisement advertisement : validAdvertisements) {
             cars.add(advertisement.getCar());
         }
 

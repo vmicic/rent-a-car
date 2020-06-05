@@ -36,7 +36,7 @@ INSERT INTO pickup_spot(street, city) VALUES
     ('Autobuska stanica', 'Novi Sad');
 
 INSERT INTO advertisement(from_date, to_date, car_id) VALUES
-    ('2020-12-20 12:00','2020-12-30 12:00', '1'),
+    ('2020-12-01 12:00','2020-12-30 12:00', '1'),
     ('2020-12-17 12:00','2020-12-27 12:00', '2');
 
 INSERT INTO advertisement_pickup_spots(advertisement_id, pickup_spot_id) VALUES
@@ -44,5 +44,7 @@ INSERT INTO advertisement_pickup_spots(advertisement_id, pickup_spot_id) VALUES
     ('1', '2'),
     ('2', '1');
 
+INSERT INTO reservation(from_date, to_date, advertisement_id) VALUES
+    ('2020-12-20 12:00','2020-12-27 12:00', '1');
 
 
