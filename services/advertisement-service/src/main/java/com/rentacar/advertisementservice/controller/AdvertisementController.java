@@ -23,6 +23,7 @@ import com.rentacar.advertisementservice.domain.dto.AdvertisementDTO;
 public class AdvertisementController {
 
     private static Logger logger = LoggerFactory.getLogger(AdvertisementController.class);
+    private static final Integer NUMBER_OF_ADS_ALLOWED_USER = 3;
 
     private final PickupSpotService pickupSpotService;
     private final AdvertisementService advertisementService;
@@ -37,6 +38,10 @@ public class AdvertisementController {
     @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_AGENT','ROLE_COMPANY')")
 	public ResponseEntity<?> createAdvertisement(@RequestBody AdvertisementDTO advertisementDTO) {
         //TODO Implement check if car for advertisement is from user, make sure that user has max 3 advertisements
+
+        if(advertisementService.getNumberOfCreatedAdvertisements() >= NUMBER_OF_ADS_ALLOWED_USER) {
+            return new ResponseEntity<>("Cannot create more than " + NUMBER_OF_ADS_ALLOWED_USER + " ads", HttpStatus.BAD_REQUEST);
+        }
 
 	    for(Long id : advertisementDTO.getPickupSpots()) {
 	        if(!pickupSpotService.exists(id)) {

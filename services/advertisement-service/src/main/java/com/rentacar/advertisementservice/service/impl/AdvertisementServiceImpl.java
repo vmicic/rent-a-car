@@ -1,8 +1,10 @@
 package com.rentacar.advertisementservice.service.impl;
 
+import com.rentacar.advertisementservice.client.UserServiceClient;
 import com.rentacar.advertisementservice.domain.Advertisement;
 import com.rentacar.advertisementservice.domain.Car;
 import com.rentacar.advertisementservice.domain.PickupSpot;
+import com.rentacar.advertisementservice.domain.User;
 import com.rentacar.advertisementservice.domain.dto.AdvertisementDTO;
 import com.rentacar.advertisementservice.repository.AdvertisementRepository;
 import com.rentacar.advertisementservice.service.AdvertisementService;
@@ -19,11 +21,13 @@ public class AdvertisementServiceImpl implements AdvertisementService {
     private final AdvertisementRepository advertisementRepository;
     private final PickupSpotService pickupSpotService;
     private final CarService carService;
+    private final UserServiceClient userServiceClient;
 
-    public AdvertisementServiceImpl(AdvertisementRepository advertisementRepository, PickupSpotService pickupSpotService, CarService carService) {
+    public AdvertisementServiceImpl(AdvertisementRepository advertisementRepository, PickupSpotService pickupSpotService, CarService carService, UserServiceClient userServiceClient) {
         this.advertisementRepository = advertisementRepository;
         this.pickupSpotService = pickupSpotService;
         this.carService = carService;
+        this.userServiceClient = userServiceClient;
     }
 
     @Override
@@ -39,11 +43,12 @@ public class AdvertisementServiceImpl implements AdvertisementService {
             PickupSpot pickupSpot = pickupSpotService.findById(id);
             pickupSpots.add(pickupSpot);
         }
-
         advertisement.setPickupSpots(pickupSpots);
 
-        Car car = carService.findById(advertisementDTO.getCarId());
+        User user = userServiceClient.getLoggedInUser();
+        advertisement.setUser(user);
 
+        Car car = carService.findById(advertisementDTO.getCarId());
         advertisement.setCar(car);
 
         return this.advertisementRepository.save(advertisement);
@@ -67,5 +72,13 @@ public class AdvertisementServiceImpl implements AdvertisementService {
     @Override
     public boolean exists(Long id) {
         return this.advertisementRepository.existsById(id);
+    }
+
+    @Override
+    public Integer getNumberOfCreatedAdvertisements() {
+        //TODO can also get username from auth
+        User user = userServiceClient.getLoggedInUser();
+
+        return this.advertisementRepository.findAllByUserId(user.getId()).size();
     }
 }

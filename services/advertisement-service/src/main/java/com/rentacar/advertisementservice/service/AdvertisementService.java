@@ -16,4 +16,6 @@ public interface AdvertisementService {
     Advertisement findById(Long id);
 
     boolean exists(Long id);
+
+    Integer getNumberOfCreatedAdvertisements();
 }
