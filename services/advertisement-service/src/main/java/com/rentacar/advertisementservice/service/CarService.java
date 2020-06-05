@@ -20,4 +20,5 @@ public interface CarService {
 	boolean delete(Long id);
 
     boolean exists(Long id);
+
 }

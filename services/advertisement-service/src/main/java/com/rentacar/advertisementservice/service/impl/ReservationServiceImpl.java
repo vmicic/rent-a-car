@@ -1,12 +1,16 @@
 package com.rentacar.advertisementservice.service.impl;
 
 import com.rentacar.advertisementservice.client.UserServiceClient;
+import com.rentacar.advertisementservice.controller.ReservationController;
 import com.rentacar.advertisementservice.domain.*;
+import com.rentacar.advertisementservice.domain.dto.ReservationApprovedDTO;
 import com.rentacar.advertisementservice.domain.dto.ReservationDTO;
 import com.rentacar.advertisementservice.repository.ReservationRepository;
 import com.rentacar.advertisementservice.service.AdvertisementService;
 import com.rentacar.advertisementservice.service.CarService;
 import com.rentacar.advertisementservice.service.ReservationService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -15,6 +19,8 @@ import java.util.List;
 
 @Service
 public class ReservationServiceImpl implements ReservationService {
+
+    private static Logger logger = LoggerFactory.getLogger(ReservationServiceImpl.class);
 
     private final ReservationRepository reservationRepository;
     private final AdvertisementService advertisementService;
@@ -26,6 +32,36 @@ public class ReservationServiceImpl implements ReservationService {
         this.advertisementService = advertisementService;
         this.carService = carService;
         this.userServiceClient = userServiceClient;
+    }
+
+    @Override
+    public boolean reservationPossible(ReservationDTO reservationDTO) {
+        logger.info("Checking if reservation is possible for time: " + reservationDTO.getFromDate() + " - " + reservationDTO.getToDate());
+        Advertisement advertisement = advertisementService.findById(reservationDTO.getAdvertisementId());
+
+        boolean conflict = false;
+        LocalDateTime fromDate = reservationDTO.getFromDate();
+        LocalDateTime toDate = reservationDTO.getToDate();
+
+
+        for(Reservation reservation : advertisement.getReservations()) {
+            //compare if from or to time is between some reservation
+            // reservation.start <= fromDate <= reservation.end
+            if((fromDate.isAfter(reservation.getFromDate()) || fromDate.isEqual(reservation.getFromDate()) &&
+                    fromDate.isBefore(reservation.getToDate()) || fromDate.isEqual(reservation.getToDate()))) {
+                conflict = true;
+                break;
+            }
+
+            // reservation.start <= endDate <= reservation.end
+            if((toDate.isAfter(reservation.getFromDate()) || toDate.isEqual(reservation.getFromDate()) &&
+                    toDate.isBefore(reservation.getToDate()) || toDate.isEqual(reservation.getToDate()))) {
+                conflict = true;
+                break;
+            }
+        }
+
+        return !conflict;
     }
 
     @Override
@@ -53,4 +89,18 @@ public class ReservationServiceImpl implements ReservationService {
 
         return this.reservationRepository.save(reservation);
     }
+
+    @Override
+    public Reservation createApprovedReservation(ReservationApprovedDTO reservationApprovedDTO) {
+        return null;
+    }
+
+    @Override
+    public boolean reservationApprovedPossible(ReservationApprovedDTO reservationApprovedDTO) {
+
+
+        return true;
+    }
+
+
 }

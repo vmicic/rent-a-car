@@ -129,8 +129,7 @@ public class CarServiceImpl implements CarService {
 
 	@Override
 	public boolean exists(Long id) {
-		// TODO Auto-generated method stub
-		return false;
+		return this.carRepository.existsById(id);
 	}
 
 }

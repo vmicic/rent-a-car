@@ -51,3 +51,7 @@ INSERT INTO advertisement_pickup_spots(advertisement_id, pickup_spot_id) VALUES
     ('1', '1'),
     ('1', '2'),
     ('2', '1');
+
+
+INSERT INTO reservation(from_date, to_date, advertisement_id) VALUES
+    ('2020-12-20 12:00','2020-12-27 12:00', '1');

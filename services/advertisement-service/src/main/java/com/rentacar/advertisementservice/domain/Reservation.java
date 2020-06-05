@@ -1,5 +1,6 @@
 package com.rentacar.advertisementservice.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -22,11 +23,13 @@ public class Reservation extends BaseEntity {
 
     private Double price;
 
+    @JsonIgnore
     @OneToOne
     @JoinColumn(name = "report_id", referencedColumnName = "id")
     private Report report;
 
 
+    @JsonIgnore
     @LazyCollection(LazyCollectionOption.FALSE)
     @ManyToMany
     @JoinTable(name = "car_reservation_id",
@@ -34,18 +37,22 @@ public class Reservation extends BaseEntity {
                 inverseJoinColumns = @JoinColumn(name = "car_id", referencedColumnName = "id"))
     private List<Car> cars = new ArrayList<>();
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "advertisement_id")
     private Advertisement advertisement;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "user_requested_id", referencedColumnName = "id")
     private User user;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "user_received_id", referencedColumnName = "id")
     private User userOwnerCar;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "company_id", referencedColumnName = "id")
     private Company company;
