@@ -8,6 +8,7 @@ import com.rentacar.advertisementservice.repository.ReservationRepository;
 import com.rentacar.advertisementservice.service.AdvertisementService;
 import com.rentacar.advertisementservice.service.CarService;
 import com.rentacar.advertisementservice.service.ReservationService;
+import org.apache.tomcat.jni.Local;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -45,16 +46,14 @@ public class ReservationServiceImpl implements ReservationService {
         for (Reservation reservation : advertisement.getReservations()) {
             //compare if from or to time is between some reservation
             // reservation.start <= fromDate <= reservation.end
-            if ((fromDate.isAfter(reservation.getFromDate()) || fromDate.isEqual(reservation.getFromDate()) &&
-                    fromDate.isBefore(reservation.getToDate()) || fromDate.isEqual(reservation.getToDate()))) {
+            if (checkIfTimeIsBetween(fromDate, reservation.getFromDate(), reservation.getToDate())) {
                 if(reservation.getState() == ReservationState.PAID) {
                     return false;
                 }
             }
 
             // reservation.start <= endDate <= reservation.end
-            if ((toDate.isAfter(reservation.getFromDate()) || toDate.isEqual(reservation.getFromDate()) &&
-                    toDate.isBefore(reservation.getToDate()) || toDate.isEqual(reservation.getToDate()))) {
+            if (checkIfTimeIsBetween(toDate, reservation.getFromDate(), reservation.getToDate())) {
                 if(reservation.getState() == ReservationState.PAID) {
                     return false;
                 }
@@ -139,8 +138,7 @@ public class ReservationServiceImpl implements ReservationService {
         for (Reservation reservation : reservations) {
             //compare if from or to time is between some reservation
             // reservation.start <= fromDate <= reservation.end
-            if ((fromDate.isAfter(reservation.getFromDate()) || fromDate.isEqual(reservation.getFromDate()) &&
-                    fromDate.isBefore(reservation.getToDate()) || fromDate.isEqual(reservation.getToDate()))) {
+            if (checkIfTimeIsBetween(fromDate, reservation.getFromDate(), reservation.getToDate())) {
                 //There is conflict if reservation is already paid, but if it's pending it will be canceled
                 if (reservation.getState() == ReservationState.PENDING) {
                     logger.info("Canceling reservation " + reservation.getId());
@@ -148,9 +146,8 @@ public class ReservationServiceImpl implements ReservationService {
                 }
             }
 
-            // reservation.start <= endDate <= reservation.end
-            if ((toDate.isAfter(reservation.getFromDate()) || toDate.isEqual(reservation.getFromDate()) &&
-                    toDate.isBefore(reservation.getToDate()) || toDate.isEqual(reservation.getToDate()))) {
+            // reservation.start <= toDate <= reservation.end
+            if (checkIfTimeIsBetween(toDate, reservation.getFromDate(), reservation.getToDate())) {
                 if (reservation.getState() == ReservationState.PENDING) {
                     logger.info("Canceling reservation " + reservation.getId());
                     this.cancelReservation(reservation.getId());
@@ -170,31 +167,31 @@ public class ReservationServiceImpl implements ReservationService {
 
         List<Reservation> reservations = this.reservationRepository.findAllByCarsContains(car);
 
-        boolean conflict = false;
 
         for (Reservation reservation : reservations) {
             //compare if from or to time is between some reservation
             // reservation.start <= fromDate <= reservation.end
-            if ((fromDate.isAfter(reservation.getFromDate()) || fromDate.isEqual(reservation.getFromDate()) &&
-                    fromDate.isBefore(reservation.getToDate()) || fromDate.isEqual(reservation.getToDate()))) {
+            if (checkIfTimeIsBetween(fromDate, reservation.getFromDate(), reservation.getToDate())) {
                 //There is conflict if reservation is already paid, but if it's pending it will be canceled
                 if (reservation.getState() == ReservationState.PAID) {
-                    conflict = true;
-                    break;
+                    logger.info(reservation.toString());
+                    logger.info("reservation.start <= fromDate <= reservation.end");
+                    return false;
                 }
             }
 
             // reservation.start <= endDate <= reservation.end
-            if ((toDate.isAfter(reservation.getFromDate()) || toDate.isEqual(reservation.getFromDate()) &&
-                    toDate.isBefore(reservation.getToDate()) || toDate.isEqual(reservation.getToDate()))) {
+            if (checkIfTimeIsBetween(toDate, reservation.getFromDate(), reservation.getToDate())) {
                 if (reservation.getState() == ReservationState.PAID) {
-                    conflict = true;
-                    break;
+                    logger.info(reservation.toString());
+                    logger.info("reservation.start <= endDate <= reservation.end");
+                    return false;
                 }
             }
         }
 
-        return !conflict;
+        
+        return true;
     }
 
     @Override
@@ -205,5 +202,10 @@ public class ReservationServiceImpl implements ReservationService {
             reservation.setState(ReservationState.CANCELED);
             this.reservationRepository.save(reservation);
         }
+    }
+
+    private boolean checkIfTimeIsBetween(LocalDateTime checkFor, LocalDateTime startTime, LocalDateTime endTime) {
+        return (checkFor.isAfter(startTime) || checkFor.isEqual(startTime)) &&
+                (checkFor.isBefore(endTime) || checkFor.isEqual(endTime));
     }
 }

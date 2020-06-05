@@ -20,4 +20,6 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     List<Reservation> findAllByAdvertisementNullAndCarsContainsAndFromDateLessThanEqualAndToDateGreaterThanEqualOrAdvertisementNullAndCarsContainsAndFromDateLessThanEqualAndToDateGreaterThanEqual(Car car, LocalDateTime fromDate, LocalDateTime fromDateCopy, Car carCopy, LocalDateTime toDate, LocalDateTime toDateCopy);
 
     List<Reservation> findAllByAdvertisementNullAndCarsContainsAndFromDateGreaterThanEqualAndToDateLessThanEqual(Car car, LocalDateTime fromDate, LocalDateTime toDate);
+
+    List<Reservation> findCarsContainsAndFromDateLessThanEqualAndToDateGreaterThanEqualAndCarsContainsAndFromDateLessThanEqualAndToDateGreaterThanEqual(Car car, LocalDateTime fromDate, LocalDateTime fromDateCopy, Car carCopy, LocalDateTime toDate, LocalDateTime toDateCopy);
 }
