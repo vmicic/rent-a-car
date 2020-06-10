@@ -47,7 +47,7 @@ public class SearchController {
         if(dateFrom.isAfter(dateTo)) {
             return new ResponseEntity<>("Requested date invalid", HttpStatus.BAD_REQUEST);
         }
-        
+
         if(dateFrom.isBefore(LocalDateTime.now().plusDays(2))) {
             return new ResponseEntity<>("Search should be at least two days in advance", HttpStatus.BAD_REQUEST);
         }
