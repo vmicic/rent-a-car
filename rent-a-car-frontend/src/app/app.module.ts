@@ -3,6 +3,10 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { AccountModule } from './modules/account/account.module';
+import { HomeModule } from './modules/home/home.module';
+import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -10,9 +14,16 @@ import { AppComponent } from './app.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    AccountModule,
+    HomeModule,
+    SharedModule
   ],
-  providers: [],
+  providers: [
+  {
+    provide: JWT_OPTIONS, useValue: JWT_OPTIONS
+  },
+  JwtHelperService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
