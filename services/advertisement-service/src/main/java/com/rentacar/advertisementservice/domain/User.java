@@ -9,12 +9,10 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "users", schema = "public")
+@Table(name = "users")
 public class User extends BaseEntity{
 
     private String email;
-
-    private String password;
 
     private String firstName;
 
@@ -48,20 +46,12 @@ public class User extends BaseEntity{
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
     public LocalDateTime getDateRegistered() {
         return dateRegistered;
     }
 
     public void setDateRegistered(LocalDateTime dateRegistered) {
         this.dateRegistered = dateRegistered;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getFirstName() {

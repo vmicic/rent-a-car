@@ -39,7 +39,7 @@ public class TokenAuthenticationFilter extends UsernamePasswordAuthenticationFil
             String role = userServiceClient.getRole(token);
             String username = userServiceClient.getUsername(token);
 
-            logger.info("Username: " + username + ", role: " + role);
+            //logger.info("Username: " + username + ", role: " + role);
 
             Set<SimpleGrantedAuthority> authorities = new HashSet<>();
 
