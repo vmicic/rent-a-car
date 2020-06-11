@@ -29,6 +29,10 @@ export class AuthService {
   isTokenPresent() {
     return localStorage.getItem('token');
   }
+ 
+  getToken() {
+    return localStorage.getItem('token');
+  }
 
   isAuthenticated() {
     if (this.isTokenPresent()) {

@@ -7,7 +7,9 @@ import { AccountModule } from './modules/account/account.module';
 import { HomeModule } from './modules/home/home.module';
 import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { SharedModule } from './shared/shared.module';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { UserModule } from './modules/user/user.module';
+import { TokenInterceptor } from './shared/interceptors/tokenInterceptor';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,12 @@ import { HttpClientModule } from '@angular/common/http';
     SharedModule,
     HttpClientModule
   ],
-  providers: [
+  providers: [ 
+    {
+    provide: HTTP_INTERCEPTORS,
+    useClass: TokenInterceptor,
+    multi: true
+    },    
   {
     provide: JWT_OPTIONS, useValue: JWT_OPTIONS
   },
