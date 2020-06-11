@@ -27,4 +27,14 @@ export class LoginComponent implements OnInit {
     })
   }
 
+  onSubmit() {
+    this.accountService.login(this.loginForm.value).subscribe(
+      response => {
+        localStorage.setItem('token', response.body.accessToken);
+        localStorage.setItem('username', this.loginForm.controls["username"].value);
+        this.authService.login();
+        this.router.navigate(['']);
+    })
+  }
+
 }

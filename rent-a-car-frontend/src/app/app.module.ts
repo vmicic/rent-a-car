@@ -7,6 +7,7 @@ import { AccountModule } from './modules/account/account.module';
 import { HomeModule } from './modules/home/home.module';
 import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { SharedModule } from './shared/shared.module';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { SharedModule } from './shared/shared.module';
     AppRoutingModule,
     AccountModule,
     HomeModule,
-    SharedModule
+    SharedModule,
+    HttpClientModule
   ],
   providers: [
   {

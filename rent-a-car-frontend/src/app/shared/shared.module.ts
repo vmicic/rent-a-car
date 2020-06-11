@@ -12,6 +12,7 @@ import { JwtModule } from '@auth0/angular-jwt';
     CommonModule,
     SharedRoutingModule,
     JwtModule
-  ]
+  ], 
+  exports: [HeaderComponent]
 })
 export class SharedModule { }
