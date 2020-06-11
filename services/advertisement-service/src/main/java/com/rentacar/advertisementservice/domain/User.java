@@ -2,12 +2,14 @@ package com.rentacar.advertisementservice.domain;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 @Entity
+@Table(name = "users", schema = "public")
 public class User extends BaseEntity{
 
     private String email;

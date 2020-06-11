@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "car_brand", schema = "rentacar")
 public class CarBrand extends BaseEntity {
 
     @NotNull

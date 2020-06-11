@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "advertisement", schema = "rentacar")
 public class Advertisement extends BaseEntity{
 
     private LocalDateTime fromDate;

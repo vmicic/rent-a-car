@@ -4,7 +4,6 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "car", schema = "rentacar")
 public class Car extends BaseEntity {
 
     @ManyToOne

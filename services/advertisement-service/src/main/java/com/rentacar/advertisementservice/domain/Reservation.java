@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Table(name = "reservation", schema = "public")
 public class Reservation extends BaseEntity {
 
     private LocalDateTime creationDateTime;
