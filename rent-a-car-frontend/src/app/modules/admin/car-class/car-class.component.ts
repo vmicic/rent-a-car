@@ -30,7 +30,11 @@ export class CarClassComponent implements OnInit {
   closeResult: string;
   errorMessage: string;
 
+  
+  @ViewChild("edit", { static: true }) modalContent2: TemplateRef<any>;
+
   newClass: FormGroup;
+  editClassForm: FormGroup;
 
   constructor(
     private carClassService: CarClassService,
@@ -45,6 +49,11 @@ export class CarClassComponent implements OnInit {
       name: ['', Validators.required]
     })
 
+    this.editClassForm = this.formBuilder.group({
+      id: ['', Validators.required],
+      name: ['', Validators.required]
+    })
+
     this.dtOptions = {
       pagingType: 'full_numbers',
       pageLength: 10,
@@ -52,7 +61,8 @@ export class CarClassComponent implements OnInit {
       rowId: 'id',
       columns: [{
         title: 'ID',
-        data: 'id'
+        data: 'id',
+        visible: false
       }, {
         title: 'Name',
         data: 'name'
@@ -60,7 +70,7 @@ export class CarClassComponent implements OnInit {
       {
         title: 'Action',
         render: function (data: any, type: any, full: any) {
-          return '<button class="waves-effect btn btn-secondary btn-sm" title="Buy item" clicked-id="' + full.id + '"></button> ';
+          return '<button class="waves-effect btn btn-warning btn-sm" title="Edit" edit-clicked-id="' + full.id + '"><img src="../../../../../assets/images/pencil.svg" edit-clicked-id="' + full.id + '" title="Edit"></button> <button class="waves-effect btn btn-danger btn-sm" title="Delete" delete-clicked-id="' + full.id + '"><img src="../../../../../assets/images/archive.svg" delete-clicked-id="' + full.id + '" title="Delete"></button>';
         }
       }
       ]
@@ -82,8 +92,30 @@ export class CarClassComponent implements OnInit {
   ngAfterViewInit(): void {
 
     this.listenerFn = this.renderer.listenGlobal('document', 'click', (event) => {
-      if (event.target.hasAttribute("schedule-id")) {
+      if (event.target.hasAttribute("edit-clicked-id")) {
+        let id: number = event.target.getAttribute("edit-clicked-id");
+
+        console.log("Clicked id is: " + id);
+        console.log(this.classes[0].id);
+
+        let oneClass = this.classes.filter(singleClass => singleClass.id == id);
+        console.log(oneClass);
+
+        this.editClassForm.controls["id"].setValue(oneClass[0].id);
+        this.editClassForm.controls["name"].setValue(oneClass[0].name);
+        this.openModalEdit();
       }
+
+      if (event.target.hasAttribute("delete-clicked-id")) {
+        let id = event.target.getAttribute("delete-clicked-id");
+
+        this.carClassService.deleteCarClass(id).subscribe(
+          response => {
+            location.reload();
+          }
+        )
+      }
+
     });
 
     setTimeout(() => {
@@ -100,6 +132,24 @@ export class CarClassComponent implements OnInit {
         });
       });
     }, 1000);
+  }
+
+  openModalEdit() {
+    this.modalService.open(this.modalContent2, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReasonEdit(reason)}`;
+    })
+  }
+
+  private getDismissReasonEdit(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
   }
 
 
@@ -125,9 +175,21 @@ export class CarClassComponent implements OnInit {
     this.carClassService.createCarClass(this.newClass.value).subscribe(
       response => {
         this.modalService.dismissAll();
-        console.log(response);
         location.reload();
       }
     )
   }
+
+  editClass() {
+    var myObj = new Object;
+    myObj["name"] = this.editClassForm.controls["name"].value;
+
+    this.carClassService.editClass(this.editClassForm.controls["id"].value, myObj).subscribe(
+      response => {
+        this.modalService.dismissAll();
+        location.reload();
+      }
+    )
+  }
+
 }

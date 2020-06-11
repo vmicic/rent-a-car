@@ -18,4 +18,12 @@ export class CarClassService {
   createCarClass(className) : Observable<HttpResponse<any>> {
     return this.http.post<any>("server/administrator-service/class", className, {observe: 'response'});
   }
+
+  deleteCarClass(id: number) : Observable<HttpResponse<any>> {
+    return this.http.delete("server/administrator-service/class/" + id, {observe: 'response'});
+  }
+
+  editClass(id: number, className) : Observable<HttpResponse<any>> {
+    return this.http.put<any>("server/administrator-service/class/" + id, className, {observe: 'response'});
+  }
 }

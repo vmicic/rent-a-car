@@ -9,7 +9,7 @@
             <tr *ngFor="let class of classes">
               <td>{{ class.id}}</td>
               <td>{{ class.name }}</td>
-              <td><button></button></td>
+              <td class="text-center"><button></button></td>
             </tr>
           </tbody>
           <tfoot>
@@ -41,6 +41,28 @@
     </div>
     <div class="modal-body">
           <form [formGroup]="newClass" (ngSubmit)="createClass()">
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input type="text" class="form-control" id="name" formControlName="name" required>
+            </div>
+      
+      
+            <button type="submit" class="btn btn-primary">Submit</button>
+      
+          </form>
+    </div>
+  </ng-template>
+
+  <ng-template #edit let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title">Edit car class</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+  
+    </div>
+    <div class="modal-body">
+          <form [formGroup]="editClassForm" (ngSubmit)="editClass()">
             <div class="form-group">
               <label for="name">Name</label>
               <input type="text" class="form-control" id="name" formControlName="name" required>
