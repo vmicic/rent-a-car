@@ -12,6 +12,7 @@ import java.util.List;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "advertisement", schema = "public")
 public class Advertisement extends BaseEntity{
 
     private LocalDateTime fromDate;

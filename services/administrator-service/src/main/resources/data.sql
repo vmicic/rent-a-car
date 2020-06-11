@@ -10,7 +10,6 @@ INSERT INTO car_class(name) VALUES
     ('Old Timer');
 
 
-
 INSERT INTO fuel_type(name) VALUES
     ('Diesel'),
     ('Gasoline'),

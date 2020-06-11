@@ -1,14 +1,16 @@
 package com.rentacar.userservice.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Table(name = "advertisement", schema = "rentacar")
 public class Advertisement extends BaseEntity{
 
     private LocalDateTime fromDate;
@@ -17,12 +19,20 @@ public class Advertisement extends BaseEntity{
 
     private Double kmLimitPerDay;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "advertisement")
     private List<Reservation> reservations = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "car_id")
     private Car car;
+
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @ManyToMany
+    @JoinTable(name = "advertisement_pickup_spots",
+            joinColumns = @JoinColumn(name = "advertisement_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "pickup_spot_id", referencedColumnName = "id"))
+    private List<PickupSpot> pickupSpots;
 
     @ManyToOne
     @JoinColumn(name = "discount_id")
@@ -113,5 +123,13 @@ public class Advertisement extends BaseEntity{
 
     public void setCompany(Company company) {
         this.company = company;
+    }
+
+    public List<PickupSpot> getPickupSpots() {
+        return pickupSpots;
+    }
+
+    public void setPickupSpots(List<PickupSpot> pickupSpots) {
+        this.pickupSpots = pickupSpots;
     }
 }

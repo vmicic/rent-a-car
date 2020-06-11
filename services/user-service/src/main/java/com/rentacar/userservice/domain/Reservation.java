@@ -1,5 +1,9 @@
 package com.rentacar.userservice.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -10,29 +14,45 @@ public class Reservation extends BaseEntity {
 
     private LocalDateTime creationDateTime;
 
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private ReservationState state;
 
-    private LocalDateTime dateFrom;
+    private LocalDateTime fromDate;
 
-    private LocalDateTime dateTo;
+    private LocalDateTime toDate;
 
     private Double price;
 
-    @OneToMany(mappedBy = "reservation")
-    private List<Report> report = new ArrayList<>();
+    @JsonIgnore
+    @OneToOne
+    @JoinColumn(name = "report_id", referencedColumnName = "id")
+    private Report report;
 
-    @ManyToOne
-    @JoinColumn(name = "car_id")
-    private Car car;
 
+    @JsonIgnore
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @ManyToMany
+    @JoinTable(name = "car_reservation",
+                joinColumns = @JoinColumn(name = "reservation_id", referencedColumnName = "id"),
+                inverseJoinColumns = @JoinColumn(name = "car_id", referencedColumnName = "id"))
+    private List<Car> cars = new ArrayList<>();
+
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "advertisement_id")
     private Advertisement advertisement;
 
+    @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_requested_id", referencedColumnName = "id")
     private User user;
 
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "user_received_id", referencedColumnName = "id")
+    private User userOwnerCar;
+
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "company_id", referencedColumnName = "id")
     private Company company;
@@ -48,28 +68,28 @@ public class Reservation extends BaseEntity {
         this.creationDateTime = creationDateTime;
     }
 
-    public String getStatus() {
-        return status;
+    public ReservationState getState() {
+        return state;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setState(ReservationState state) {
+        this.state = state;
     }
 
-    public LocalDateTime getDateFrom() {
-        return dateFrom;
+    public LocalDateTime getFromDate() {
+        return fromDate;
     }
 
-    public void setDateFrom(LocalDateTime dateFrom) {
-        this.dateFrom = dateFrom;
+    public void setFromDate(LocalDateTime fromDate) {
+        this.fromDate = fromDate;
     }
 
-    public LocalDateTime getDateTo() {
-        return dateTo;
+    public LocalDateTime getToDate() {
+        return toDate;
     }
 
-    public void setDateTo(LocalDateTime dateTo) {
-        this.dateTo = dateTo;
+    public void setToDate(LocalDateTime toDate) {
+        this.toDate = toDate;
     }
 
     public Double getPrice() {
@@ -80,20 +100,20 @@ public class Reservation extends BaseEntity {
         this.price = price;
     }
 
-    public List<Report> getReport() {
+    public Report getReport() {
         return report;
     }
 
-    public void setReport(List<Report> report) {
+    public void setReport(Report report) {
         this.report = report;
     }
 
-    public Car getCar() {
-        return car;
+    public List<Car> getCars() {
+        return cars;
     }
 
-    public void setCar(Car car) {
-        this.car = car;
+    public void setCars(List<Car> cars) {
+        this.cars = cars;
     }
 
     public Advertisement getAdvertisement() {
@@ -118,5 +138,21 @@ public class Reservation extends BaseEntity {
 
     public void setCompany(Company company) {
         this.company = company;
+    }
+
+    public User getUserOwnerCar() {
+        return userOwnerCar;
+    }
+
+    public void setUserOwnerCar(User userOwnerCar) {
+        this.userOwnerCar = userOwnerCar;
+    }
+
+    @Override
+    public String toString() {
+        return "Reservation{" +
+                "fromDate=" + fromDate +
+                ", toDate=" + toDate +
+                '}';
     }
 }

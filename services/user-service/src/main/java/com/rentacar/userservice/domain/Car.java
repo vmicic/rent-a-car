@@ -1,10 +1,10 @@
 package com.rentacar.userservice.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
+@Table(name = "car", schema = "rentacar")
 public class Car extends BaseEntity {
 
     @ManyToOne
@@ -113,4 +113,5 @@ public class Car extends BaseEntity {
     public void setCompany(Company company) {
         this.company = company;
     }
+
 }

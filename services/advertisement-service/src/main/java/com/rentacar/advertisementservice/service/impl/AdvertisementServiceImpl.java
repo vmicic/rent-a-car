@@ -76,7 +76,6 @@ public class AdvertisementServiceImpl implements AdvertisementService {
 
     @Override
     public Integer getNumberOfCreatedAdvertisements() {
-        //TODO can also get username from auth
         User user = userServiceClient.getLoggedInUser();
 
         return this.advertisementRepository.findAllByUserId(user.getId()).size();

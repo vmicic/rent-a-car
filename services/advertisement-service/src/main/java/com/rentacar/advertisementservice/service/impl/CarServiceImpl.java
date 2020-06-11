@@ -91,14 +91,9 @@ public class CarServiceImpl implements CarService {
 
 		User owner = userServiceClient.getLoggedInUser();
 		
-		if(owner != null) {
-			if(!userService.idExists(owner.getId())) {
-				userService.createUser(owner);
-			}
-			newCar.setUser(owner);
-		}else {
-			return null;
-		}
+
+		newCar.setUser(owner);
+
 		//Company company = null; // TODO treba dodati company is request-a
 		//newCar.setCompany(company);
 		
