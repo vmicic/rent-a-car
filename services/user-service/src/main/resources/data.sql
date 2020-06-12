@@ -11,7 +11,8 @@ INSERT INTO users("date_registered", "email", "first_name", "last_name","last_pa
 
 INSERT INTO user_authority("user_id", "authority_id") VALUES
     ('1', '1'),
-    ('2', '4');
+    ('2', '4'),
+    ('3', '1');
 
 INSERT INTO car_brand(name) VALUES
     ('BMW'),

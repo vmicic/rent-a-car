@@ -31,4 +31,6 @@ public interface UserService {
 
     void unlockUser(Long id);
 
+    List<User> getAllUsersNoAdmin();
+
 }

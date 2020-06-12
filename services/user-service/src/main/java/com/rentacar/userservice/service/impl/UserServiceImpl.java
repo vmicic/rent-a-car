@@ -3,6 +3,8 @@ package com.rentacar.userservice.service.impl;
 import com.rentacar.userservice.domain.User;
 import com.rentacar.userservice.domain.dto.UserDTO;
 import com.rentacar.userservice.repository.UserRepository;
+import com.rentacar.userservice.security.auth.AuthoritiesConstants;
+import com.rentacar.userservice.service.AuthorityService;
 import com.rentacar.userservice.service.UserService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -15,9 +17,12 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    private final AuthorityService authorityService;
+
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthorityService authorityService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.authorityService = authorityService;
     }
 
 
@@ -110,5 +115,10 @@ public class UserServiceImpl implements UserService {
         return this.userRepository.findById(id).isPresent();
     }
 
+    @Override
+    public List<User> getAllUsersNoAdmin() {
+        return this.userRepository.findAllByAuthoritiesContainsOrAuthoritiesContainsOrAuthoritiesContains(
+                authorityService.findByName(AuthoritiesConstants.USER), authorityService.findByName(AuthoritiesConstants.AGENT), authorityService.findByName(AuthoritiesConstants.COMPANY));
 
+    }
 }

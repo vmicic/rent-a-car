@@ -23,18 +23,15 @@ public class UserController {
     }
 
     @GetMapping
-    public void getAllUsers() {
+    @PreAuthorize("hasRole('ROLE_ADMINISTRATOR')")
+    public ResponseEntity<?> getAllUsersNoAdmin() {
+        return new ResponseEntity(this.userService.getAllUsersNoAdmin(), HttpStatus.OK);
     }
 
     @GetMapping("/loggedIn")
     public ResponseEntity<?> getLoggedUser(Principal user) {
         User userInfo = userService.findOneByEmail(user.getName());
         return new ResponseEntity<>(userInfo, HttpStatus.OK);
-    }
-
-    @GetMapping("/{id}")
-    public void getUser(@PathVariable Long id) {
-
     }
 
     @DeleteMapping("/{id}")

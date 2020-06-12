@@ -11,10 +11,11 @@ import { TransmissionTypeComponent } from './transmission-type/transmission-type
 import { ReactiveFormsModule } from '@angular/forms';
 import { DataTablesModule } from 'angular-datatables';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { UsersComponent } from './users/users.component';
 
 
 @NgModule({
-  declarations: [AdminHomeComponent, CarBrandComponent, CarClassComponent, CarModelComponent, FuelTypeComponent, TransmissionTypeComponent],
+  declarations: [AdminHomeComponent, CarBrandComponent, CarClassComponent, CarModelComponent, FuelTypeComponent, TransmissionTypeComponent, UsersComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,
