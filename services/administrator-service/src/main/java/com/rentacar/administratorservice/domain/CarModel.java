@@ -11,7 +11,6 @@ public class CarModel extends  BaseEntity{
 
     private String name;
 
-    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "car_brand_id", referencedColumnName = "id")
     private CarBrand carBrand;

@@ -16,6 +16,7 @@ public class CarBrand extends BaseEntity {
     @NotNull
     private String name;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "carBrand", cascade = CascadeType.ALL)
     private List<CarModel> carModels = new ArrayList<>();
 
