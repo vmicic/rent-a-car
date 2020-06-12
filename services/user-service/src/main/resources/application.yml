@@ -6,7 +6,7 @@ spring:
         driver-class-name: org.postgresql.Driver
         initialization-mode: always
         platform: postgres
-        url: jdbc:postgresql://localhost:5432/rentacar
+        url: ${DB_PATH:jdbc:postgresql://localhost:5432/rentacar}
         username: postgres
         password: 1234
 

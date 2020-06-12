@@ -47,10 +47,8 @@ public class User extends BaseEntity implements UserDetails {
     @OneToMany(mappedBy = "user")
     private List<Car> cars = new ArrayList<>();
 
-    @JsonIgnore
     private boolean enabled;
 
-    @JsonIgnore
     private boolean accountNonLocked;
 
     @JsonIgnore
@@ -101,6 +99,7 @@ public class User extends BaseEntity implements UserDetails {
         return this.email;
     }
 
+    @JsonIgnore
     @Override
     public boolean isAccountNonExpired() {
         return true;
@@ -115,6 +114,7 @@ public class User extends BaseEntity implements UserDetails {
         this.accountNonLocked = accountNonLocked;
     }
 
+    @JsonIgnore
     @Override
     public boolean isCredentialsNonExpired() {
         return true;

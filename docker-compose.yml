@@ -21,9 +21,14 @@ services:
     tty: true
     networks:
       - static-network
+    environment:
+      DB_PATH: jdbc:postgresql://postgres/rentacar
     depends_on:
       - consul-server
-
+      - postgres
+    links:
+      - postgres
+      
   search-service:
     image: search-service
     build:
@@ -32,8 +37,13 @@ services:
     tty: true
     networks:
       - static-network
+    environment:
+      DB_PATH: jdbc:postgresql://postgres/rentacar
     depends_on:
       - consul-server
+      - postgres
+    links:
+      - postgres
 
   advertisement-service:
     image: advertisement-service
@@ -43,8 +53,13 @@ services:
     tty: true
     networks:
       - static-network
+    environment:
+      DB_PATH: jdbc:postgresql://postgres/rentacar
     depends_on:
       - consul-server
+      - postgres
+    links:
+      - postgres
       
   message-service:
     image: message-service
@@ -54,8 +69,13 @@ services:
     tty: true
     networks:
       - static-network
+    environment:
+      DB_PATH: jdbc:postgresql://postgres/rentacar
     depends_on:
       - consul-server
+      - postgres
+    links:
+      - postgres
       
   administrator-service:
     image: administrator-service
@@ -65,8 +85,13 @@ services:
     tty: true
     networks:
       - static-network
+    environment:
+      DB_PATH: jdbc:postgresql://postgres/rentacar
     depends_on:
       - consul-server
+      - postgres
+    links:
+      - postgres
 
   gateway:
     image: gateway
@@ -80,6 +105,28 @@ services:
       - static-network
     depends_on:
       - consul-server 
+      
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    expose:
+        - 5432
+    ports:
+        - 5400:5432
+    networks:
+        - static-network
+    environment:
+        - POSTGRES_PASSWORD=1234
+        - POSTGRES_USER=postgres
+        - POSTGRES_DB=rentacar
+    restart: unless-stopped
+    depends_on:
+        - consul-server
+
+volumes:
+  postgres-data:
 
 networks:
   static-network:
