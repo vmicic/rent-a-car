@@ -77,7 +77,6 @@ export class CarClassComponent implements OnInit {
 
     }
 
-
     this.carClassService.getAll().subscribe(
       response => {
         this.classes = response.body;
@@ -95,11 +94,7 @@ export class CarClassComponent implements OnInit {
       if (event.target.hasAttribute("edit-clicked-id")) {
         let id: number = event.target.getAttribute("edit-clicked-id");
 
-        console.log("Clicked id is: " + id);
-        console.log(this.classes[0].id);
-
         let oneClass = this.classes.filter(singleClass => singleClass.id == id);
-        console.log(oneClass);
 
         this.editClassForm.controls["id"].setValue(oneClass[0].id);
         this.editClassForm.controls["name"].setValue(oneClass[0].name);
@@ -115,7 +110,6 @@ export class CarClassComponent implements OnInit {
           }
         )
       }
-
     });
 
     setTimeout(() => {

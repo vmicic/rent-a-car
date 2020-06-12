@@ -1,0 +1,14 @@
+.table {
+    background-color: white;
+}
+
+.table-bordered {
+    border: 1px solid #e6e6f2;
+}
+
+.bottom-border {
+    outline: 0;
+    border-width: 0 0 2px;
+    border-color: white
+
+}

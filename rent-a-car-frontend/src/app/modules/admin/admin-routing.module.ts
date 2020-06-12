@@ -6,6 +6,8 @@ import { CarBrandComponent } from './car-brand/car-brand.component';
 import { CarClassComponent } from './car-class/car-class.component';
 import { CarModelComponent } from './car-model/car-model.component';
 import { FuelTypeComponent } from './fuel-type/fuel-type.component';
+import { TransmissionTypeService } from './services/transmission-type.service';
+import { TransmissionTypeComponent } from './transmission-type/transmission-type.component';
 
 
 const routes: Routes = [
@@ -25,7 +27,7 @@ const routes: Routes = [
         { path: 'car-class', component: CarClassComponent},
         { path: 'car-model', component: CarModelComponent},
         { path: 'fuel-type', component: FuelTypeComponent},
-        { path: 'transmission-type', component: CarBrandComponent}
+        { path: 'transmission-type', component: TransmissionTypeComponent}
       ]
     }
   ]

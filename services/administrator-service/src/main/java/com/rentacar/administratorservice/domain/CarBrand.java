@@ -3,6 +3,7 @@ package com.rentacar.administratorservice.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.UniqueConstraint;
@@ -15,7 +16,7 @@ public class CarBrand extends BaseEntity {
     @NotNull
     private String name;
 
-    @OneToMany(mappedBy = "carBrand")
+    @OneToMany(mappedBy = "carBrand", cascade = CascadeType.ALL)
     private List<CarModel> carModels = new ArrayList<>();
 
     public CarBrand() {

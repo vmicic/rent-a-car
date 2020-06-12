@@ -1,1 +1,76 @@
-<p>fuel-type works!</p>
+<div class="card">
+    <h5 class="card-header">Fuel types</h5>
+    <div class="card-body">
+        <div class="float-right"><button class="btn btn-primary mb-2" (click)="openModal()">Add</button></div>
+      <div class='table-responsive-sm'>
+        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table row-border hover table-bordered"
+          *ngIf="fuelTypes; else loading">
+          <tbody>
+            <tr *ngFor="let fuelType of fuelTypes">
+              <td>{{ fuelType.id}}</td>
+              <td>{{ fuelType.name }}</td>
+              <td class="text-center"><button></button></td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <th style="width: 5%;"><input type="text" class="bottom-border" placeholder="Search id" name="search-id" /></th>
+              <th><input type="text" class="bottom-border" placeholder="Search name" name="search-name" /></th>
+              <th></th>
+            </tr>
+          </tfoot>
+        </table>
+        <br>
+        <br>
+      </div>
+    </div>
+  </div>
+
+
+  <ng-template #loading>
+    Loading fuel types...
+  </ng-template>
+
+  <ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title">Add new fuel type</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+  
+    </div>
+    <div class="modal-body">
+          <form [formGroup]="newFuelTypeForm" (ngSubmit)="createFuelType()">
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input type="text" class="form-control" id="name" formControlName="name" required>
+            </div>
+      
+      
+            <button type="submit" class="btn btn-primary">Submit</button>
+      
+          </form>
+    </div>
+  </ng-template>
+
+  <ng-template #edit let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title">Edit fuel type</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+  
+    </div>
+    <div class="modal-body">
+          <form [formGroup]="editFuelTypeForm" (ngSubmit)="editFuelType()">
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input type="text" class="form-control" id="name" formControlName="name" required>
+            </div>
+      
+      
+            <button type="submit" class="btn btn-primary">Submit</button>
+      
+          </form>
+    </div>
+  </ng-template>
