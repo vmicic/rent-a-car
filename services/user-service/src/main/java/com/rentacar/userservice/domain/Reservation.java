@@ -24,9 +24,9 @@ public class Reservation extends BaseEntity {
     private Double price;
 
     @JsonIgnore
-    @OneToOne
+    @OneToMany
     @JoinColumn(name = "report_id", referencedColumnName = "id")
-    private Report report;
+    private List<Report> reports = new ArrayList<>();
 
 
     @JsonIgnore
@@ -100,12 +100,12 @@ public class Reservation extends BaseEntity {
         this.price = price;
     }
 
-    public Report getReport() {
-        return report;
+    public List<Report> getReports() {
+        return reports;
     }
 
-    public void setReport(Report report) {
-        this.report = report;
+    public void setReports(List<Report> reports) {
+        this.reports = reports;
     }
 
     public List<Car> getCars() {
