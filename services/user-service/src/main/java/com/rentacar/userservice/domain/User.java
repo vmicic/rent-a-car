@@ -49,8 +49,6 @@ public class User extends BaseEntity implements UserDetails {
 
     private boolean enabled;
 
-    private boolean accountNonLocked;
-
     @JsonIgnore
     private Timestamp lastPasswordResetDate;
 
@@ -105,14 +103,12 @@ public class User extends BaseEntity implements UserDetails {
         return true;
     }
 
+    @JsonIgnore
     @Override
     public boolean isAccountNonLocked() {
-        return this.accountNonLocked;
+        return true;
     }
 
-    public void setAccountNonLocked(boolean accountNonLocked) {
-        this.accountNonLocked = accountNonLocked;
-    }
 
     @JsonIgnore
     @Override

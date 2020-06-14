@@ -27,10 +27,6 @@ public interface UserService {
 
     void deactivateUser(Long id);
 
-    void lockUser(Long id);
-
-    void unlockUser(Long id);
-
     List<User> getAllUsersNoAdmin();
 
 }

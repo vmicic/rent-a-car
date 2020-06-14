@@ -67,24 +67,5 @@ public class UserController {
 
     }
 
-    @PutMapping("/lock/{id}")
-    public ResponseEntity<?> lockUser(@PathVariable Long id) {
-        if(!userService.idExists(id)) {
-            return new ResponseEntity<>("User with id does not exists", HttpStatus.BAD_REQUEST);
-        }
-        userService.lockUser(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-
-    }
-
-    @PutMapping("/unlock/{id}")
-    public ResponseEntity<?> unlockUser(@PathVariable Long id) {
-        if(!userService.idExists(id)) {
-            return new ResponseEntity<>("User with id does not exists", HttpStatus.BAD_REQUEST);
-        }
-        userService.unlockUser(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-
-    }
 
 }

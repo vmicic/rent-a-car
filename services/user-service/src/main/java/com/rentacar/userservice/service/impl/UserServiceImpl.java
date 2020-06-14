@@ -71,25 +71,7 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    @Override
-    public void lockUser(Long id) {
-        User user = userRepository.findById(id).orElse(null);
 
-        if(user != null) {
-            user.setAccountNonLocked(false);
-            this.userRepository.save(user);
-        }
-    }
-
-    @Override
-    public void unlockUser(Long id) {
-        User user = userRepository.findById(id).orElse(null);
-
-        if(user != null) {
-            user.setAccountNonLocked(true);
-            this.userRepository.save(user);
-        }
-    }
 
     @Override
     public boolean emailExists(String email) {
@@ -105,7 +87,6 @@ public class UserServiceImpl implements UserService {
         user.setEmail(userDTO.getEmail());
         user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         user.setEnabled(false);
-        user.setAccountNonLocked(true);
 
         return this.userRepository.save(user);
     }
