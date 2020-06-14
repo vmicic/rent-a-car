@@ -200,7 +200,7 @@ public class ReservationServiceImpl implements ReservationService {
     public void approveReservation(Long id) {
         Reservation reservation = this.findById(id);
 
-        reservation.setState(ReservationState.PAID);
+        reservation.setState(ReservationState.RESERVED);
 
         for(Car car : reservation.getCars()) {
             List<Reservation> reservations = this.reservationRepository.
