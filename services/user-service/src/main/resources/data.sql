@@ -62,8 +62,8 @@ INSERT INTO advertisement_pickup_spots(advertisement_id, pickup_spot_id) VALUES
     ('1', '2'),
     ('2', '1');
 
-INSERT INTO reservation(from_date, to_date, advertisement_id) VALUES
-    ('2020-12-20 12:00','2020-12-27 12:00', '1');
+INSERT INTO reservation(from_date, to_date, advertisement_id, state, user_requested_id, user_received_id) VALUES
+    ('2020-12-22 12:00','2020-12-23 12:00', '1', 'RESERVED', '3', '1');
 
 
 INSERT INTO car_reservation(reservation_id, car_id) VALUES

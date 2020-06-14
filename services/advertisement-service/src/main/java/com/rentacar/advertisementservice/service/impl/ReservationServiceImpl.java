@@ -20,7 +20,7 @@ import java.util.List;
 @Service
 public class ReservationServiceImpl implements ReservationService {
 
-    private static Logger logger = LoggerFactory.getLogger(ReservationServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(ReservationServiceImpl.class);
 
     private final ReservationRepository reservationRepository;
     private final AdvertisementService advertisementService;
