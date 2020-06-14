@@ -3,6 +3,7 @@ package com.rentacar.advertisementservice.repository;
 import com.rentacar.advertisementservice.domain.Car;
 import com.rentacar.advertisementservice.domain.Reservation;
 import com.rentacar.advertisementservice.domain.ReservationState;
+import com.rentacar.advertisementservice.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -25,5 +26,8 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     List<Reservation> CarsContainsAndFromDateGreaterThanEqualAndToDateLessThanEqualAndStateEquals(Car car, LocalDateTime fromDate, LocalDateTime toDate, ReservationState reservationState);
 
     //find all reservations before some time and with state pending
-    List<Reservation> findAllByCreationDateTimeBeforeAndStateEquals(LocalDateTime time, ReservationState resevationState);
+    List<Reservation> findAllByCreationDateTimeBeforeAndStateEquals(LocalDateTime time, ReservationState reservationState);
+
+    //check if there is reserved reservation between users so they can exchange messages
+    List<Reservation> findAllByUserEqualsAndUserOwnerCar_IdAndStateEqualsOrUser_IdAndUserOwnerCarEqualsAndStateEquals(User user, Long id, ReservationState reservationState, Long idCopy, User userCopy, ReservationState reservationStateCopy);
 }

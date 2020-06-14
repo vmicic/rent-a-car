@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/reservation")
 public class ReservationController {
 
-    private static Logger logger = LoggerFactory.getLogger(ReservationController.class);
+    private static final Logger logger = LoggerFactory.getLogger(ReservationController.class);
 
     private final ReservationService reservationService;
     private final AdvertisementService advertisementService;
@@ -105,5 +105,12 @@ public class ReservationController {
         this.reservationService.approveReservation(id);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping("/messages/{id}")
+    public ResponseEntity<?> canUsersExchangeMessages(@PathVariable Long id) {
+       boolean canExchange = this.reservationService.canUsersExchangeMessages(id);
+
+       return new ResponseEntity<>(canExchange, HttpStatus.OK);
     }
 }

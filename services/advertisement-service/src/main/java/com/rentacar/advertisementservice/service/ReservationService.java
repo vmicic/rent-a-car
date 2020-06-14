@@ -27,4 +27,6 @@ public interface ReservationService {
     void approveReservation(Long id);
 
     void cancelReservationOlderThen(LocalDateTime time);
+
+    boolean canUsersExchangeMessages(Long id);
 }

@@ -8,9 +8,9 @@ import com.rentacar.advertisementservice.repository.ReservationRepository;
 import com.rentacar.advertisementservice.service.AdvertisementService;
 import com.rentacar.advertisementservice.service.CarService;
 import com.rentacar.advertisementservice.service.ReservationService;
+import com.rentacar.advertisementservice.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -26,12 +26,14 @@ public class ReservationServiceImpl implements ReservationService {
     private final AdvertisementService advertisementService;
     private final CarService carService;
     private final UserServiceClient userServiceClient;
+    private final UserService userService;
 
-    public ReservationServiceImpl(ReservationRepository reservationRepository, AdvertisementService advertisementService, CarService carService, UserServiceClient userServiceClient) {
+    public ReservationServiceImpl(ReservationRepository reservationRepository, AdvertisementService advertisementService, CarService carService, UserServiceClient userServiceClient, UserService userService) {
         this.reservationRepository = reservationRepository;
         this.advertisementService = advertisementService;
         this.carService = carService;
         this.userServiceClient = userServiceClient;
+        this.userService = userService;
     }
 
     @Override
@@ -237,5 +239,23 @@ public class ReservationServiceImpl implements ReservationService {
             reservation.setState(ReservationState.CANCELED);
             this.reservationRepository.save(reservation);
         }
+    }
+
+    @Override
+    //check if there is reservations with logged and requested user with state reserved and then they can
+    //exchange messages
+    public boolean canUsersExchangeMessages(Long id) {
+        User user = userServiceClient.getLoggedInUser();
+        User user1 = userService.findById(id);
+
+        logger.info("Logged user is: " + user.toString());
+        logger.info("Checking if can exchange messages with: " + id);
+
+        List<Reservation> reservations = this.reservationRepository.findAllByUserEqualsAndUserOwnerCar_IdAndStateEqualsOrUser_IdAndUserOwnerCarEqualsAndStateEquals(
+                user, id, ReservationState.RESERVED, id, user, ReservationState.RESERVED);
+
+        logger.info("Reservations size: " + reservations.size());
+
+        return !reservations.isEmpty();
     }
 }
