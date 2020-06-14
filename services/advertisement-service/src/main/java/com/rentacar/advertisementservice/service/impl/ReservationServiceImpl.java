@@ -95,7 +95,6 @@ public class ReservationServiceImpl implements ReservationService {
         for (Long id : reservationDTO.getCarIds()) {
             Car car = this.carService.findById(id);
             cars.add(car);
-            logger.info("Car owner: " + car.getUser().toString());
             reservation.setUserOwnerCar(car.getUser());
         }
 
@@ -227,5 +226,16 @@ public class ReservationServiceImpl implements ReservationService {
         }
 
         this.reservationRepository.save(reservation);
+    }
+
+    @Override
+    //find all reservations older then some time and with state pending and cancel them
+    public void cancelReservationOlderThen(LocalDateTime time) {
+        List<Reservation> reservations = this.reservationRepository.findAllByCreationDateTimeBeforeAndStateEquals(time, ReservationState.PENDING);
+
+        for(Reservation reservation : reservations) {
+            reservation.setState(ReservationState.CANCELED);
+            this.reservationRepository.save(reservation);
+        }
     }
 }

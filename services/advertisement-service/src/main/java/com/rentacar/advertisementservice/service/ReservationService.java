@@ -4,6 +4,8 @@ import com.rentacar.advertisementservice.domain.Reservation;
 import com.rentacar.advertisementservice.domain.dto.ReservationApprovedDTO;
 import com.rentacar.advertisementservice.domain.dto.ReservationDTO;
 
+import java.time.LocalDateTime;
+
 public interface ReservationService {
 
     Reservation createReservation(ReservationDTO reservationDTO);
@@ -23,4 +25,6 @@ public interface ReservationService {
     boolean loggedUserOwnerCar(Long id);
 
     void approveReservation(Long id);
+
+    void cancelReservationOlderThen(LocalDateTime time);
 }
