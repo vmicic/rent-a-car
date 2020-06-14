@@ -15,4 +15,12 @@ public interface ReservationService {
     boolean reservationApprovedPossible(ReservationApprovedDTO reservationApprovedDTO);
 
     void cancelReservation(Long id);
+
+    Reservation findById(Long id);
+
+    boolean exists(Long id);
+
+    boolean loggedUserOwnerCar(Long id);
+
+    void approveReservation(Long id);
 }

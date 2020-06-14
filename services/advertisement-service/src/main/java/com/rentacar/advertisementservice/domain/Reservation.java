@@ -8,6 +8,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "reservation", schema = "public")
@@ -155,5 +156,23 @@ public class Reservation extends BaseEntity {
                 "fromDate=" + fromDate +
                 ", toDate=" + toDate +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Reservation)) return false;
+        Reservation that = (Reservation) o;
+        return Objects.equals(creationDateTime, that.creationDateTime) &&
+                state == that.state &&
+                Objects.equals(fromDate, that.fromDate) &&
+                Objects.equals(toDate, that.toDate) &&
+                Objects.equals(this.getId(), that.getId()) &&
+                Objects.equals(cars, that.cars);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.getId(), creationDateTime, state, fromDate, toDate, cars);
     }
 }

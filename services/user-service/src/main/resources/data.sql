@@ -7,7 +7,7 @@ INSERT INTO authorities ("name") VALUES
 INSERT INTO users("date_registered", "email", "first_name", "last_name","last_password_reset_date", "password","enabled") VALUES
     ('2020-01-15', 'pera@gmail.com', 'petar', 'panin', '2012-01-01 18:47:52', '$2y$12$ZSaHrzb6qz.8nsdWgYUfaOugfoLPBIdOKiA9x4sjyVcf.06/F27Ca', 'true'),
     ('2020-01-16', 'admin@gmail.com', 'Admin', 'adminini', '2012-05-01 18:47:52', '$2y$12$ZSaHrzb6qz.8nsdWgYUfaOugfoLPBIdOKiA9x4sjyVcf.06/F27Ca', 'true'),
-    ('2020-01-15', 'user@gmail.com', 'User', 'LastName', '2012-01-01 18:47:52', '$2y$12$ZSaHrzb6qz.8nsdWgYUfaOugfoLPBIdOKiA9x4sjyVcf.06/F27Ca', 'false');
+    ('2020-01-15', 'user@gmail.com', 'User', 'LastName', '2012-01-01 18:47:52', '$2y$12$ZSaHrzb6qz.8nsdWgYUfaOugfoLPBIdOKiA9x4sjyVcf.06/F27Ca', 'true');
 
 INSERT INTO user_authority("user_id", "authority_id") VALUES
     ('1', '1'),
@@ -64,6 +64,7 @@ INSERT INTO advertisement_pickup_spots(advertisement_id, pickup_spot_id) VALUES
 
 INSERT INTO reservation(from_date, to_date, advertisement_id) VALUES
     ('2020-12-20 12:00','2020-12-27 12:00', '1');
+
 
 INSERT INTO car_reservation(reservation_id, car_id) VALUES
     ('1', '1');

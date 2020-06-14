@@ -10,6 +10,7 @@ import com.rentacar.advertisementservice.service.CarService;
 import com.rentacar.advertisementservice.service.ReservationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -94,6 +95,8 @@ public class ReservationServiceImpl implements ReservationService {
         for (Long id : reservationDTO.getCarIds()) {
             Car car = this.carService.findById(id);
             cars.add(car);
+            logger.info("Car owner: " + car.getUser().toString());
+            reservation.setUserOwnerCar(car.getUser());
         }
 
         reservation.setCars(cars);
@@ -172,5 +175,57 @@ public class ReservationServiceImpl implements ReservationService {
     private boolean checkIfTimeIsBetween(LocalDateTime checkFor, LocalDateTime startTime, LocalDateTime endTime) {
         return (checkFor.isAfter(startTime) || checkFor.isEqual(startTime)) &&
                 (checkFor.isBefore(endTime) || checkFor.isEqual(endTime));
+    }
+
+
+    @Override
+    public Reservation findById(Long id) {
+        return this.reservationRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public boolean exists(Long id) {
+        return this.reservationRepository.existsById(id);
+    }
+
+    @Override
+    public boolean loggedUserOwnerCar(Long id) {
+        User user = userServiceClient.getLoggedInUser();
+
+        Reservation reservation = this.findById(id);
+
+        return user.equals(reservation.getUserOwnerCar());
+    }
+
+    @Override
+    public void approveReservation(Long id) {
+        Reservation reservation = this.findById(id);
+
+        reservation.setState(ReservationState.PAID);
+
+        for(Car car : reservation.getCars()) {
+            List<Reservation> reservations = this.reservationRepository.
+                    CarsContainsAndFromDateLessThanEqualAndToDateGreaterThanEqualAndStateEqualsOrAndCarsContainsAndFromDateLessThanEqualAndToDateGreaterThanEqualAndStateEquals
+                            (car, reservation.getFromDate(), reservation.getFromDate(), ReservationState.PENDING, car, reservation.getToDate(), reservation.getToDate(), ReservationState.PENDING);
+
+            for(Reservation reservationToCancel : reservations) {
+                if(reservationToCancel.equals(reservation)) {
+                    logger.info("Found reservation with im trying to approve, skipping");
+                    continue;
+                }
+                reservationToCancel.setState(ReservationState.CANCELED);
+                this.reservationRepository.save(reservationToCancel);
+            }
+
+            List<Reservation> reservationInside = this.reservationRepository.
+                    CarsContainsAndFromDateGreaterThanEqualAndToDateLessThanEqualAndStateEquals(car, reservation.getFromDate(), reservation.getToDate(), ReservationState.PENDING);
+
+            for(Reservation reservationToCancel: reservationInside) {
+                reservationToCancel.setState(ReservationState.CANCELED);
+                this.reservationRepository.save(reservationToCancel);
+            }
+        }
+
+        this.reservationRepository.save(reservation);
     }
 }

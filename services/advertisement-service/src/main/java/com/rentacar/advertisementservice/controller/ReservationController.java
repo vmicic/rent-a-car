@@ -2,6 +2,7 @@ package com.rentacar.advertisementservice.controller;
 
 import com.rentacar.advertisementservice.domain.Car;
 import com.rentacar.advertisementservice.domain.Reservation;
+import com.rentacar.advertisementservice.domain.ReservationState;
 import com.rentacar.advertisementservice.domain.dto.ReservationApprovedDTO;
 import com.rentacar.advertisementservice.domain.dto.ReservationDTO;
 import com.rentacar.advertisementservice.service.AdvertisementService;
@@ -12,10 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/reservation")
@@ -65,6 +63,7 @@ public class ReservationController {
 
     @PostMapping("/approved")
     public ResponseEntity<?> createApprovedReservation(@RequestBody ReservationApprovedDTO reservationApprovedDTO) {
+        //TODO check if request for multiple cars from same owner
 
         if(reservationApprovedDTO.getFromDate().isAfter(reservationApprovedDTO.getToDate())) {
             return new ResponseEntity<>("Requested date invalid, start date cannot be before end date", HttpStatus.BAD_REQUEST);
@@ -87,5 +86,24 @@ public class ReservationController {
         Reservation reservation = reservationService.createApprovedReservation(reservationApprovedDTO);
 
         return new ResponseEntity<>(reservation, HttpStatus.CREATED);
+    }
+
+    @PutMapping("/approve/{id}")
+    public ResponseEntity<?> approveReservation(@PathVariable Long id) {
+        if(!this.reservationService.exists(id)) {
+            return new ResponseEntity<>("Requested reservation doesn't exist", HttpStatus.BAD_REQUEST);
+        }
+
+        if(!this.reservationService.loggedUserOwnerCar(id)) {
+            return new ResponseEntity<>("Logged user cannot approve requested reservation", HttpStatus.BAD_REQUEST);
+        }
+
+        if(!this.reservationService.findById(id).getState().equals(ReservationState.PENDING)) {
+            return new ResponseEntity<>("Request reservation doesn't need to be approved", HttpStatus.BAD_REQUEST);
+        }
+
+        this.reservationService.approveReservation(id);
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
