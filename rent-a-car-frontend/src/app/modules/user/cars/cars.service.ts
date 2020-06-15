@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpResponse, HttpRequest } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -13,5 +13,9 @@ export class CarsService {
 
   getAllCarsFromUser() : Observable<HttpResponse<any>> {
     return this.http.get("server/advertisement-service/cars/user", {observe: 'response'});
+  }
+
+  addCar(car) : Observable<HttpResponse<any>> {
+    return this.http.post<any>("server/advertisement-service/cars", car, {observe: 'response'});
   }
 }

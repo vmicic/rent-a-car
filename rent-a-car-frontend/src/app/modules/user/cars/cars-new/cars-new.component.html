@@ -1,1 +1,59 @@
-<p>cars-new works!</p>
+<div class="new-car-form">
+    <form [formGroup]="newCarForm" (ngSubmit)="onSubmit()">
+
+        <h3>Add car</h3>
+        <hr>
+        <div class="form-group">
+            <label>Car brand:</label>
+            <select class="form-control" formControlName="carBrandId" (change)="changeModels(this)">
+                <option hidden>Please choose performative</option>
+                <option *ngFor="let brand of carBrands; let i = index" [value]="brand.id">
+                    {{brand.name}}
+                </option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Car model:</label>
+            <select class="form-control" formControlName="carModelId">
+                <option hidden>Please choose performative</option>
+                <option *ngFor="let model of carModelsFiltered; let i = index" [value]="model.id">
+                    {{model.name}}
+                </option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Car class:</label>
+            <select class="form-control" formControlName="carClassId">
+                <option hidden>Please choose performative</option>
+                <option *ngFor="let class of carClasses; let i = index" [value]="class.id">
+                    {{class.name}}
+                </option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Fuel type:</label>
+            <select class="form-control" formControlName="fuelTypeId">
+                <option hidden>Please choose performative</option>
+                <option *ngFor="let fuelType of fuelTypes; let i = index" [value]="fuelType.id">
+                    {{fuelType.name}}
+                </option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Transmission type:</label>
+            <select class="form-control" formControlName="transmissionTypeId">
+                <option hidden>Please choose performative</option>
+                <option *ngFor="let transmissionType of transmissionTypes; let i = index" [value]="transmissionType.id">
+                    {{transmissionType.name}}
+                </option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Seats for kids:</label>
+            <input type="number" class="form-control" formControlName="seatsForKids"> 
+        </div>
+
+        
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>

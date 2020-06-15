@@ -67,7 +67,7 @@ export class CarsListComponent implements OnInit {
       {
         title: 'Action',
         render: function (data: any, type: any, full: any) {
-          return '<button class="waves-effect btn btn-warning btn-sm" title="Edit" edit-clicked-id="' + full.id + '"><img src="../../../../../assets/images/pencil.svg" edit-clicked-id="' + full.id + '" title="Edit"></button> <button class="waves-effect btn btn-danger btn-sm" title="Delete" delete-clicked-id="' + full.id + '"><img src="../../../../../assets/images/archive.svg" delete-clicked-id="' + full.id + '" title="Delete"></button>';
+          return '<button></button>'
         }
       }
       ]
