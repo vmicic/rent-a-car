@@ -1,0 +1,82 @@
+<div *ngIf="selectedCar$ | async as car; else loading" class="main-div text-center">
+    <div class="card">
+        <h5 class="card-header">Car details</h5>
+
+        <div class="card-body text-center">
+            <div class="row text-center">
+                <div class="card-text container-fluid">Car Brand: {{car.carBrand.name}}</div>
+            </div>
+
+            <div class="row">
+                <div class="card-text container-fluid">Car Model: {{car.carModel.name}}</div>
+            </div>
+
+            <div class="row">
+                <div class="container-fluid card-text">Car Class: {{car.carClass.name}}</div>
+            </div>
+
+            <div class="row">
+                <div class="container-fluid card-text">Fuel Type: {{car.fuelType.name}}</div>
+            </div>
+
+            <div class="row">
+                <div class="container-fluid card-text">Transmission Type: {{car.transmissionType.name}}</div>
+            </div>
+
+            <div class="row">
+                <div class="container-fluid card-text">Seats for kids: {{car.seatsForKids}}</div>
+            </div>
+            <br>
+            <br>
+            <div *ngIf="imagesObs$ | async as imagesObs">
+                <div *ngIf="imagesObs != null" class="row">
+                    <!-- ============================================================== -->
+                    <!--  slides with indicator  -->
+                    <!-- ============================================================== -->
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                        <div class="card">
+                            <h5 class="card-header">Images</h5>
+                            <div class="card-body">
+                                <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                                    <ol class="carousel-indicators">
+                                        <li *ngIf="imagesObs[0] != null"  data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                                        <ng-container *ngFor="let image of imagesObs; let i = index">
+                                            <li *ngIf="i != 0"  data-target="#carouselExampleIndicators" data-slide-to="i"></li>
+                                        </ng-container>
+                                      </ol>
+
+                                    <div class="carousel-inner">
+                                        <div *ngIf="imagesObs[0] != null" class="carousel-item active">
+                                            <img class="d-block w-100"
+                                                src="data:image/jpeg;base64,{{imagesObs[0].data}}" alt="First slide">
+                                        </div>
+                                        <ng-container *ngFor="let image of imagesObs; let i = index">
+                                            <div *ngIf="i != 0" class="carousel-item">
+                                                <img class="d-block w-100"
+                                                    src="data:image/jpeg;base64,{{imagesObs[1].data}}"
+                                                    alt="Second slide">
+                                            </div>
+                                        </ng-container>
+
+                                    </div>
+                                </div>
+                                <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button"
+                                    data-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="sr-only">Previous</span> </a>
+                                <a class="carousel-control-next" href="#carouselExampleIndicators" role="button"
+                                    data-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="sr-only">Next</span> </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #loading>
+    Loading car...
+</ng-template>

@@ -94,7 +94,6 @@ export class CarsNewComponent implements OnInit {
 
           this.carService.sendImage(formData).subscribe(
             response => {
-              console.log(response);
             }
           )
         }

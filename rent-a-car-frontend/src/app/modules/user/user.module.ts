@@ -9,10 +9,11 @@ import { CarsNewComponent } from './cars/cars-new/cars-new.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DataTablesModule } from 'angular-datatables';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { CarsDetailsComponent } from './cars/cars-details/cars-details.component';
 
 
 @NgModule({
-  declarations: [UserHomeComponent, UserDashboardComponent, CarsListComponent, CarsNewComponent],
+  declarations: [UserHomeComponent, UserDashboardComponent, CarsListComponent, CarsNewComponent, CarsDetailsComponent],
   imports: [
     CommonModule,
     UserRoutingModule,

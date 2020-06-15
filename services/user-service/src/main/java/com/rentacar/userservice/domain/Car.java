@@ -41,7 +41,8 @@ public class Car extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "company_id", referencedColumnName = "id")
     private Company company;
-    
+
+    @JsonIgnore
     @OneToMany(mappedBy = "car", fetch = FetchType.EAGER)
     private List<Image> image;
 

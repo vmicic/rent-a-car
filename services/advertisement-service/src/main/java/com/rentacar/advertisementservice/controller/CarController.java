@@ -1,5 +1,6 @@
 package com.rentacar.advertisementservice.controller;
 
+import com.rentacar.advertisementservice.domain.Image;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -58,6 +59,13 @@ public class CarController {
 
         return new ResponseEntity<>(car, HttpStatus.OK);
     }
+
+    @GetMapping("/images/{id}")
+	public ResponseEntity<?> getAllImagesForCar(@PathVariable Long id) {
+		List<Image> images = carService.getAllImages(id);
+
+		return new ResponseEntity<>(images, HttpStatus.OK);
+	}
 	
 	@DeleteMapping("/{id}")
     public void deleteCar(@PathVariable Long id) {

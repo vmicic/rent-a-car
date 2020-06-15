@@ -6,7 +6,7 @@
         <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table row-border hover table-bordered"
           *ngIf="cars; else loading">
           <tbody>
-            <tr *ngFor="let car of cars">
+            <tr *ngFor="let car of cars" [routerLink]="[car.id]">
               <td>{{ car.id}}</td>
               <td>{{ car.carBrand.name }}</td>
               <td>{{ car.carModel.name }}</td>

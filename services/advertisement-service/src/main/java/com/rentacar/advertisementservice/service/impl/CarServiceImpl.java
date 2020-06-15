@@ -22,6 +22,8 @@ import com.rentacar.advertisementservice.service.TransmissionTypeService;
 import com.rentacar.advertisementservice.service.UserService;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.transaction.Transactional;
+
 @Service
 public class CarServiceImpl implements CarService {
 
@@ -100,6 +102,7 @@ public class CarServiceImpl implements CarService {
 	}
 
 	@Override
+	@Transactional
 	public List<Car> findAllByUser() {
 		return this.carRepository.findAllByUserEquals(userServiceClient.getLoggedInUser());
 	}
@@ -163,5 +166,12 @@ public class CarServiceImpl implements CarService {
 		}
 
 		return false;
+	}
+
+	@Override
+	public List<Image> getAllImages(Long id) {
+		Car car = this.findById(id);
+
+		return car.getImage();
 	}
 }
