@@ -1,0 +1,42 @@
+<div class="card">
+    <h5 class="card-header">CARS</h5>
+    <div class="card-body">
+        <div class="float-right"><button class="btn btn-primary mb-2" routerLink="new">Add</button></div>
+      <div class='table-responsive-sm'>
+        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table row-border hover table-bordered"
+          *ngIf="cars; else loading">
+          <tbody>
+            <tr *ngFor="let car of cars">
+              <td>{{ car.id}}</td>
+              <td>{{ car.carBrand.name }}</td>
+              <td>{{ car.carModel.name }}</td>
+              <td>{{ car.carClass.name }}</td>
+              <td>{{ car.fuelType.name }}</td>
+              <td>{{ car.transmissionType.name }}</td>
+              <td>{{ car.seatsForKids }}</td>
+              <td class="text-center"><button></button></td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <th><input type="text" class="bottom-border" placeholder="Search id" name="search-id" /></th>
+              <th><input type="text" class="bottom-border" placeholder="Search brand" name="search-name" /></th>
+              <th><input type="text" class="bottom-border" placeholder="Search model" name="search-name" /></th>
+              <th><input type="text" class="bottom-border" placeholder="Search class" name="search-name" /></th>
+              <th><input type="text" class="bottom-border" placeholder="Search fuel type" name="search-name" /></th>
+              <th><input type="text" class="bottom-border" placeholder="Search transmission type" name="search-name" /></th>
+              <th><input type="text" class="bottom-border" placeholder="Search name" name="search-name" /></th>
+              <th></th>
+            </tr>
+          </tfoot>
+        </table>
+        <br>
+        <br>
+      </div>
+    </div>
+  </div>
+
+
+  <ng-template #loading>
+    Loading fuel types...
+  </ng-template>

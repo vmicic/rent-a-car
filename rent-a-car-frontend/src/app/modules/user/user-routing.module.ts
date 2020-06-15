@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { UserHomeComponent } from './user-home/user-home.component';
 import { RoleUserGuard } from 'src/app/shared/auth/guards/role-user.guard';
+import { CarsListComponent } from './cars/cars-list/cars-list.component';
+import { CarsNewComponent } from './cars/cars-new/cars-new.component';
 
 
 const routes: Routes = [
@@ -17,6 +19,8 @@ const routes: Routes = [
         path: '',
         canActivateChild: [RoleUserGuard],
         children: [
+          { path: 'cars', component: CarsListComponent},
+          { path: 'cars/new', component: CarsNewComponent}
         ]
       }
     ]

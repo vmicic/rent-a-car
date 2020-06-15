@@ -34,7 +34,7 @@ public class RatingServiceImpl implements RatingService {
         rating.setUserRatingPosted(user);
         rating.setRating(ratingDTO.getRating());
         rating.setComment(ratingDTO.getComment());
-        rating.setApproved(false);
+        //rating.setApproved(false);
 
         return this.ratingRepository.save(rating);
     }

@@ -101,7 +101,7 @@ public class CarServiceImpl implements CarService {
 
 	@Override
 	public List<Car> findAllByUser() {
-		return null;
+		return this.carRepository.findAllByUserEquals(userServiceClient.getLoggedInUser());
 	}
 
 	@Override

@@ -16,6 +16,8 @@ public class Rating extends BaseEntity {
 
     private boolean approved;
 
+    private boolean seen;
+
     @OneToOne
     @JoinColumn(name = "user_posted_id", referencedColumnName = "id")
     private User ratingPosted;
@@ -85,5 +87,13 @@ public class Rating extends BaseEntity {
 
     public void setApproved(boolean approved) {
         this.approved = approved;
+    }
+
+    public boolean isSeen() {
+        return seen;
+    }
+
+    public void setSeen(boolean seen) {
+        this.seen = seen;
     }
 }

@@ -7,12 +7,14 @@ INSERT INTO authorities ("name") VALUES
 INSERT INTO users("date_registered", "email", "first_name", "last_name","last_password_reset_date", "password","enabled") VALUES
     ('2020-01-15', 'pera@gmail.com', 'petar', 'panin', '2012-01-01 18:47:52', '$2y$12$ZSaHrzb6qz.8nsdWgYUfaOugfoLPBIdOKiA9x4sjyVcf.06/F27Ca', 'true'),
     ('2020-01-16', 'admin@gmail.com', 'Admin', 'adminini', '2012-05-01 18:47:52', '$2y$12$ZSaHrzb6qz.8nsdWgYUfaOugfoLPBIdOKiA9x4sjyVcf.06/F27Ca', 'true'),
-    ('2020-01-15', 'user@gmail.com', 'User', 'LastName', '2012-01-01 18:47:52', '$2y$12$ZSaHrzb6qz.8nsdWgYUfaOugfoLPBIdOKiA9x4sjyVcf.06/F27Ca', 'true');
+    ('2020-01-15', 'user@gmail.com', 'User', 'LastName', '2012-01-01 18:47:52', '$2y$12$ZSaHrzb6qz.8nsdWgYUfaOugfoLPBIdOKiA9x4sjyVcf.06/F27Ca', 'true'),
+    ('2020-01-15', 'mirko@gmail.com', 'Mirko', 'Mirkovic', '2012-01-01 18:47:52', '$2y$12$ZSaHrzb6qz.8nsdWgYUfaOugfoLPBIdOKiA9x4sjyVcf.06/F27Ca', 'true');
 
 INSERT INTO user_authority("user_id", "authority_id") VALUES
     ('1', '1'),
     ('2', '4'),
-    ('3', '1');
+    ('3', '1'),
+    ('4', '1');
 
 INSERT INTO car_brand(name) VALUES
     ('BMW'),
@@ -43,10 +45,10 @@ INSERT INTO car_model(name, car_brand_id) VALUES
     ('X2', '1'),
     ('A4', '2');
 
-INSERT INTO car(car_model_id, car_brand_id, fuel_type_id, transmission_type_id, car_class_id, user_id) VALUES
-    ('1','1','1','1','1', '1'),
-    ('2','1','1','2','2', '1'),
-    ('2','1','1','2','2', '2');
+INSERT INTO car(car_model_id, car_brand_id, fuel_type_id, transmission_type_id, car_class_id, seats_for_kids, user_id) VALUES
+    ('1','1','1','1','1', '1','1'),
+    ('2','1','1','2','2', '0','1'),
+    ('2','1','1','2','2', '2','2');
 
 INSERT INTO pickup_spot(street, city) VALUES
     ('Aerodrom Nikola Tesla', 'Beograd'),

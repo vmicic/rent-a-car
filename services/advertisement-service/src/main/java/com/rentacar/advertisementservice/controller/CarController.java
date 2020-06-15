@@ -13,6 +13,7 @@ import com.rentacar.advertisementservice.service.CarService;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/cars")
@@ -62,6 +63,13 @@ public class CarController {
     public void deleteCar(@PathVariable Long id) {
 
     }
+
+    @GetMapping("/user")
+	public ResponseEntity<?> getCarsFromUser() {
+		List<Car> cars = this.carService.findAllByUser();
+
+		return new ResponseEntity<>(cars, HttpStatus.OK);
+	}
 	
 	@GetMapping
     public void getAllCars() {
