@@ -30,6 +30,9 @@ public class Car extends BaseEntity {
 
     private Integer seatsForKids;
 
+    @OneToMany(mappedBy = "car")
+    private List<Rating> ratings;
+
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
@@ -113,4 +116,11 @@ public class Car extends BaseEntity {
         this.company = company;
     }
 
+    public List<Rating> getRatings() {
+        return ratings;
+    }
+
+    public void setRatings(List<Rating> ratings) {
+        this.ratings = ratings;
+    }
 }

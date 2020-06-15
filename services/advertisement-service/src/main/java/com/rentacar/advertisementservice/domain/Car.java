@@ -50,6 +50,9 @@ public class Car extends BaseEntity {
     @OneToMany(mappedBy = "car")
     private List<Image> image;
 
+    @OneToMany(mappedBy = "car")
+    private List<Rating> ratings;
+
 	public Car() {
     }
 
@@ -132,6 +135,14 @@ public class Car extends BaseEntity {
 	public void setImage(List<Image> image) {
 		this.image = image;
 	}
+
+    public List<Rating> getRatings() {
+        return ratings;
+    }
+
+    public void setRatings(List<Rating> ratings) {
+        this.ratings = ratings;
+    }
 
     @Override
     public boolean equals(Object o) {

@@ -14,6 +14,8 @@ import java.util.List;
 @Repository
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
 
+    //TODO refactor to exists where is possible
+
     List<Reservation> findAllByCarsContains(Car car);
 
     //check for manuel created reservations who's time overlaps with wanted reservation
@@ -30,4 +32,8 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
 
     //check if there is reserved reservation between users so they can exchange messages
     List<Reservation> findAllByUserEqualsAndUserOwnerCar_IdAndStateEqualsOrUser_IdAndUserOwnerCarEqualsAndStateEquals(User user, Long id, ReservationState reservationState, Long idCopy, User userCopy, ReservationState reservationStateCopy);
+
+    //check if there is reservation with logged user, and car which he wants to rate, which is finished and paid
+    boolean existsReservationByUserEqualsAndCarsContainsAndToDateBeforeAndStateEquals(User user, Car car, LocalDateTime time, ReservationState reservationState);
+
 }

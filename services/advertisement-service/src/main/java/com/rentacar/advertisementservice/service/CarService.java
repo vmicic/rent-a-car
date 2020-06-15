@@ -26,4 +26,6 @@ public interface CarService {
     boolean loggedInUserOwner(Car car);
 
     void saveImage(MultipartFile imageFile, Long id) throws IOException;
+
+    boolean carAlreadyRated(Long id);
 }

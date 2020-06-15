@@ -3,8 +3,7 @@ package com.rentacar.advertisementservice.service.impl;
 import java.io.IOException;
 import java.util.List;
 
-import com.rentacar.advertisementservice.domain.CarBrand;
-import com.rentacar.advertisementservice.domain.CarClass;
+import com.rentacar.advertisementservice.domain.*;
 import com.rentacar.advertisementservice.repository.ImageRepository;
 import com.rentacar.advertisementservice.service.CarBrandService;
 import com.rentacar.advertisementservice.service.CarClassService;
@@ -14,12 +13,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.rentacar.advertisementservice.client.UserServiceClient;
-import com.rentacar.advertisementservice.domain.Car;
-import com.rentacar.advertisementservice.domain.CarModel;
-import com.rentacar.advertisementservice.domain.FuelType;
-import com.rentacar.advertisementservice.domain.Image;
-import com.rentacar.advertisementservice.domain.TransmissionType;
-import com.rentacar.advertisementservice.domain.User;
 import com.rentacar.advertisementservice.domain.dto.CarDTO;
 import com.rentacar.advertisementservice.repository.CarRepository;
 import com.rentacar.advertisementservice.repository.UserRepository;
@@ -154,5 +147,21 @@ public class CarServiceImpl implements CarService {
 
 		this.imageRepository.save(image);
 
+	}
+
+	@Override
+	//check if user already posted rating for selected car
+	public boolean carAlreadyRated(Long id) {
+		Car car = this.findById(id);
+
+		User user = userServiceClient.getLoggedInUser();
+
+		for(Rating rating : car.getRatings()) {
+			if(rating.getUserRatingPosted().getId().equals(user.getId())) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 }

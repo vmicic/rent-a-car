@@ -2,6 +2,7 @@ package com.rentacar.advertisementservice.service.impl;
 
 import com.rentacar.advertisementservice.client.UserServiceClient;
 import com.rentacar.advertisementservice.domain.*;
+import com.rentacar.advertisementservice.domain.dto.RatingDTO;
 import com.rentacar.advertisementservice.domain.dto.ReservationApprovedDTO;
 import com.rentacar.advertisementservice.domain.dto.ReservationDTO;
 import com.rentacar.advertisementservice.repository.ReservationRepository;
@@ -252,10 +253,19 @@ public class ReservationServiceImpl implements ReservationService {
         logger.info("Checking if can exchange messages with: " + id);
 
         List<Reservation> reservations = this.reservationRepository.findAllByUserEqualsAndUserOwnerCar_IdAndStateEqualsOrUser_IdAndUserOwnerCarEqualsAndStateEquals(
-                user, id, ReservationState.RESERVED, id, user, ReservationState.RESERVED);
+                user, id, ReservationState.PAID, id, user, ReservationState.PAID);
 
         logger.info("Reservations size: " + reservations.size());
 
         return !reservations.isEmpty();
+    }
+
+    @Override
+    public boolean existsForRating(RatingDTO ratingDTO) {
+        User user = userServiceClient.getLoggedInUser();
+        Car car = carService.findById(ratingDTO.getCarId());
+
+        return this.reservationRepository.existsReservationByUserEqualsAndCarsContainsAndToDateBeforeAndStateEquals(
+                user, car, LocalDateTime.now(), ReservationState.PAID);
     }
 }

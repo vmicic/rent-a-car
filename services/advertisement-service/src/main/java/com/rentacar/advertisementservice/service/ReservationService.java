@@ -1,6 +1,7 @@
 package com.rentacar.advertisementservice.service;
 
 import com.rentacar.advertisementservice.domain.Reservation;
+import com.rentacar.advertisementservice.domain.dto.RatingDTO;
 import com.rentacar.advertisementservice.domain.dto.ReservationApprovedDTO;
 import com.rentacar.advertisementservice.domain.dto.ReservationDTO;
 
@@ -29,4 +30,6 @@ public interface ReservationService {
     void cancelReservationOlderThen(LocalDateTime time);
 
     boolean canUsersExchangeMessages(Long id);
+
+    boolean existsForRating(RatingDTO ratingDTO);
 }
