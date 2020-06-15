@@ -24,6 +24,8 @@ export class CarsNewComponent implements OnInit {
   fuelTypes: any[] = [];
   transmissionTypes: any[] = [];
 
+  images: any[] = [];
+
   constructor(
     private formBuilder: FormBuilder,
     private carBrandService: CarBrandService,
@@ -77,17 +79,33 @@ export class CarsNewComponent implements OnInit {
   changeModels(selectedObj) {
     let id = this.newCarForm.controls["carBrandId"].value;
     this.carModelsFiltered = this.carModels.filter(carModel => carModel.carBrand.id == id);
-    console.log(this.carModelsFiltered);
-    for(let i = 0; i < this.carModels.length; i++) {
+    for (let i = 0; i < this.carModels.length; i++) {
     }
   }
 
   onSubmit() {
     this.carService.addCar(this.newCarForm.value).subscribe(
       response => {
-        console.log(response);
+        let id = response.body.id;
+        for (let i = 0; i < this.images.length; i++) {
+          const formData = new FormData();
+          formData.append('imageFile', this.images[i]);
+          formData.append('carId', id);
+
+          this.carService.sendImage(formData).subscribe(
+            response => {
+              console.log(response);
+            }
+          )
+        }
       }
     )
   }
+
+  onFileChanges(event) {
+    this.images = event.target['files'];
+  }
+
+
 
 }

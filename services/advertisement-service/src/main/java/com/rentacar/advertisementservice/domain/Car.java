@@ -6,10 +6,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
 @Entity
 public class Car extends BaseEntity {
@@ -46,8 +43,8 @@ public class Car extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "company_id", referencedColumnName = "id")
     private Company company;
-    
-    @OneToMany(mappedBy = "car")
+
+    @OneToMany(mappedBy = "car", fetch = FetchType.EAGER)
     private List<Image> image;
 
     @OneToMany(mappedBy = "car")

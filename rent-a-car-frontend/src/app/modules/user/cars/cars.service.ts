@@ -18,4 +18,8 @@ export class CarsService {
   addCar(car) : Observable<HttpResponse<any>> {
     return this.http.post<any>("server/advertisement-service/cars", car, {observe: 'response'});
   }
+
+  sendImage(formData) : Observable<HttpResponse<any>> {
+    return this.http.post<any>("server/advertisement-service/cars/uploadImage", formData, {observe: 'response'});
+  }
 }

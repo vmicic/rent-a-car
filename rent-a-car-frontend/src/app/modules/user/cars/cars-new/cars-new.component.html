@@ -50,10 +50,16 @@
         </div>
         <div class="form-group">
             <label>Seats for kids:</label>
-            <input type="number" class="form-control" formControlName="seatsForKids"> 
+            <input type="number" class="form-control" formControlName="seatsForKids">
+        </div>
+        <div class="row">
+            <h5>Images</h5>
+        </div>
+        <div class="form-group">
+            <input id="custom-input" type="file" (change)="onFileChanges($event)" multiple>
         </div>
 
-        
+
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 </div>
