@@ -10,6 +10,8 @@ import { AdvertisementsNewComponent } from './advertisements/advertisements-new/
 import { NewApprovedComponent } from './reservations/new-approved/new-approved.component';
 import { SearchFormComponent } from './search/search-form/search-form.component';
 import { SearchResultComponent } from './search/search-result/search-result.component';
+import { SearchCarDetailsComponent } from './search/search-car-details/search-car-details.component';
+import { CartComponent } from './cart/cart.component';
 
 
 const routes: Routes = [
@@ -32,7 +34,9 @@ const routes: Routes = [
           { path: 'cars/:id', component: CarsDetailsComponent},
           { path: 'advertisements', component: AdvertisementsListComponent},
           { path: 'search/result', component: SearchResultComponent},
-          { path: 'search', component: SearchFormComponent}
+          { path: 'search/result/:id', component: SearchCarDetailsComponent},
+          { path: 'search', component: SearchFormComponent},
+          { path: 'cart', component: CartComponent}
         ]
       }
     ]

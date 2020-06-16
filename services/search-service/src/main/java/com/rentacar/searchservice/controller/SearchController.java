@@ -58,7 +58,7 @@ public class SearchController {
         List<Car> cars = new ArrayList<>();
 
         List<Advertisement> advertisements = advertisementService.findAdvertisementInRequestedDate(dateFrom, dateTo, pickupSpotId);
-        
+
         for(Advertisement advertisement : advertisements) {
             Car car = advertisement.getCar();
             if(reservationService.carPossibleToReserveForDate(car, dateFrom, dateTo)) {

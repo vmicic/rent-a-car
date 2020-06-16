@@ -15,6 +15,8 @@ import { AdvertisementsListComponent } from './advertisements/advertisements-lis
 import { NewApprovedComponent } from './reservations/new-approved/new-approved.component';
 import { SearchFormComponent } from './search/search-form/search-form.component';
 import { SearchResultComponent } from './search/search-result/search-result.component';
+import { SearchCarDetailsComponent } from './search/search-car-details/search-car-details.component';
+import { CartComponent } from './cart/cart.component';
 
 
 @NgModule({
@@ -28,7 +30,9 @@ import { SearchResultComponent } from './search/search-result/search-result.comp
     AdvertisementsListComponent, 
     NewApprovedComponent, 
     SearchFormComponent,
-    SearchResultComponent],
+    SearchResultComponent,
+    SearchCarDetailsComponent,
+    CartComponent],
   imports: [
     CommonModule,
     UserRoutingModule,

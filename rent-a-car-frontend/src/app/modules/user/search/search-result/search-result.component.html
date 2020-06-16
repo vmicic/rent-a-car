@@ -1,1 +1,41 @@
-<p>search-result works!</p>
+<div class="card">
+    <h5 class="card-header">CARS</h5>
+    <div class="card-body">
+      <div class='table-responsive-sm'>
+        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table row-border hover table-bordered"
+          *ngIf="cars; else loading">
+          <tbody>
+            <tr *ngFor="let car of cars">
+              <td  [routerLink]="[car.id]">{{ car.id}}</td>
+              <td  [routerLink]="[car.id]">{{ car.carBrand.name }}</td>
+              <td  [routerLink]="[car.id]">{{ car.carModel.name }}</td>
+              <td  [routerLink]="[car.id]">{{ car.carClass.name }}</td>
+              <td  [routerLink]="[car.id]">{{ car.fuelType.name }}</td>
+              <td  [routerLink]="[car.id]">{{ car.transmissionType.name }}</td>
+              <td  [routerLink]="[car.id]">{{ car.seatsForKids }}</td>
+              <td class="text-center"><button></button></td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <th><input type="text" class="bottom-border" placeholder="Search id" name="search-id" /></th>
+              <th><input type="text" class="bottom-border" placeholder="Search brand" name="search-name" /></th>
+              <th><input type="text" class="bottom-border" placeholder="Search model" name="search-name" /></th>
+              <th><input type="text" class="bottom-border" placeholder="Search class" name="search-name" /></th>
+              <th><input type="text" class="bottom-border" placeholder="Search fuel type" name="search-name" /></th>
+              <th><input type="text" class="bottom-border" placeholder="Search transmission type" name="search-name" /></th>
+              <th><input type="text" class="bottom-border" placeholder="Search name" name="search-name" /></th>
+              <th></th>
+            </tr>
+          </tfoot>
+        </table>
+        <br>
+        <br>
+      </div>
+    </div>
+  </div>
+
+
+  <ng-template #loading>
+    Loading fuel types...
+  </ng-template>
