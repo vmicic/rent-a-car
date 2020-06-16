@@ -1,9 +1,16 @@
 package com.rentacar.searchservice.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
+@Table(name = "reservation", schema = "public")
 public class Reservation extends BaseEntity {
 
     private LocalDateTime creationDateTime;
@@ -17,21 +24,26 @@ public class Reservation extends BaseEntity {
 
     private Double price;
 
-    @OneToOne
-    @JoinColumn(name = "report_id", referencedColumnName = "id")
-    private Report report;
-
-    @ManyToOne
-    @JoinColumn(name = "car_id")
-    private Car car;
+    @JsonIgnore
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @ManyToMany
+    @JoinTable(name = "car_reservation",
+            joinColumns = @JoinColumn(name = "reservation_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "car_id", referencedColumnName = "id"))
+    private List<Car> cars = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "advertisement_id")
     private Advertisement advertisement;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_requested_id")
     private User user;
+
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "user_received_id", referencedColumnName = "id")
+    private User userOwnerCar;
 
     @ManyToOne
     @JoinColumn(name = "company_id", referencedColumnName = "id")
@@ -80,20 +92,12 @@ public class Reservation extends BaseEntity {
         this.price = price;
     }
 
-    public Report getReport() {
-        return report;
+    public List<Car> getCars() {
+        return cars;
     }
 
-    public void setReport(Report report) {
-        this.report = report;
-    }
-
-    public Car getCar() {
-        return car;
-    }
-
-    public void setCar(Car car) {
-        this.car = car;
+    public void setCars(List<Car> cars) {
+        this.cars = cars;
     }
 
     public Advertisement getAdvertisement() {
@@ -118,6 +122,14 @@ public class Reservation extends BaseEntity {
 
     public void setCompany(Company company) {
         this.company = company;
+    }
+
+    public User getUserOwnerCar() {
+        return userOwnerCar;
+    }
+
+    public void setUserOwnerCar(User userOwnerCar) {
+        this.userOwnerCar = userOwnerCar;
     }
 
     @Override

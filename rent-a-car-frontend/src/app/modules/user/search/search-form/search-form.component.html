@@ -48,10 +48,14 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="ml-2" *ngFor="let pickup of pickups; let i = index">
-                <input type="radio" [value]="i" formControlName="pickup"/> {{pickups[i].street}}, {{pickups[i].city}}
-            </label>
+            <label>Pickup spot: </label>
+            <select class="form-control" formControlName="pickup">
+                <option hidden>Please choose pickup</option>
+                <option *ngFor="let pickup of pickups; let i = index" [value]="pickup.id">
+                    {{pickup.street}}, {{pickup.city}}
+                </option>
+            </select>
         </div>
-        <button class="btn btn-primary">Submit</button>
+        <button class="btn btn-primary">Search</button>
     </form>
 </div>

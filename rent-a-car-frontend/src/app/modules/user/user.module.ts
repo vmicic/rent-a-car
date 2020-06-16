@@ -14,10 +14,21 @@ import { AdvertisementsNewComponent } from './advertisements/advertisements-new/
 import { AdvertisementsListComponent } from './advertisements/advertisements-list/advertisements-list.component';
 import { NewApprovedComponent } from './reservations/new-approved/new-approved.component';
 import { SearchFormComponent } from './search/search-form/search-form.component';
+import { SearchResultComponent } from './search/search-result/search-result.component';
 
 
 @NgModule({
-  declarations: [UserHomeComponent, UserDashboardComponent, CarsListComponent, CarsNewComponent, CarsDetailsComponent, AdvertisementsNewComponent, AdvertisementsListComponent, NewApprovedComponent, SearchFormComponent],
+  declarations: [
+    UserHomeComponent, 
+    UserDashboardComponent, 
+    CarsListComponent, 
+    CarsNewComponent, 
+    CarsDetailsComponent, 
+    AdvertisementsNewComponent, 
+    AdvertisementsListComponent, 
+    NewApprovedComponent, 
+    SearchFormComponent,
+    SearchResultComponent],
   imports: [
     CommonModule,
     UserRoutingModule,

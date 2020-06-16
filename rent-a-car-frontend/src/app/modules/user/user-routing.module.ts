@@ -9,6 +9,7 @@ import { AdvertisementsListComponent } from './advertisements/advertisements-lis
 import { AdvertisementsNewComponent } from './advertisements/advertisements-new/advertisements-new.component';
 import { NewApprovedComponent } from './reservations/new-approved/new-approved.component';
 import { SearchFormComponent } from './search/search-form/search-form.component';
+import { SearchResultComponent } from './search/search-result/search-result.component';
 
 
 const routes: Routes = [
@@ -30,6 +31,7 @@ const routes: Routes = [
           { path: 'cars/:id/reservations/new', component: NewApprovedComponent},
           { path: 'cars/:id', component: CarsDetailsComponent},
           { path: 'advertisements', component: AdvertisementsListComponent},
+          { path: 'search/result', component: SearchResultComponent},
           { path: 'search', component: SearchFormComponent}
         ]
       }

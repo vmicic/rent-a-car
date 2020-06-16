@@ -57,16 +57,17 @@ INSERT INTO pickup_spot(street, city) VALUES
 
 
 INSERT INTO advertisement(from_date, to_date, car_id, user_id) VALUES
-    ('2020-12-20 12:00','2020-12-30 12:00', '1', '1'),
-    ('2020-12-17 12:00','2020-12-27 12:00', '2', '1');
+    ('2020-11-10 12:00','2020-12-30 12:00', '1', '1'),
+    ('2020-10-17 12:00','2020-12-27 12:00', '2', '1');
 
 INSERT INTO advertisement_pickup_spots(advertisement_id, pickup_spot_id) VALUES
     ('1', '1'),
     ('1', '2'),
-    ('2', '1');
+    ('2', '1'),
+    ('2', '3');
 
 INSERT INTO reservation(from_date, to_date, advertisement_id, state, user_requested_id, user_received_id) VALUES
-    ('2020-12-22 12:00','2020-12-23 12:00', '1', 'PAID', '3', '1');
+    ('2020-12-18 12:00','2020-12-23 12:00', '1', 'PAID', '3', '1');
 
 
 INSERT INTO reservation(from_date, to_date, state, user_requested_id, user_received_id) VALUES

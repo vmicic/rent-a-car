@@ -11,5 +11,5 @@ import java.util.List;
 @Repository
 public interface AdvertisementRepository extends JpaRepository<Advertisement, Long> {
 
-    List<Advertisement> findAllByFromDateIsLessThanEqualAndToDateGreaterThanEqual(LocalDateTime fromTime, LocalDateTime toTime);
+    List<Advertisement> findAllByFromDateIsLessThanEqualAndToDateGreaterThanEqualAndPickupSpotsContains(LocalDateTime fromTime, LocalDateTime toTime, PickupSpot pickupSpot);
 }

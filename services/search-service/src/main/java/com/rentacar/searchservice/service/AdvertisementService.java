@@ -8,7 +8,6 @@ import java.util.List;
 
 public interface AdvertisementService {
 
-    List<Advertisement> findAdvertisementInRequestedDate(LocalDateTime fromTime, LocalDateTime toTime);
+    List<Advertisement> findAdvertisementInRequestedDate(LocalDateTime fromTime, LocalDateTime toTime, Long pickupSpotId);
 
-    List<Advertisement> findAdvertisementsForPickupSpot(List<Advertisement> advertisements, Long pickupSpotId);
 }

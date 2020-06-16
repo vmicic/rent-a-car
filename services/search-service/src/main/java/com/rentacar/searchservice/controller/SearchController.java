@@ -3,6 +3,7 @@ package com.rentacar.searchservice.controller;
 import com.rentacar.searchservice.domain.Advertisement;
 import com.rentacar.searchservice.domain.Car;
 import com.rentacar.searchservice.service.AdvertisementService;
+import com.rentacar.searchservice.service.ReservationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -19,12 +20,14 @@ import java.util.List;
 @RestController
 public class SearchController {
 
-    private static Logger logger = LoggerFactory.getLogger(SearchController.class);
+    private static final Logger logger = LoggerFactory.getLogger(SearchController.class);
 
     private final AdvertisementService advertisementService;
+    private final ReservationService reservationService;
 
-    public SearchController(AdvertisementService advertisementService) {
+    public SearchController(AdvertisementService advertisementService, ReservationService reservationService) {
         this.advertisementService = advertisementService;
+        this.reservationService = reservationService;
     }
 
 
@@ -54,13 +57,13 @@ public class SearchController {
 
         List<Car> cars = new ArrayList<>();
 
-        List<Advertisement> advertisements = advertisementService.findAdvertisementInRequestedDate(dateFrom, dateTo);
-
-        List<Advertisement> validAdvertisements = advertisementService.findAdvertisementsForPickupSpot(advertisements, pickupSpotId);
-
-
-        for(Advertisement advertisement : validAdvertisements) {
-            cars.add(advertisement.getCar());
+        List<Advertisement> advertisements = advertisementService.findAdvertisementInRequestedDate(dateFrom, dateTo, pickupSpotId);
+        
+        for(Advertisement advertisement : advertisements) {
+            Car car = advertisement.getCar();
+            if(reservationService.carPossibleToReserveForDate(car, dateFrom, dateTo)) {
+                cars.add(advertisement.getCar());
+            }
         }
 
         return new ResponseEntity<>(cars, HttpStatus.OK);

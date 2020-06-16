@@ -60,7 +60,7 @@ public class ReservationServiceImpl implements ReservationService {
 
     private boolean ifReservationPossibleForCar(LocalDateTime fromDate, LocalDateTime toDate, Car car) {
         List<Reservation> reservations = this.reservationRepository.
-                CarsContainsAndFromDateLessThanEqualAndToDateGreaterThanEqualAndStateEqualsOrAndCarsContainsAndFromDateLessThanEqualAndToDateGreaterThanEqualAndStateEquals
+                CarsContainsAndFromDateLessThanEqualAndToDateGreaterThanEqualAndStateEqualsOrCarsContainsAndFromDateLessThanEqualAndToDateGreaterThanEqualAndStateEquals
                         (car, fromDate, fromDate, ReservationState.PAID, car, toDate, toDate, ReservationState.PAID);
 
         //checking if
@@ -207,7 +207,7 @@ public class ReservationServiceImpl implements ReservationService {
 
         for(Car car : reservation.getCars()) {
             List<Reservation> reservations = this.reservationRepository.
-                    CarsContainsAndFromDateLessThanEqualAndToDateGreaterThanEqualAndStateEqualsOrAndCarsContainsAndFromDateLessThanEqualAndToDateGreaterThanEqualAndStateEquals
+                    CarsContainsAndFromDateLessThanEqualAndToDateGreaterThanEqualAndStateEqualsOrCarsContainsAndFromDateLessThanEqualAndToDateGreaterThanEqualAndStateEquals
                             (car, reservation.getFromDate(), reservation.getFromDate(), ReservationState.PENDING, car, reservation.getToDate(), reservation.getToDate(), ReservationState.PENDING);
 
             for(Reservation reservationToCancel : reservations) {

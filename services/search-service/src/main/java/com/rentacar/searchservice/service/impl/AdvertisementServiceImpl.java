@@ -2,9 +2,9 @@ package com.rentacar.searchservice.service.impl;
 
 import com.rentacar.searchservice.domain.Advertisement;
 import com.rentacar.searchservice.domain.PickupSpot;
-import com.rentacar.searchservice.domain.Reservation;
 import com.rentacar.searchservice.repository.AdvertisementRepository;
 import com.rentacar.searchservice.service.AdvertisementService;
+import com.rentacar.searchservice.service.PickupSpotService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -16,78 +16,25 @@ import java.util.List;
 @Service
 public class AdvertisementServiceImpl implements AdvertisementService {
 
-    private static Logger logger = LoggerFactory.getLogger(AdvertisementServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(AdvertisementServiceImpl.class);
 
     private final AdvertisementRepository advertisementRepository;
+    private final PickupSpotService pickupSpotService;
 
-    public AdvertisementServiceImpl(AdvertisementRepository advertisementRepository) {
+    public AdvertisementServiceImpl(AdvertisementRepository advertisementRepository, PickupSpotService pickupSpotService) {
         this.advertisementRepository = advertisementRepository;
+        this.pickupSpotService = pickupSpotService;
     }
 
     @Override
-    public List<Advertisement> findAdvertisementInRequestedDate(LocalDateTime fromTime, LocalDateTime toTime) {
+    public List<Advertisement> findAdvertisementInRequestedDate(LocalDateTime fromTime, LocalDateTime toTime, Long pickupSpotId) {
 
-        List<Advertisement> advertisementsAll = this.advertisementRepository.findAllByFromDateIsLessThanEqualAndToDateGreaterThanEqual(fromTime, toTime);
+        PickupSpot pickupSpot = pickupSpotService.findById(pickupSpotId);
 
-        List<Advertisement> advertisements = new ArrayList<>();
+        return this.advertisementRepository.findAllByFromDateIsLessThanEqualAndToDateGreaterThanEqualAndPickupSpotsContains(fromTime, toTime, pickupSpot);
 
-        for(Advertisement advertisement : advertisementsAll) {
-            logger.info("For advertisement: " + advertisement.getId());
-            logger.info("Searching period: " + fromTime.toString() + " end: " + toTime.toString());
-            boolean conflict = false;
-
-            for(Reservation reservation : advertisement.getReservations()) {
-                logger.info("Reservation period: " + reservation.getFromDate() + " - " + reservation.getToDate());
-                //compare if from or to time is between some reservation
-                // reservation.start <= fromTime <= reservation.end
-                if(checkIfTimeIsBetween(fromTime, reservation.getFromDate(), reservation.getToDate())) {
-                    logger.info("reservation.start <= fromTime <= reservation.end");
-                    conflict = true;
-                    break;
-                }
-
-                if(checkIfTimeIsBetween(toTime, reservation.getFromDate(), reservation.getToDate())) {
-                    logger.info("reservation.start <= toTime <= reservation.end");
-                    conflict = true;
-                    break;
-                }
-
-                //if reservation completely overlaps another
-                if((fromTime.isBefore(reservation.getFromDate()) || fromTime.isEqual(reservation.getToDate())) &&
-                        (toTime.isAfter(reservation.getFromDate()) || toTime.isEqual(reservation.getToDate()))) {
-                    logger.info("overlaps");
-                    conflict = true;
-                    break;
-                }
-            }
-
-            //if there isn't conflict add advertisement but if there is conflict continue to next advertisement
-            if(!conflict) {
-                advertisements.add(advertisement);
-            } else {
-                conflict = false;
-            }
-        }
-
-        return advertisements;
     }
 
-    @Override
-    public List<Advertisement> findAdvertisementsForPickupSpot(List<Advertisement> advertisements, Long pickupSpotId) {
-        List<Advertisement> validAdvertisements = new ArrayList<>();
-
-        for(Advertisement advertisement : advertisements) {
-            List<PickupSpot> pickupSpots = advertisement.getPickupSpots();
-            for(PickupSpot pickupSpotAdv : pickupSpots) {
-                if(pickupSpotAdv.getId().equals(pickupSpotId)) {
-                    validAdvertisements.add(advertisement);
-                    break;
-                }
-            }
-        }
-
-        return validAdvertisements;
-    }
 
     private boolean checkIfTimeIsBetween(LocalDateTime checkFor, LocalDateTime startTime, LocalDateTime endTime) {
         return (checkFor.isAfter(startTime) || checkFor.isEqual(startTime)) &&
