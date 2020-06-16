@@ -52,6 +52,7 @@ INSERT INTO car(car_model_id, car_brand_id, fuel_type_id, transmission_type_id, 
 
 INSERT INTO pickup_spot(street, city) VALUES
     ('Aerodrom Nikola Tesla', 'Beograd'),
+    ('Zeleznicka stanica', 'Beograd'),
     ('Autobuska stanica', 'Novi Sad');
 
 

@@ -13,10 +13,11 @@ import { CarsDetailsComponent } from './cars/cars-details/cars-details.component
 import { AdvertisementsNewComponent } from './advertisements/advertisements-new/advertisements-new.component';
 import { AdvertisementsListComponent } from './advertisements/advertisements-list/advertisements-list.component';
 import { NewApprovedComponent } from './reservations/new-approved/new-approved.component';
+import { SearchFormComponent } from './search/search-form/search-form.component';
 
 
 @NgModule({
-  declarations: [UserHomeComponent, UserDashboardComponent, CarsListComponent, CarsNewComponent, CarsDetailsComponent, AdvertisementsNewComponent, AdvertisementsListComponent, NewApprovedComponent],
+  declarations: [UserHomeComponent, UserDashboardComponent, CarsListComponent, CarsNewComponent, CarsDetailsComponent, AdvertisementsNewComponent, AdvertisementsListComponent, NewApprovedComponent, SearchFormComponent],
   imports: [
     CommonModule,
     UserRoutingModule,
