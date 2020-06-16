@@ -12,11 +12,11 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CarsDetailsComponent } from './cars/cars-details/cars-details.component';
 import { AdvertisementsNewComponent } from './advertisements/advertisements-new/advertisements-new.component';
 import { AdvertisementsListComponent } from './advertisements/advertisements-list/advertisements-list.component';
-import { NewComponent } from './reservations/new/new.component';
+import { NewApprovedComponent } from './reservations/new-approved/new-approved.component';
 
 
 @NgModule({
-  declarations: [UserHomeComponent, UserDashboardComponent, CarsListComponent, CarsNewComponent, CarsDetailsComponent, AdvertisementsNewComponent, AdvertisementsListComponent, NewComponent],
+  declarations: [UserHomeComponent, UserDashboardComponent, CarsListComponent, CarsNewComponent, CarsDetailsComponent, AdvertisementsNewComponent, AdvertisementsListComponent, NewApprovedComponent],
   imports: [
     CommonModule,
     UserRoutingModule,

@@ -48,7 +48,7 @@ INSERT INTO car_model(name, car_brand_id) VALUES
 INSERT INTO car(car_model_id, car_brand_id, fuel_type_id, transmission_type_id, car_class_id, seats_for_kids, user_id) VALUES
     ('1','1','1','1','1', '1','1'),
     ('2','1','1','2','2', '0','1'),
-    ('2','1','1','2','2', '2','2');
+    ('2','1','1','2','2', '2','3');
 
 INSERT INTO pickup_spot(street, city) VALUES
     ('Aerodrom Nikola Tesla', 'Beograd'),

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray, FormControl } from '@angular/forms';
 import { PickupService } from '../../services/pickup.service';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { Advertisement } from 'src/app/shared/domain/advertisement';
@@ -24,7 +24,8 @@ export class AdvertisementsNewComponent implements OnInit {
     private formBuilder: FormBuilder,
     private pickupService: PickupService,
     private route: ActivatedRoute,
-    private advertisementService: AdvertisementService
+    private advertisementService: AdvertisementService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -102,6 +103,7 @@ export class AdvertisementsNewComponent implements OnInit {
     this.advertisementService.createAdvertisement(ad).subscribe(
       response => {
         console.log(response);
+        this.router.navigate(['home/cars']);
       }
     )
   }
