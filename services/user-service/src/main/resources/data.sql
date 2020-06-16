@@ -77,3 +77,4 @@ INSERT INTO reservation(from_date, to_date, state, user_requested_id, user_recei
 INSERT INTO car_reservation(reservation_id, car_id) VALUES
     ('1', '1'),
     ('2', '1');
+

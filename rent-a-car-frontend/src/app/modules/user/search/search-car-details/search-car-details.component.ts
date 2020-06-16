@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { ActivatedRoute, ParamMap } from '@angular/router';
+import { CarsService } from '../../cars/cars.service';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-search-car-details',
@@ -7,9 +11,35 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SearchCarDetailsComponent implements OnInit {
 
-  constructor() { }
+
+  selectedCar$: Observable<any>;
+  carId: string;
+
+  images: any[] = [];
+
+  imagesObs$: Observable<any>;
+
+  constructor(
+    private router: ActivatedRoute,
+    private carService: CarsService
+  ) { }
 
   ngOnInit() {
+    this.selectedCar$ = this.router.paramMap.pipe(
+      switchMap((params: ParamMap) => {
+        this.carId = params.get('id');
+        return this.carService.getCar(this.carId);
+      })
+    )
+
+    this.imagesObs$ = this.router.paramMap.pipe(
+      switchMap((params: ParamMap) => {
+        this.carId = params.get('id');
+        return this.carService.getImages(this.carId);
+      })
+    )
+
+
   }
 
 }

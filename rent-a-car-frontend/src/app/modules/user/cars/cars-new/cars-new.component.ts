@@ -94,6 +94,7 @@ export class CarsNewComponent implements OnInit {
 
           this.carService.sendImage(formData).subscribe(
             response => {
+              this.router.navigate(["home/cars"]);
             }
           )
         }

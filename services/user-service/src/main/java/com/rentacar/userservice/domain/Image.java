@@ -1,6 +1,7 @@
 package com.rentacar.userservice.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 
@@ -12,6 +13,7 @@ public class Image extends BaseEntity {
 
 	@Lob
 	@Column(name = "data")
+	@Type(type="org.hibernate.type.BinaryType")
 	private byte[] data;
 
 	@JsonIgnore
