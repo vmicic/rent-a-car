@@ -7,14 +7,14 @@
           *ngIf="cars; else loading">
           <tbody>
             <tr *ngFor="let car of cars" [routerLink]="[car.id]">
-              <td>{{ car.id}}</td>
+              <td >{{ car.id}}</td>
               <td>{{ car.carBrand.name }}</td>
               <td>{{ car.carModel.name }}</td>
               <td>{{ car.carClass.name }}</td>
               <td>{{ car.fuelType.name }}</td>
               <td>{{ car.transmissionType.name }}</td>
               <td>{{ car.seatsForKids }}</td>
-              <td class="text-center"><button></button></td>
+              <td class="text-center" [routerLink]=" car.id + '/advertisements/new'"><button></button></td>
             </tr>
           </tbody>
           <tfoot>

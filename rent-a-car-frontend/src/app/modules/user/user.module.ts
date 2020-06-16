@@ -10,10 +10,13 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { DataTablesModule } from 'angular-datatables';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CarsDetailsComponent } from './cars/cars-details/cars-details.component';
+import { AdvertisementsNewComponent } from './advertisements/advertisements-new/advertisements-new.component';
+import { AdvertisementsListComponent } from './advertisements/advertisements-list/advertisements-list.component';
+import { NewComponent } from './reservations/new/new.component';
 
 
 @NgModule({
-  declarations: [UserHomeComponent, UserDashboardComponent, CarsListComponent, CarsNewComponent, CarsDetailsComponent],
+  declarations: [UserHomeComponent, UserDashboardComponent, CarsListComponent, CarsNewComponent, CarsDetailsComponent, AdvertisementsNewComponent, AdvertisementsListComponent, NewComponent],
   imports: [
     CommonModule,
     UserRoutingModule,

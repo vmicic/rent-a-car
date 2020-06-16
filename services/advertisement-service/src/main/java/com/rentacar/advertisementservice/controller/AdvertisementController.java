@@ -45,7 +45,7 @@ public class AdvertisementController {
 
 	    for(Long id : advertisementDTO.getPickupSpots()) {
 	        if(!pickupSpotService.exists(id)) {
-	            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+	            return new ResponseEntity<>("Requested pickup spot doesn't exist", HttpStatus.BAD_REQUEST);
             }
         }
 

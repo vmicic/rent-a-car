@@ -67,7 +67,7 @@ export class CarsListComponent implements OnInit {
       {
         title: 'Action',
         render: function (data: any, type: any, full: any) {
-          return '<button></button>'
+          return '<button class="btn btn-success btn-small" routerLink="' + full.id + '/advertisements/new">New ad</button>';
         }
       }
       ]

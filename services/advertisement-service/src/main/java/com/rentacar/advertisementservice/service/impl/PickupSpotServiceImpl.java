@@ -5,6 +5,8 @@ import com.rentacar.advertisementservice.repository.PickupSpotRepository;
 import com.rentacar.advertisementservice.service.PickupSpotService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class PickupSpotServiceImpl implements PickupSpotService {
 
@@ -22,5 +24,10 @@ public class PickupSpotServiceImpl implements PickupSpotService {
     @Override
     public PickupSpot findById(Long id) {
         return this.pickupSpotRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public List<PickupSpot> getAll() {
+        return this.pickupSpotRepository.findAll();
     }
 }
