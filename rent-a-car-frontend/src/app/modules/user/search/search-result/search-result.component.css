@@ -12,3 +12,8 @@
     border-color: white
 
 }
+
+input {
+    width: 100%;
+    text-align: center;
+}

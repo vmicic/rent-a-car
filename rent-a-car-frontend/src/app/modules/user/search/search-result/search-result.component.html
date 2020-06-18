@@ -6,13 +6,14 @@
           *ngIf="cars; else loading">
           <tbody>
             <tr *ngFor="let car of cars">
-              <td  [routerLink]="[car.id]">{{ car.id}}</td>
-              <td  [routerLink]="[car.id]">{{ car.carBrand.name }}</td>
-              <td  [routerLink]="[car.id]">{{ car.carModel.name }}</td>
+              <td  [routerLink]="[car.id]" >{{ car.id}}</td>
+              <td  [routerLink]="[car.id]" >{{ car.carBrand.name }}</td>
+              <td  [routerLink]="[car.id]" style="width: 9%;">{{ car.carModel.name }}</td>
               <td  [routerLink]="[car.id]">{{ car.carClass.name }}</td>
               <td  [routerLink]="[car.id]">{{ car.fuelType.name }}</td>
               <td  [routerLink]="[car.id]">{{ car.transmissionType.name }}</td>
-              <td  [routerLink]="[car.id]">{{ car.seatsForKids }}</td>
+              <td  [routerLink]="[car.id]" style="width: 10%;">{{ car.seatsForKids }}</td>
+              <td>{{car.user.firstName}} {{car.user.lastName}}</td>
               <td class="text-center"><button></button></td>
             </tr>
           </tbody>
@@ -20,11 +21,12 @@
             <tr>
               <th><input type="text" class="bottom-border" placeholder="Search id" name="search-id" /></th>
               <th><input type="text" class="bottom-border" placeholder="Search brand" name="search-name" /></th>
-              <th><input type="text" class="bottom-border" placeholder="Search model" name="search-name" /></th>
+              <th style="width: 9%;"><input type="text" class="bottom-border" placeholder="Search model" name="search-name" /></th>
               <th><input type="text" class="bottom-border" placeholder="Search class" name="search-name" /></th>
               <th><input type="text" class="bottom-border" placeholder="Search fuel type" name="search-name" /></th>
               <th><input type="text" class="bottom-border" placeholder="Search transmission type" name="search-name" /></th>
-              <th><input type="text" class="bottom-border" placeholder="Search name" name="search-name" /></th>
+              <th style="width: 10%;"><input type="text"  class="bottom-border" placeholder="Search seats" name="search-name" /></th>
+              <th><input type="text" class="bottom-border" placeholder="Search owner" name="search-name" /></th>
               <th></th>
             </tr>
           </tfoot>

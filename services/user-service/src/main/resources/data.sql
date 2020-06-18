@@ -7,7 +7,7 @@ INSERT INTO authorities ("name") VALUES
 INSERT INTO users("date_registered", "email", "first_name", "last_name","last_password_reset_date", "password","enabled") VALUES
     ('2020-01-15', 'pera@gmail.com', 'petar', 'panin', '2012-01-01 18:47:52', '$2y$12$ZSaHrzb6qz.8nsdWgYUfaOugfoLPBIdOKiA9x4sjyVcf.06/F27Ca', 'true'),
     ('2020-01-16', 'admin@gmail.com', 'Admin', 'adminini', '2012-05-01 18:47:52', '$2y$12$ZSaHrzb6qz.8nsdWgYUfaOugfoLPBIdOKiA9x4sjyVcf.06/F27Ca', 'true'),
-    ('2020-01-15', 'user@gmail.com', 'User', 'LastName', '2012-01-01 18:47:52', '$2y$12$ZSaHrzb6qz.8nsdWgYUfaOugfoLPBIdOKiA9x4sjyVcf.06/F27Ca', 'true'),
+    ('2020-01-15', 'user@gmail.com', 'Dragan', 'Stojanovic', '2012-01-01 18:47:52', '$2y$12$ZSaHrzb6qz.8nsdWgYUfaOugfoLPBIdOKiA9x4sjyVcf.06/F27Ca', 'true'),
     ('2020-01-15', 'mirko@gmail.com', 'Mirko', 'Mirkovic', '2012-01-01 18:47:52', '$2y$12$ZSaHrzb6qz.8nsdWgYUfaOugfoLPBIdOKiA9x4sjyVcf.06/F27Ca', 'true');
 
 INSERT INTO user_authority("user_id", "authority_id") VALUES
@@ -48,7 +48,7 @@ INSERT INTO car_model(name, car_brand_id) VALUES
 INSERT INTO car(car_model_id, car_brand_id, fuel_type_id, transmission_type_id, car_class_id, seats_for_kids, user_id) VALUES
     ('1','1','1','1','1', '1','1'),
     ('2','1','1','2','2', '0','1'),
-    ('2','1','1','2','2', '2','3');
+    ('3','2','2','2','3', '2','3');
 
 INSERT INTO pickup_spot(street, city) VALUES
     ('Aerodrom Nikola Tesla', 'Beograd'),
@@ -58,13 +58,16 @@ INSERT INTO pickup_spot(street, city) VALUES
 
 INSERT INTO advertisement(from_date, to_date, car_id, user_id) VALUES
     ('2020-11-10 12:00','2020-12-30 12:00', '1', '1'),
-    ('2020-10-17 12:00','2020-12-27 12:00', '2', '1');
+    ('2020-10-17 12:00','2020-12-27 12:00', '2', '1'),
+    ('2020-10-17 12:00','2020-12-27 12:00', '3', '1');
 
 INSERT INTO advertisement_pickup_spots(advertisement_id, pickup_spot_id) VALUES
     ('1', '1'),
     ('1', '2'),
     ('2', '1'),
-    ('2', '3');
+    ('2', '3'),
+    ('3', '1'),
+    ('3', '2');
 
 INSERT INTO reservation(from_date, to_date, advertisement_id, state, user_requested_id, user_received_id) VALUES
     ('2020-12-18 12:00','2020-12-23 12:00', '1', 'PAID', '3', '1');

@@ -28,6 +28,8 @@ export class SearchResultComponent implements OnInit {
 
   dtTrigger: Subject<any> = new Subject<any>();
 
+  cart: any[] = [];
+
   constructor(
     private route: ActivatedRoute,
     private searchService: SearchService,
@@ -68,6 +70,9 @@ export class SearchResultComponent implements OnInit {
       }, {
         title: 'Seats for kids',
         data: 'seatsForKids'
+      }, {
+        title: 'Owner',
+        data: 'user'
       },
       {
         title: 'Action',
@@ -78,7 +83,10 @@ export class SearchResultComponent implements OnInit {
       ]
     }
 
-    console.log(this.fromDate);
+    if(localStorage.getItem('cartRentACar') != null) {
+      this.cart = JSON.parse(localStorage.getItem('cart'));
+    }
+
 
     let params = {
       pickup: this.pickup,
@@ -98,9 +106,14 @@ export class SearchResultComponent implements OnInit {
 
     this.listenerFn = this.renderer.listenGlobal('document', 'click', (event) => {
       if (event.target.hasAttribute("clicked-id")) {
-
         let id: number = event.target.getAttribute("clicked-id");
-        console.log("Adding to cart" + id);
+
+        if(this.cart.indexOf(this.cars[id]) == -1) {
+          this.cart.push(this.cars[id]);
+          localStorage.setItem('cartRentACar', JSON.stringify(this.cart));
+        }
+
+        console.log(this.cart);
       }
     });
 
