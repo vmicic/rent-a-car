@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.rentacar.advertisementservice.domain.Advertisement;
 import com.rentacar.advertisementservice.domain.dto.AdvertisementDTO;
+import com.rentacar.advertisementservice.domain.dto.ReservationDTO;
 
 public interface AdvertisementService {
 	
@@ -18,4 +19,6 @@ public interface AdvertisementService {
     boolean exists(Long id);
 
     Integer getNumberOfCreatedAdvertisements();
+
+    boolean advertisementForCarAndDateExists(ReservationDTO reservationDTO);
 }

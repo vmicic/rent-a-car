@@ -11,7 +11,11 @@ export class ReservationService {
     private http: HttpClient
   ) { }
 
-  createReservation(reservation) : Observable<HttpResponse<any>> {
+  createReservationApproved(reservation) : Observable<HttpResponse<any>> {
     return this.http.post<any>("server/advertisement-service/reservation/approved", reservation, {observe: 'response'});
+  }
+
+  createReservation(reservation) : Observable<HttpResponse<any>> {
+    return this.http.post<any>("server/advertisement-service/reservation", reservation, {observe: 'response'});
   }
 }

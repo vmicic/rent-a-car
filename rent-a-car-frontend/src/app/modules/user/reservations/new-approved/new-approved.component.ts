@@ -73,7 +73,7 @@ export class NewApprovedComponent implements OnInit {
       carId: this.carId
     }
 
-    this.reservationService.createReservation(reservation).subscribe(
+    this.reservationService.createReservationApproved(reservation).subscribe(
       response => {
         console.log(response);
         this.router.navigate(['home/cars']);

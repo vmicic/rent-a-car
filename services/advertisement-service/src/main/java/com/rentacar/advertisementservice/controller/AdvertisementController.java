@@ -38,6 +38,7 @@ public class AdvertisementController {
     @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_AGENT','ROLE_COMPANY')")
 	public ResponseEntity<?> createAdvertisement(@RequestBody AdvertisementDTO advertisementDTO) {
         //TODO Implement check if car for advertisement is from user, make sure that user has max 3 advertisements
+        // implement not possible to create advertisement for same car in same time
 
         if(advertisementService.getNumberOfCreatedAdvertisements() >= NUMBER_OF_ADS_ALLOWED_USER) {
             return new ResponseEntity<>("Cannot create more than " + NUMBER_OF_ADS_ALLOWED_USER + " ads", HttpStatus.BAD_REQUEST);

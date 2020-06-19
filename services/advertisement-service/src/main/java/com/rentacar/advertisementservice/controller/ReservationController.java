@@ -38,11 +38,13 @@ public class ReservationController {
         // TODO Implement basic checks check if date is valid(for advertisement),
         //  if every car is from same user
 
+        logger.info(reservationDTO.toString());
+
         if(reservationDTO.getFromDate().isAfter(reservationDTO.getToDate())) {
             return new ResponseEntity<>("Requested date invalid, start date cannot be before end date", HttpStatus.BAD_REQUEST);
         }
 
-        if(!this.advertisementService.exists(reservationDTO.getAdvertisementId())) {
+        if(!this.advertisementService.advertisementForCarAndDateExists(reservationDTO)) {
             return new ResponseEntity<>("Specified advertisement doesn't exist", HttpStatus.BAD_REQUEST);
         }
 

@@ -90,10 +90,7 @@ public class ReservationServiceImpl implements ReservationService {
         reservation.setToDate(reservationDTO.getToDate());
         reservation.setCreationDateTime(LocalDateTime.now());
         reservation.setState(ReservationState.PENDING);
-
-        Advertisement advertisement = advertisementService.findById(reservationDTO.getAdvertisementId());
-        reservation.setAdvertisement(advertisement);
-
+        
         List<Car> cars = new ArrayList<>();
         for (Long id : reservationDTO.getCarIds()) {
             Car car = this.carService.findById(id);

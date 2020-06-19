@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ReservationDTO {
 
@@ -13,7 +14,7 @@ public class ReservationDTO {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime toDate;
 
-    private ArrayList<Long> carIds;
+    private List<Long> carIds = new ArrayList<>();
 
     private Long advertisementId;
 
@@ -38,11 +39,11 @@ public class ReservationDTO {
         this.toDate = toDate;
     }
 
-    public ArrayList<Long> getCarIds() {
+    public List<Long> getCarIds() {
         return carIds;
     }
 
-    public void setCarIds(ArrayList<Long> carIds) {
+    public void setCarIds(List<Long> carIds) {
         this.carIds = carIds;
     }
 

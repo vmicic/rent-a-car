@@ -108,12 +108,15 @@ export class SearchResultComponent implements OnInit {
       if (event.target.hasAttribute("clicked-id")) {
         let id: number = event.target.getAttribute("clicked-id");
 
-        if(this.cart.indexOf(this.cars[id]) == -1) {
-          this.cart.push(this.cars[id]);
+
+        if(this.cart.indexOf(this.cars[id - 1]) == -1) {
+          this.cart.push(this.cars[id - 1]);
+          console.log(this.cart);
+          this.cart[this.cart.length - 1]["fromDate"] = this.fromDate;
+          this.cart[this.cart.length - 1]["toDate"] = this.toDate;
           localStorage.setItem('cartRentACar', JSON.stringify(this.cart));
         }
 
-        console.log(this.cart);
       }
     });
 
@@ -131,6 +134,11 @@ export class SearchResultComponent implements OnInit {
         });
       });
     }, 1000);
+  }
+
+  clearCart() : void {
+    console.log('clearing cart');
+    localStorage.removeItem('cartRentACar');
   }
 
 }

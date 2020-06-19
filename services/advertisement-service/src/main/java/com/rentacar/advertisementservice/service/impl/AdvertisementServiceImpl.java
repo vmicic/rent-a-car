@@ -6,6 +6,7 @@ import com.rentacar.advertisementservice.domain.Car;
 import com.rentacar.advertisementservice.domain.PickupSpot;
 import com.rentacar.advertisementservice.domain.User;
 import com.rentacar.advertisementservice.domain.dto.AdvertisementDTO;
+import com.rentacar.advertisementservice.domain.dto.ReservationDTO;
 import com.rentacar.advertisementservice.repository.AdvertisementRepository;
 import com.rentacar.advertisementservice.service.AdvertisementService;
 import com.rentacar.advertisementservice.service.CarService;
@@ -79,5 +80,21 @@ public class AdvertisementServiceImpl implements AdvertisementService {
         User user = userServiceClient.getLoggedInUser();
 
         return this.advertisementRepository.findAllByUserId(user.getId()).size();
+    }
+
+    @Override
+    public boolean advertisementForCarAndDateExists(ReservationDTO reservationDTO) {
+
+
+        for(Long id : reservationDTO.getCarIds()) {
+            Car car = this.carService.findById(id);
+
+            if(!this.advertisementRepository.existsByCarEqualsAndFromDateLessThanEqualAndToDateGreaterThanEqual
+                    (car, reservationDTO.getFromDate(), reservationDTO.getToDate())) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
