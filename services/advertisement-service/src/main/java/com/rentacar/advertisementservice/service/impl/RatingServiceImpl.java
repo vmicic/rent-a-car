@@ -31,7 +31,7 @@ public class RatingServiceImpl implements RatingService {
         Car car = carService.findById(ratingDTO.getCarId());
 
         rating.setCar(car);
-        rating.setUserRatingPosted(user);
+        rating.setRatingPosted(user);
         rating.setRating(ratingDTO.getRating());
         rating.setComment(ratingDTO.getComment());
         //rating.setApproved(false);

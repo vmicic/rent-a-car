@@ -18,7 +18,7 @@ public class Rating extends BaseEntity {
 
     @OneToOne
     @JoinColumn(name = "user_posted_id", referencedColumnName = "id")
-    private User userRatingPosted;
+    private User ratingPosted;
 
     @OneToOne
     @JoinColumn(name = "user_received_id", referencedColumnName = "id")
@@ -47,12 +47,12 @@ public class Rating extends BaseEntity {
         this.reply = reply;
     }
 
-    public User getUserRatingPosted() {
-        return userRatingPosted;
+    public User getRatingPosted() {
+        return ratingPosted;
     }
 
-    public void setUserRatingPosted(User ratingPosted) {
-        this.userRatingPosted = ratingPosted;
+    public void setRatingPosted(User ratingPosted) {
+        this.ratingPosted = ratingPosted;
     }
 
     public User getRatingReceived() {

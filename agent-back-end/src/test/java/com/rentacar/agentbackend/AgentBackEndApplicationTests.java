@@ -8,6 +8,7 @@ class AgentBackEndApplicationTests {
 
 	@Test
 	void contextLoads() {
+		System.out.println("Tests running");
 	}
 
 }
