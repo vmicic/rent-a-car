@@ -4,6 +4,7 @@ import { DataTableDirective } from 'angular-datatables';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ReservationService } from '../services/reservation.service';
 import { Router } from '@angular/router';
+import { IHash } from 'src/app/shared/domain/IHash';
 
 @Component({
   selector: 'app-cart',
@@ -80,12 +81,13 @@ export class CartComponent implements OnInit {
       ]
     }
 
-    if(localStorage.getItem('cartRentACar') != null) {
+
+    if (localStorage.getItem('cartRentACar') != null) {
       this.cart = JSON.parse(localStorage.getItem('cartRentACar'));
       this.cars = this.cart;
       this.dtTrigger.next();
     }
-    
+
 
   }
 
@@ -117,17 +119,45 @@ export class CartComponent implements OnInit {
     }, 1000);
   }
 
-  clearCart() : void {
+  clearCart(): void {
     console.log('clearing cart');
     localStorage.removeItem('cartRentACar');
   }
 
   onSubmit() {
-    if((this.reservationForm.controls["sameUser"].value)) {
-      console.log('true')
+    if ((this.reservationForm.controls["sameUser"].value)) {
+      //if we are making request as bundle for same owner
+      let reservationsOwner: IHash = {};
+
+      for (let i = 0; i < this.cars.length; i++) {
+        if (reservationsOwner[this.cars[i].user.email]) {
+          reservationsOwner[this.cars[i].user.email].push(this.cars[i]);
+        } else {
+          reservationsOwner[this.cars[i].user.email] = [this.cars[i]];
+        }
+      }
+
+      Object.keys(reservationsOwner).forEach((key) => {
+        var reservation = new Object();
+
+        reservation["fromDate"] = reservationsOwner[key][0].fromDate.replace('T', ' ');
+        reservation["toDate"] = reservationsOwner[key][0].toDate.replace('T', ' ');
+        reservation["carIds"] = [];
+
+        for (let i = 0; i < reservationsOwner[key].length; i++) {
+          reservation["carIds"].push(reservationsOwner[key][i].id);
+        }
+
+        this.reservationService.createReservation(reservation).subscribe(
+          response => {
+            console.log(response);
+            this.router.navigate(["home"]);
+          }
+        )
+      })
+
     } else {
-      console.log('false');
-      for(let i = 0; i < this.cars.length; i++) {
+      for (let i = 0; i < this.cars.length; i++) {
         var reservation = new Object();
         reservation["carIds"] = [this.cars[i].id];
         reservation["fromDate"] = this.cars[i].fromDate.replace('T', ' ');

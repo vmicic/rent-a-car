@@ -83,8 +83,10 @@ export class SearchResultComponent implements OnInit {
       ]
     }
 
+    this.clearCart();
+
     if(localStorage.getItem('cartRentACar') != null) {
-      this.cart = JSON.parse(localStorage.getItem('cart'));
+      this.cart = JSON.parse(localStorage.getItem('cartRentACar'));
     }
 
 
@@ -108,12 +110,13 @@ export class SearchResultComponent implements OnInit {
       if (event.target.hasAttribute("clicked-id")) {
         let id: number = event.target.getAttribute("clicked-id");
 
+        var car = this.cars[id - 1];
+        car["fromDate"] = this.fromDate;
+        car["toDate"] = this.toDate;
 
-        if(this.cart.indexOf(this.cars[id - 1]) == -1) {
-          this.cart.push(this.cars[id - 1]);
+        if(this.cart.indexOf(car) == -1) {
+          this.cart.push(car);
           console.log(this.cart);
-          this.cart[this.cart.length - 1]["fromDate"] = this.fromDate;
-          this.cart[this.cart.length - 1]["toDate"] = this.toDate;
           localStorage.setItem('cartRentACar', JSON.stringify(this.cart));
         }
 
