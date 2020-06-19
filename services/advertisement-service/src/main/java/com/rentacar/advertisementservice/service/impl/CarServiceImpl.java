@@ -160,7 +160,7 @@ public class CarServiceImpl implements CarService {
 		User user = userServiceClient.getLoggedInUser();
 
 		for(Rating rating : car.getRatings()) {
-			if(rating.getUserRatingPosted().getId().equals(user.getId())) {
+			if(rating.getRatingPosted().getId().equals(user.getId())) {
 				return true;
 			}
 		}

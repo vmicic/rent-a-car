@@ -1,7 +1,7 @@
 package com.rentacar.agentbackend.security.auth;
 
 import com.rentacar.agentbackend.security.TokenUtils;
-import com.rentacar.agentbackend.service.impl.user.MyUserDetailService;
+import com.rentacar.agentbackend.service.impl.MyUserDetailService;
 
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;

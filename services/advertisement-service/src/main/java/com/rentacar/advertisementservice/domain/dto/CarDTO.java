@@ -1,8 +1,5 @@
 package com.rentacar.advertisementservice.domain.dto;
 
-import java.awt.Image;
-import java.util.Set;
-
 public class CarDTO {
 
 	private Long carModelId;

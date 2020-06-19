@@ -1,7 +1,6 @@
 package com.rentacar.advertisementservice.domain.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
