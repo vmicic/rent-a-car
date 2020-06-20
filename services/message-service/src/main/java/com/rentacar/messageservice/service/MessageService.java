@@ -5,7 +5,7 @@ import com.rentacar.messageservice.domain.dto.MessageDTO;
 
 public interface MessageService {
 
-    boolean canUserSendMessage(Long id);
+    boolean canUserSendMessage(String email);
 
     Message createMessage(MessageDTO messageDTO);
 }

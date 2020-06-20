@@ -26,7 +26,7 @@ public class MessageController {
 
     @PostMapping
     public ResponseEntity<?> sendMessage(@RequestBody MessageDTO messageDTO) {
-        if(!messageService.canUserSendMessage(messageDTO.getReceiverId())) {
+        if(!messageService.canUserSendMessage(messageDTO.getUsernameReceiver())) {
             return new ResponseEntity<>("Cannot send message to requested user", HttpStatus.BAD_REQUEST);
         }
 

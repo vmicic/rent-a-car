@@ -30,9 +30,11 @@ public interface ReservationService {
 
     void cancelReservationOlderThen(LocalDateTime time);
 
-    boolean canUsersExchangeMessages(Long id);
+    boolean canUsersExchangeMessages(String email);
 
     boolean existsForRating(RatingDTO ratingDTO);
 
     List<Reservation> getReservationsForApproval();
+
+    List<Reservation> getAllRequestedReservations();
 }

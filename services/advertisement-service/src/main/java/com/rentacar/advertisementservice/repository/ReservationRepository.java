@@ -32,12 +32,14 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     List<Reservation> findAllByCreationDateTimeBeforeAndStateEquals(LocalDateTime time, ReservationState reservationState);
 
     //check if there is reserved reservation between users so they can exchange messages
-    List<Reservation> findAllByUserEqualsAndUserOwnerCar_IdAndStateEqualsOrUser_IdAndUserOwnerCarEqualsAndStateEquals(User user, Long id, ReservationState reservationState, Long idCopy, User userCopy, ReservationState reservationStateCopy);
+    List<Reservation> findAllByUserEqualsAndUserOwnerCar_EmailAndStateEqualsOrUser_EmailAndUserOwnerCarEqualsAndStateEquals(User user, String email, ReservationState reservationState, String emailCopy, User userCopy, ReservationState reservationStateCopy);
 
     //check if there is reservation with logged user, and car which he wants to rate, which is finished and paid
     boolean existsReservationByUserEqualsAndCarsContainsAndToDateBeforeAndStateEquals(User user, Car car, LocalDateTime time, ReservationState reservationState);
 
     //get all reservations for user and with state pending
     List<Reservation> findAllByUserOwnerCarEqualsAndStateEquals(User user, ReservationState state);
+
+    List<Reservation> findAllByUserEquals(User user);
 
 }

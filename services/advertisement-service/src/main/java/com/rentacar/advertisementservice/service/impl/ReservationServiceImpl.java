@@ -216,15 +216,14 @@ public class ReservationServiceImpl implements ReservationService {
     @Override
     //check if there is reservations with logged and requested user with state reserved and then they can
     //exchange messages
-    public boolean canUsersExchangeMessages(Long id) {
+    public boolean canUsersExchangeMessages(String email) {
         User user = userServiceClient.getLoggedInUser();
-        User user1 = userService.findById(id);
 
         logger.info("Logged user is: " + user.toString());
-        logger.info("Checking if can exchange messages with: " + id);
+        logger.info("Checking if can exchange messages with: " + email);
 
-        List<Reservation> reservations = this.reservationRepository.findAllByUserEqualsAndUserOwnerCar_IdAndStateEqualsOrUser_IdAndUserOwnerCarEqualsAndStateEquals(
-                user, id, ReservationState.PAID, id, user, ReservationState.PAID);
+        List<Reservation> reservations = this.reservationRepository.findAllByUserEqualsAndUserOwnerCar_EmailAndStateEqualsOrUser_EmailAndUserOwnerCarEqualsAndStateEquals(
+                user, email, ReservationState.PAID, email, user, ReservationState.PAID);
 
         logger.info("Reservations size: " + reservations.size());
 
@@ -244,5 +243,11 @@ public class ReservationServiceImpl implements ReservationService {
     public List<Reservation> getReservationsForApproval() {
         User user = userServiceClient.getLoggedInUser();
         return this.reservationRepository.findAllByUserOwnerCarEqualsAndStateEquals(user, ReservationState.PENDING);
+    }
+
+    @Override
+    public List<Reservation> getAllRequestedReservations() {
+        User user = userServiceClient.getLoggedInUser();
+        return this.reservationRepository.findAllByUserEquals(user);
     }
 }

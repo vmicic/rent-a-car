@@ -2,19 +2,11 @@ package com.rentacar.messageservice.domain.dto;
 
 public class MessageDTO {
 
-    private Long receiverId;
+    private String usernameReceiver;
 
     private String content;
 
     public MessageDTO() {
-    }
-
-    public Long getReceiverId() {
-        return receiverId;
-    }
-
-    public void setReceiverId(Long receiverId) {
-        this.receiverId = receiverId;
     }
 
     public String getContent() {
@@ -25,10 +17,18 @@ public class MessageDTO {
         this.content = content;
     }
 
+    public String getUsernameReceiver() {
+        return usernameReceiver;
+    }
+
+    public void setUsernameReceiver(String usernameReceiver) {
+        this.usernameReceiver = usernameReceiver;
+    }
+
     @Override
     public String toString() {
         return "MessageDTO{" +
-                "receiverId=" + receiverId +
+                "username='" + usernameReceiver + '\'' +
                 ", content='" + content + '\'' +
                 '}';
     }

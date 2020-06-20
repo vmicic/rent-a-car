@@ -13,6 +13,7 @@ import { SearchResultComponent } from './search/search-result/search-result.comp
 import { SearchCarDetailsComponent } from './search/search-car-details/search-car-details.component';
 import { CartComponent } from './cart/cart.component';
 import { ReceivedComponent } from './reservations/received/received.component';
+import { RequestedComponent } from './reservations/requested/requested.component';
 
 
 const routes: Routes = [
@@ -38,7 +39,8 @@ const routes: Routes = [
           { path: 'search/result/:id', component: SearchCarDetailsComponent},
           { path: 'search', component: SearchFormComponent},
           { path: 'cart', component: CartComponent},
-          { path: 'reservations/received', component: ReceivedComponent}
+          { path: 'reservations/received', component: ReceivedComponent},
+          { path: 'reservations', component: RequestedComponent}
         ]
       }
     ]

@@ -33,6 +33,15 @@ public class ReservationController {
         this.carService = carService;
     }
 
+    @GetMapping
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public ResponseEntity<?> getAllRequestedReservations() {
+        List<Reservation> reservations = this.reservationService.getAllRequestedReservations();
+
+        return new ResponseEntity<>(reservations, HttpStatus.OK);
+    }
+
+
 
     @PostMapping
     @PreAuthorize("hasRole('ROLE_USER')")
@@ -130,9 +139,9 @@ public class ReservationController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @GetMapping("/messages/{id}")
-    public ResponseEntity<?> canUsersExchangeMessages(@PathVariable Long id) {
-       boolean canExchange = this.reservationService.canUsersExchangeMessages(id);
+    @GetMapping("/messages/{email}")
+    public ResponseEntity<?> canUsersExchangeMessages(@PathVariable String email) {
+       boolean canExchange = this.reservationService.canUsersExchangeMessages(email);
 
        return new ResponseEntity<>(canExchange, HttpStatus.OK);
     }

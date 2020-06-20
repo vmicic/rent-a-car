@@ -27,8 +27,8 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public boolean canUserSendMessage(Long id) {
-        return this.advertisementServiceClient.canUsersExchangeMessages(id);
+    public boolean canUserSendMessage(String email) {
+        return this.advertisementServiceClient.canUsersExchangeMessages(email);
     }
 
     @Override
@@ -38,7 +38,7 @@ public class MessageServiceImpl implements MessageService {
         message.setContent(messageDTO.getContent());
         message.setLocalDateTime(LocalDateTime.now());
         message.setSender(userServiceClient.getLoggedInUser());
-        message.setReceiver(userService.findById(messageDTO.getReceiverId()));
+        message.setReceiver(userService.findByEmail(messageDTO.getUsernameReceiver()));
 
         return this.messageRepository.save(message);
     }

@@ -7,6 +7,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 @FeignClient(name = "advertisement-service")
 public interface AdvertisementServiceClient {
 
-    @GetMapping("/reservation/messages/{id}")
-    boolean canUsersExchangeMessages(@PathVariable Long id);
+    @GetMapping("/reservation/messages/{email}")
+    boolean canUsersExchangeMessages(@PathVariable String email);
 }
