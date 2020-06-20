@@ -90,7 +90,7 @@ public class ReservationServiceImpl implements ReservationService {
         reservation.setToDate(reservationDTO.getToDate());
         reservation.setCreationDateTime(LocalDateTime.now());
         reservation.setState(ReservationState.PENDING);
-        
+
         List<Car> cars = new ArrayList<>();
         for (Long id : reservationDTO.getCarIds()) {
             Car car = this.carService.findById(id);
@@ -264,5 +264,11 @@ public class ReservationServiceImpl implements ReservationService {
 
         return this.reservationRepository.existsReservationByUserEqualsAndCarsContainsAndToDateBeforeAndStateEquals(
                 user, car, LocalDateTime.now(), ReservationState.PAID);
+    }
+
+    @Override
+    public List<Reservation> getReservationsForApproval() {
+        User user = userServiceClient.getLoggedInUser();
+        return this.reservationRepository.findAllByUserOwnerCarEqualsAndStateEquals(user, ReservationState.PENDING);
     }
 }

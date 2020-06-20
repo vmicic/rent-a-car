@@ -17,6 +17,7 @@ import { SearchFormComponent } from './search/search-form/search-form.component'
 import { SearchResultComponent } from './search/search-result/search-result.component';
 import { SearchCarDetailsComponent } from './search/search-car-details/search-car-details.component';
 import { CartComponent } from './cart/cart.component';
+import { ReceivedComponent } from './reservations/received/received.component';
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import { CartComponent } from './cart/cart.component';
     SearchFormComponent,
     SearchResultComponent,
     SearchCarDetailsComponent,
-    CartComponent],
+    CartComponent,
+    ReceivedComponent],
   imports: [
     CommonModule,
     UserRoutingModule,

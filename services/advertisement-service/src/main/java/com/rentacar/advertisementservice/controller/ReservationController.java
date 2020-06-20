@@ -15,6 +15,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/reservation")
 public class ReservationController {
@@ -114,5 +116,12 @@ public class ReservationController {
        boolean canExchange = this.reservationService.canUsersExchangeMessages(id);
 
        return new ResponseEntity<>(canExchange, HttpStatus.OK);
+    }
+
+    @GetMapping("/approval")
+    public ResponseEntity<?> getReservationForApproval() {
+        List<Reservation> reservations = this.reservationService.getReservationsForApproval();
+
+        return new ResponseEntity<>(reservations, HttpStatus.OK);
     }
 }

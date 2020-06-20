@@ -6,6 +6,7 @@ import com.rentacar.advertisementservice.domain.dto.ReservationApprovedDTO;
 import com.rentacar.advertisementservice.domain.dto.ReservationDTO;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public interface ReservationService {
 
@@ -32,4 +33,6 @@ public interface ReservationService {
     boolean canUsersExchangeMessages(Long id);
 
     boolean existsForRating(RatingDTO ratingDTO);
+
+    List<Reservation> getReservationsForApproval();
 }

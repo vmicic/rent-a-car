@@ -4,6 +4,7 @@ import com.rentacar.advertisementservice.domain.Car;
 import com.rentacar.advertisementservice.domain.Reservation;
 import com.rentacar.advertisementservice.domain.ReservationState;
 import com.rentacar.advertisementservice.domain.User;
+import com.rentacar.advertisementservice.service.ReservationService;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -35,5 +36,8 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
 
     //check if there is reservation with logged user, and car which he wants to rate, which is finished and paid
     boolean existsReservationByUserEqualsAndCarsContainsAndToDateBeforeAndStateEquals(User user, Car car, LocalDateTime time, ReservationState reservationState);
+
+    //get all reservations for user and with state pending
+    List<Reservation> findAllByUserOwnerCarEqualsAndStateEquals(User user, ReservationState state);
 
 }
