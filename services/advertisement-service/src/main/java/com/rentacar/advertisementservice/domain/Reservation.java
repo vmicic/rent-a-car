@@ -49,7 +49,6 @@ public class Reservation extends BaseEntity {
     @JoinColumn(name = "user_requested_id", referencedColumnName = "id")
     private User user;
 
-    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "user_received_id", referencedColumnName = "id")
     private User userOwnerCar;

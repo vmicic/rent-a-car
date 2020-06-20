@@ -1,7 +1,10 @@
-import { Component, OnInit, Renderer, ViewChild } from '@angular/core';
+import { Component, OnInit, Renderer, ViewChild, TemplateRef } from '@angular/core';
 import { DataTableDirective } from 'angular-datatables';
 import { Subject } from 'rxjs';
 import { ReservationService } from '../../services/reservation.service';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { MessageService } from '../../services/message.service';
 
 @Component({
   selector: 'app-requested',
@@ -22,9 +25,19 @@ export class RequestedComponent implements OnInit {
 
   dtTrigger: Subject<any> = new Subject<any>();
 
+  newMessageForm: FormGroup;
+  usernameSelected: any;
+
+  @ViewChild("content", { static: true }) modalContent: TemplateRef<any>;
+  closeResult: string;
+  errorMessage: string;
+
   constructor(
     private renderer: Renderer,
-    private reservationService: ReservationService
+    private reservationService: ReservationService,
+    private formBuilder: FormBuilder,
+    private modalService: NgbModal,
+    private messageService: MessageService
   ) {
   }
 
@@ -50,14 +63,21 @@ export class RequestedComponent implements OnInit {
       },
       {
         title: 'Car ids'
+      }, {
+        title: 'Owner'
       },{
         title: 'Action',
         render: function (data: any, type: any, full: any) {
-          return '<button class="btn btn-success btn-small" title="Approve reservation" approved-clicked-id="' + full.id + '"><img src="../../../../../assets/images/check.svg" approved-clicked-id="' + full.id + '" title="Approve reservation"></button><button class="btn btn-danger btn-small ml-2" title="Reject reservation" reject-clicked-id="' + full.id + '"><img src="../../../../../assets/images/x.svg" reject-clicked-id="' + full.id + '" title="Reject reservation"></button>';
+          return '<button class="btn btn-info btn-small" title="Send message" message-clicked-id="' + full.id + '"><img src="../../../../../assets/images/chat.svg" message-clicked-id="' + full.id + '" title="Send message"></button><button class="btn btn-warning btn-small ml-2" title="Rate car" rate-clicked-id="' + full.id + '"><img src="../../../../../assets/images/star-half.svg" rate-clicked-id="' + full.id + '" title="Rate car"></button>';
         }
       }
       ]
     }
+
+    this.newMessageForm = this.formBuilder.group({
+      usernameReceiver: ['', Validators.required],
+      content: ['', Validators.required]
+    })
 
 
 
@@ -72,24 +92,18 @@ export class RequestedComponent implements OnInit {
   ngAfterViewInit(): void {
 
     this.listenerFn = this.renderer.listenGlobal('document', 'click', (event) => {
-      if (event.target.hasAttribute("approved-clicked-id")) {
-        let id: number = event.target.getAttribute("approved-clicked-id");
+      if (event.target.hasAttribute("message-clicked-id")) {
+        let id: number = event.target.getAttribute("message-clicked-id");
+        let reservation = this.reservations.filter(reservation => reservation.id == id);
+        this.usernameSelected = reservation[0].userOwnerCar.email;
 
-        this.reservationService.approveReservation(id).subscribe(
-          response => {
-            console.log(response);
-            window.location.reload();
-          }
-        )
-      } else if(event.target.hasAttribute("reject-clicked-id")) {
-        let id: number = event.target.getAttribute("reject-clicked-id");
+        this.newMessageForm.controls["usernameReceiver"].setValue(this.usernameSelected);
+        this.openModal();
 
-        this.reservationService.reject(id).subscribe(
-          response => {
-            console.log(response);
-            window.location.reload();
-          }
-        )
+      } else if(event.target.hasAttribute("rate-clicked-id")) {
+        let id: number = event.target.getAttribute("rate-clicked-id");
+
+
       }
     });
 
@@ -107,6 +121,33 @@ export class RequestedComponent implements OnInit {
         });
       });
     }, 1000);
+  }
+
+  sendMessage() {
+    console.log(this.newMessageForm.value);
+    this.messageService.sendMessage(this.newMessageForm.value).subscribe(
+      response => {
+        console.log(response);
+      }
+    )
+  }
+
+  openModal() {
+    this.modalService.open(this.modalContent, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    })
+  }
+
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
   }
 
 }

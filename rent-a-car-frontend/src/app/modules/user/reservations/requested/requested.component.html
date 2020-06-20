@@ -10,9 +10,10 @@
                         <td>{{ reservation.fromDate | date:'medium' }}</td>
                         <td>{{ reservation.toDate | date:'medium'}}</td>
                         <td style="width: 15%;">{{ reservation.state}}</td>
-                        <td style="width: 15%;">
+                        <td style="width: 10%;">
                             <ng-container *ngFor="let car of reservation.cars">{{car.id}} </ng-container>
                         </td>
+                        <td>{{reservation.userOwnerCar.firstName}} {{reservation.userOwnerCar.lastName}}</td>
                         <td class="text-center"><button></button></td>
                     </tr>
                 </tbody>
@@ -23,8 +24,12 @@
                         <th><input type="text" class="bottom-border" placeholder="Search from" name="search-name" />
                         </th>
                         <th><input type="text" class="bottom-border" placeholder="Search to" name="search-name" /></th>
-                        <th style="width: 15%;"><input type="text" class="bottom-border" placeholder="Search state" name="search-name" /></th>
-                        <th style="width: 15%;"><input type="text" class="bottom-border" placeholder="Search ids" name="search-name" /></th>
+                        <th style="width: 15%;"><input type="text" class="bottom-border" placeholder="Search state"
+                                name="search-name" /></th>
+                        <th style="width: 10%;"><input type="text" class="bottom-border" placeholder="Search ids"
+                                name="search-name" /></th>
+                        <th style="width: 15%;"><input type="text" class="bottom-border" placeholder="Search owner"
+                                name="search-name" /></th>
                         <th></th>
                     </tr>
                 </tfoot>
@@ -39,3 +44,30 @@
 <ng-template #loading>
     Loading reservations...
 </ng-template>
+
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">Send message</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="newMessageForm" (ngSubmit)="sendMessage()">
+            <div class="form-group">
+                <label for="name">Receiver</label>
+                <input type="text" class="form-control" id="name" formControlName="usernameReceiver">
+            </div>
+
+            <div class="form-group">
+                <label for="content">Content</label>
+                <textarea type="text" class="form-control" id="content" formControlName="content" rows="5"></textarea>
+              </div>
+      
+      
+            <button type="submit" class="btn btn-primary">Submit</button>
+      
+          </form>
+    </div>
+  </ng-template>

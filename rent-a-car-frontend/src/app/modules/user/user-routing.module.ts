@@ -14,6 +14,7 @@ import { SearchCarDetailsComponent } from './search/search-car-details/search-ca
 import { CartComponent } from './cart/cart.component';
 import { ReceivedComponent } from './reservations/received/received.component';
 import { RequestedComponent } from './reservations/requested/requested.component';
+import { MessagesNewComponent } from './messages/messages-new/messages-new.component';
 
 
 const routes: Routes = [
