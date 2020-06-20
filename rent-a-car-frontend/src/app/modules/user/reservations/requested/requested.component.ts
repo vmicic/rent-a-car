@@ -5,6 +5,7 @@ import { ReservationService } from '../../services/reservation.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { MessageService } from '../../services/message.service';
+import { RatingService } from 'src/app/modules/admin/services/rating.service';
 
 @Component({
   selector: 'app-requested',
@@ -34,12 +35,20 @@ export class RequestedComponent implements OnInit {
   closeResult: string;
   errorMessage: string;
 
+  
+  @ViewChild("edit", { static: true }) modalContent2: TemplateRef<any>;
+
+  newRatingForm: FormGroup;
+
+  carIdsToRate: any[] = [];
+
   constructor(
     private renderer: Renderer,
     private reservationService: ReservationService,
     private formBuilder: FormBuilder,
     private modalService: NgbModal,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private ratingService: RatingService
   ) {
   }
 
@@ -76,6 +85,12 @@ export class RequestedComponent implements OnInit {
       ]
     }
 
+    this.newRatingForm = this.formBuilder.group({
+      carId: ['', Validators.required],
+      rating: ['', Validators.required],
+      comment: ['', Validators.required]
+    })
+
     this.newMessageForm = this.formBuilder.group({
       usernameReceiver: ['', Validators.required],
       content: ['', Validators.required]
@@ -105,6 +120,13 @@ export class RequestedComponent implements OnInit {
       } else if(event.target.hasAttribute("rate-clicked-id")) {
         let id: number = event.target.getAttribute("rate-clicked-id");
 
+        let reservation = this.reservations.filter(reservation => reservation.id == id);
+        
+        for(let i = 0; i < reservation[0].cars.length; i++) {
+          this.carIdsToRate.push(reservation[0].cars[i].id);
+        }
+
+        this.openModalEdit();
 
       }
     });
@@ -153,6 +175,22 @@ export class RequestedComponent implements OnInit {
     } else {
       return `with: ${reason}`;
     }
+  }
+
+  openModalEdit() {
+    this.modalService.open(this.modalContent2, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    })
+  }
+
+  submitRating() {
+    this.ratingService.createRating(this.newRatingForm.value).subscribe(
+      response => {
+        console.log(response);
+      }
+    )
   }
 
 }

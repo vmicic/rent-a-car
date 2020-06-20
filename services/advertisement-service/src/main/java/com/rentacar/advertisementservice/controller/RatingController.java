@@ -42,6 +42,7 @@ public class RatingController {
             return new ResponseEntity<>("Requested car doesn't exist", HttpStatus.BAD_REQUEST);
         }
 
+        //this method check if there is reservation which is paid and was before so user can rate it
         if(!this.reservationService.existsForRating(ratingDTO)) {
             return new ResponseEntity<>("You cannot rate selected car", HttpStatus.BAD_REQUEST);
         }

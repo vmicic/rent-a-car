@@ -22,4 +22,8 @@ export class RatingService {
   rejectRating(id) : Observable<HttpResponse<any>> {
     return this.http.put<any>("server/advertisement-service/ratings/reject/" + id, {observe: 'response'});
   }
+
+  createRating(rating) : Observable<HttpResponse<any>> {
+    return this.http.post<any>("server/advertisement-service/ratings", rating, {observe: 'response'});
+  }
 }

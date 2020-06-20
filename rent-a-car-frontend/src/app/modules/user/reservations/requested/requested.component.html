@@ -74,3 +74,36 @@
         </form>
     </div>
 </ng-template>
+
+<ng-template #edit let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">Rate car</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="newRatingForm" (ngSubmit)="submitRating()">
+            <div class="form-group">
+                <label>Car Id: </label>
+                <select class="form-control" formControlName="carId">
+                    <option hidden>Please choose performative</option>
+                    <option *ngFor="let carId of carIdsToRate; let i = index" [value]="carId">
+                        {{carId}}
+                    </option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Rating: </label>
+                <input type="number" class="form-control" formControlName="rating">
+            </div>
+            <div class="form-group">
+                <label>Comment: </label>
+                <textarea rows=2 type="number" class="form-control" formControlName="comment"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+
+        </form>
+    </div>
+</ng-template>
