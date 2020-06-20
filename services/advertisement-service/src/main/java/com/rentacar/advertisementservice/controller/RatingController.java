@@ -6,10 +6,8 @@ import com.rentacar.advertisementservice.service.RatingService;
 import com.rentacar.advertisementservice.service.ReservationService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/ratings")
@@ -45,4 +43,29 @@ public class RatingController {
 
         return null;
     }
+
+    @PutMapping("/approve/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMINISTRATOR')")
+    public ResponseEntity<?> approveRating(@PathVariable Long id) {
+        if(!this.ratingService.existById(id)) {
+            return new ResponseEntity<>("Requested rating doesn't exist", HttpStatus.BAD_REQUEST);
+        }
+
+        this.ratingService.approveRating(id);
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @PutMapping("/reject/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMINISTRATOR')")
+    public ResponseEntity<?> rejectRating(@PathVariable Long id) {
+        if(!this.ratingService.existById(id)) {
+            return new ResponseEntity<>("Requested rating doesn't exist", HttpStatus.BAD_REQUEST);
+        }
+
+        this.ratingService.rejectRating(id);
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
 }

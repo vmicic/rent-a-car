@@ -38,4 +38,32 @@ public class RatingServiceImpl implements RatingService {
 
         return this.ratingRepository.save(rating);
     }
+
+    @Override
+    public void approveRating(Long id) {
+        Rating rating = this.ratingRepository.findById(id).orElse(null);
+
+        if(rating != null) {
+            rating.setSeen(true);
+            rating.setApproved(true);
+            this.ratingRepository.save(rating);
+        }
+
+    }
+
+    @Override
+    public void rejectRating(Long id) {
+        Rating rating = this.ratingRepository.findById(id).orElse(null);
+
+        if(rating != null) {
+            rating.setSeen(true);
+            rating.setApproved(false);
+            this.ratingRepository.save(rating);
+        }
+    }
+
+    @Override
+    public boolean existById(Long id) {
+        return this.ratingRepository.existsById(id);
+    }
 }
