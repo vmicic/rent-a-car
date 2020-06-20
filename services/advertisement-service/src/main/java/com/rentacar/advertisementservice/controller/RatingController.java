@@ -1,5 +1,6 @@
 package com.rentacar.advertisementservice.controller;
 
+import com.rentacar.advertisementservice.domain.Rating;
 import com.rentacar.advertisementservice.domain.dto.RatingDTO;
 import com.rentacar.advertisementservice.service.CarService;
 import com.rentacar.advertisementservice.service.RatingService;
@@ -8,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/ratings")
@@ -21,6 +24,14 @@ public class RatingController {
         this.ratingService = ratingService;
         this.reservationService = reservationService;
         this.carService = carService;
+    }
+
+    @GetMapping
+    @PreAuthorize("hasRole('ROLE_ADMINISTRATOR')")
+    public ResponseEntity<?> getRatingsForApproval() {
+        List<Rating> ratings = this.ratingService.getAllForApproval();
+
+        return new ResponseEntity<>(ratings, HttpStatus.OK);
     }
 
     @PostMapping

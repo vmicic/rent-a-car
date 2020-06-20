@@ -9,6 +9,7 @@ import { FuelTypeComponent } from './fuel-type/fuel-type.component';
 import { TransmissionTypeService } from './services/transmission-type.service';
 import { TransmissionTypeComponent } from './transmission-type/transmission-type.component';
 import { UsersComponent } from './users/users.component';
+import { ShowAllRatingsComponent } from './ratings/show-all-ratings/show-all-ratings.component';
 
 
 const routes: Routes = [
@@ -29,7 +30,8 @@ const routes: Routes = [
         { path: 'car-model', component: CarModelComponent},
         { path: 'fuel-type', component: FuelTypeComponent},
         { path: 'transmission-type', component: TransmissionTypeComponent},
-        { path: 'users', component: UsersComponent}
+        { path: 'users', component: UsersComponent},
+        { path: 'ratings', component:ShowAllRatingsComponent}
       ]
     }
   ]

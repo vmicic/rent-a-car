@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MessageService } from '../../services/message.service';
 import { AuthService } from 'src/app/shared/auth/auth.service';
 import { Subject, Observable, Subscription } from 'rxjs';
@@ -10,7 +10,7 @@ import { interval } from 'rxjs'
   templateUrl: './show-all.component.html',
   styleUrls: ['./show-all.component.css']
 })
-export class ShowAllComponent implements OnInit {
+export class ShowAllComponent implements OnInit, OnDestroy {
 
   messages: any[];
   messagesObs$: Subject<any[]> = new Subject<any[]>();
@@ -34,6 +34,7 @@ export class ShowAllComponent implements OnInit {
     private authService: AuthService,
     private formBuilder: FormBuilder
   ) { }
+
 
   ngOnInit() {
     this.newMessageForm = this.formBuilder.group({
@@ -188,6 +189,10 @@ export class ShowAllComponent implements OnInit {
         )
       }
     )
+  }
+  ngOnDestroy(): void {
+    console.log("Unsubscribing");
+    this.sub.unsubscribe();
   }
 
 }

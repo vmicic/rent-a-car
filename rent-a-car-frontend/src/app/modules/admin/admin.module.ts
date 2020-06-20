@@ -12,10 +12,11 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { DataTablesModule } from 'angular-datatables';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { UsersComponent } from './users/users.component';
+import { ShowAllRatingsComponent } from './ratings/show-all-ratings/show-all-ratings.component';
 
 
 @NgModule({
-  declarations: [AdminHomeComponent, CarBrandComponent, CarClassComponent, CarModelComponent, FuelTypeComponent, TransmissionTypeComponent, UsersComponent],
+  declarations: [AdminHomeComponent, CarBrandComponent, CarClassComponent, CarModelComponent, FuelTypeComponent, TransmissionTypeComponent, UsersComponent, ShowAllRatingsComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,

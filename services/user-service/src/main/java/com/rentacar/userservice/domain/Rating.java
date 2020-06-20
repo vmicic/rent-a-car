@@ -1,5 +1,7 @@
 package com.rentacar.userservice.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -26,6 +28,7 @@ public class Rating extends BaseEntity {
     @JoinColumn(name = "user_received_id", referencedColumnName = "id")
     private User ratingReceived;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "car_id", referencedColumnName = "id")
     private Car car;

@@ -10,6 +10,8 @@ import com.rentacar.advertisementservice.service.CarService;
 import com.rentacar.advertisementservice.service.RatingService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class RatingServiceImpl implements RatingService {
 
@@ -65,5 +67,10 @@ public class RatingServiceImpl implements RatingService {
     @Override
     public boolean existById(Long id) {
         return this.ratingRepository.existsById(id);
+    }
+
+    @Override
+    public List<Rating> getAllForApproval() {
+        return this.ratingRepository.findAllBySeenEquals(false);
     }
 }
