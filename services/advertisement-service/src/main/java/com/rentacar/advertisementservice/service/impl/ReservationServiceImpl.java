@@ -47,9 +47,6 @@ public class ReservationServiceImpl implements ReservationService {
 
             Car car = this.carService.findById(id);
 
-            //checking if
-            //reservation.start <= fromDate <= reservation.end
-            //reservation.start <= endDate <= reservation.end
             if (!ifReservationPossibleForCar(fromDate, toDate, car)) {
                 return false;
             }
@@ -108,55 +105,59 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     public Reservation createApprovedReservation(ReservationApprovedDTO reservationApprovedDTO) {
+        //TODO Implement canceling of reservation inside
         LocalDateTime fromDate = reservationApprovedDTO.getFromDate();
         LocalDateTime toDate = reservationApprovedDTO.getToDate();
 
-        Reservation reservationNew = new Reservation();
+        Reservation reservation = new Reservation();
 
-        reservationNew.setFromDate(fromDate);
-        reservationNew.setToDate(toDate);
-        reservationNew.setCreationDateTime(LocalDateTime.now());
-        reservationNew.setState(ReservationState.PAID);
+        reservation.setFromDate(fromDate);
+        reservation.setToDate(toDate);
+        reservation.setCreationDateTime(LocalDateTime.now());
+        reservation.setState(ReservationState.PAID);
 
         Car car = this.carService.findById(reservationApprovedDTO.getCarId());
+
         List<Car> cars = new ArrayList<>();
-
         cars.add(car);
-        reservationNew.setCars(cars);
 
-        List<Reservation> reservations = this.reservationRepository.findAllByCarsContains(car);
+        reservation.setCars(cars);
 
-        for (Reservation reservation : reservations) {
-            //compare if from or to time is between some reservation
-            // reservation.start <= fromDate <= reservation.end
-            if (checkIfTimeIsBetween(fromDate, reservation.getFromDate(), reservation.getToDate())) {
-                //There is conflict if reservation is already paid, but if it's pending it will be canceled
-                if (reservation.getState() == ReservationState.PENDING) {
-                    logger.info("Canceling reservation " + reservation.getId());
-                    this.cancelReservation(reservation.getId());
+        cancelAllReservationsConflict(reservation);
+
+        return this.reservationRepository.save(reservation);
+    }
+
+    private void cancelAllReservationsConflict(Reservation reservation) {
+        for(Car car : reservation.getCars()) {
+            List<Reservation> reservations = this.reservationRepository.
+                    CarsContainsAndFromDateLessThanEqualAndToDateGreaterThanEqualAndStateEqualsOrCarsContainsAndFromDateLessThanEqualAndToDateGreaterThanEqualAndStateEquals
+                            (car, reservation.getFromDate(), reservation.getFromDate(), ReservationState.PENDING, car, reservation.getToDate(), reservation.getToDate(), ReservationState.PENDING);
+
+            for(Reservation reservationToCancel : reservations) {
+                if(reservationToCancel.equals(reservation)) {
+                    logger.info("Found reservation with im trying to approve, skipping");
+                    continue;
                 }
+                reservationToCancel.setState(ReservationState.CANCELED);
+                this.reservationRepository.save(reservationToCancel);
             }
 
-            // reservation.start <= toDate <= reservation.end
-            if (checkIfTimeIsBetween(toDate, reservation.getFromDate(), reservation.getToDate())) {
-                if (reservation.getState() == ReservationState.PENDING) {
-                    logger.info("Canceling reservation " + reservation.getId());
-                    this.cancelReservation(reservation.getId());
-                }
+            List<Reservation> reservationInside = this.reservationRepository.
+                    CarsContainsAndFromDateGreaterThanEqualAndToDateLessThanEqualAndStateEquals(car, reservation.getFromDate(), reservation.getToDate(), ReservationState.PENDING);
+
+            for(Reservation reservationToCancel: reservationInside) {
+                reservationToCancel.setState(ReservationState.CANCELED);
+                this.reservationRepository.save(reservationToCancel);
             }
         }
-
-        return this.reservationRepository.save(reservationNew);
     }
 
     @Override
     public boolean reservationApprovedPossible(ReservationApprovedDTO reservationApprovedDTO) {
-
         Car car = this.carService.findById(reservationApprovedDTO.getCarId());
         LocalDateTime fromDate = reservationApprovedDTO.getFromDate();
         LocalDateTime toDate = reservationApprovedDTO.getToDate();
-
-
 
         return ifReservationPossibleForCar(fromDate, toDate, car);
     }
@@ -170,12 +171,6 @@ public class ReservationServiceImpl implements ReservationService {
             this.reservationRepository.save(reservation);
         }
     }
-
-    private boolean checkIfTimeIsBetween(LocalDateTime checkFor, LocalDateTime startTime, LocalDateTime endTime) {
-        return (checkFor.isAfter(startTime) || checkFor.isEqual(startTime)) &&
-                (checkFor.isBefore(endTime) || checkFor.isEqual(endTime));
-    }
-
 
     @Override
     public Reservation findById(Long id) {
@@ -200,39 +195,9 @@ public class ReservationServiceImpl implements ReservationService {
     public void approveReservation(Long id) {
         Reservation reservation = this.findById(id);
 
-        reservation.setState(ReservationState.RESERVED);
+        reservation.setState(ReservationState.PAID);
 
-        for(Car car : reservation.getCars()) {
-            List<Reservation> reservations = this.reservationRepository.
-                    CarsContainsAndFromDateLessThanEqualAndToDateGreaterThanEqualAndStateEqualsOrCarsContainsAndFromDateLessThanEqualAndToDateGreaterThanEqualAndStateEquals
-                            (car, reservation.getFromDate(), reservation.getFromDate(), ReservationState.PENDING, car, reservation.getToDate(), reservation.getToDate(), ReservationState.PENDING);
-
-            for(Reservation reservationToCancel : reservations) {
-                if(reservationToCancel.equals(reservation)) {
-                    logger.info("Found reservation with im trying to approve, skipping");
-                    continue;
-                }
-                reservationToCancel.setState(ReservationState.CANCELED);
-                this.reservationRepository.save(reservationToCancel);
-            }
-
-            List<Reservation> reservationInside = this.reservationRepository.
-                    CarsContainsAndFromDateGreaterThanEqualAndToDateLessThanEqualAndStateEquals(car, reservation.getFromDate(), reservation.getToDate(), ReservationState.PENDING);
-
-            for(Reservation reservationToCancel: reservationInside) {
-                reservationToCancel.setState(ReservationState.CANCELED);
-                this.reservationRepository.save(reservationToCancel);
-            }
-        }
-
-        this.reservationRepository.save(reservation);
-    }
-
-    @Override
-    public void rejectReservation(Long id) {
-        Reservation reservation = this.findById(id);
-
-        reservation.setState(ReservationState.CANCELED);
+        cancelAllReservationsConflict(reservation);
 
         this.reservationRepository.save(reservation);
     }

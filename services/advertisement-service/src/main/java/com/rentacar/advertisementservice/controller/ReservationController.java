@@ -125,7 +125,7 @@ public class ReservationController {
             return new ResponseEntity<>("Request reservation doesn't need to be approved", HttpStatus.BAD_REQUEST);
         }
 
-        this.reservationService.rejectReservation(id);
+        this.reservationService.cancelReservation(id);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
