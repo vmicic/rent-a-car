@@ -111,6 +111,25 @@ public class ReservationController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+    @PutMapping("/reject/{id}")
+    public ResponseEntity<?> rejectReservation(@PathVariable Long id) {
+        if(!this.reservationService.exists(id)) {
+            return new ResponseEntity<>("Requested reservation doesn't exist", HttpStatus.BAD_REQUEST);
+        }
+
+        if(!this.reservationService.loggedUserOwnerCar(id)) {
+            return new ResponseEntity<>("Logged user cannot approve requested reservation", HttpStatus.BAD_REQUEST);
+        }
+
+        if(!this.reservationService.findById(id).getState().equals(ReservationState.PENDING)) {
+            return new ResponseEntity<>("Request reservation doesn't need to be approved", HttpStatus.BAD_REQUEST);
+        }
+
+        this.reservationService.rejectReservation(id);
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
     @GetMapping("/messages/{id}")
     public ResponseEntity<?> canUsersExchangeMessages(@PathVariable Long id) {
        boolean canExchange = this.reservationService.canUsersExchangeMessages(id);

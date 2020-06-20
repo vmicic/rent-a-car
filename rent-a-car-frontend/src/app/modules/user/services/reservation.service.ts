@@ -18,4 +18,16 @@ export class ReservationService {
   createReservation(reservation) : Observable<HttpResponse<any>> {
     return this.http.post<any>("server/advertisement-service/reservation", reservation, {observe: 'response'});
   }
+
+  getReservationsForApproval() : Observable<HttpResponse<any>> {
+    return this.http.get("server/advertisement-service/reservation/approval", {observe: 'response'});
+  }
+
+  approveReservation(id) : Observable<HttpResponse<any>> {
+    return this.http.put<any>("server/advertisement-service/reservation/approve/" + id, {observe: 'response'});
+  }
+
+  reject(id) : Observable<HttpResponse<any>> {
+    return this.http.put<any>("server/advertisement-service/reservation/reject/" + id, {observe: 'response'});
+  }
 }

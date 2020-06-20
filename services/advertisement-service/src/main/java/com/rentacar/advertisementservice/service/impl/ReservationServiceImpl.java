@@ -229,6 +229,15 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
+    public void rejectReservation(Long id) {
+        Reservation reservation = this.findById(id);
+
+        reservation.setState(ReservationState.CANCELED);
+
+        this.reservationRepository.save(reservation);
+    }
+
+    @Override
     //find all reservations older then some time and with state pending and cancel them
     public void cancelReservationOlderThen(LocalDateTime time) {
         List<Reservation> reservations = this.reservationRepository.findAllByCreationDateTimeBeforeAndStateEquals(time, ReservationState.PENDING);

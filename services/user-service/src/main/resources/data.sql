@@ -70,13 +70,13 @@ INSERT INTO advertisement_pickup_spots(advertisement_id, pickup_spot_id) VALUES
     ('3', '2');
 
 INSERT INTO reservation(from_date, to_date, advertisement_id, state, user_requested_id, user_received_id) VALUES
-    ('2020-12-18 12:00','2020-12-23 12:00', '1', 'PAID', '3', '1');
+    ('2020-12-18 12:00','2020-12-23 12:00', '1', 'RESERVED', '3', '1');
 
 
 INSERT INTO reservation(from_date, to_date, state, user_requested_id, user_received_id) VALUES
-    ('2020-05-20 12:00','2020-05-25 12:00', 'PAID', '3', '1'),
+    ('2020-05-20 12:00','2020-05-25 12:00', 'RESERVED', '3', '1'),
     ('2020-11-10 12:00','2020-11-15 12:00', 'PENDING', '3', '1'),
-    ('2020-11-20 12:00','2020-12-01 12:00', 'PENDING', '3', '1'),
+    ('2020-11-08 12:00','2020-11-12 12:00', 'PENDING', '3', '1'),
     ('2020-11-10 12:00','2020-11-15 12:00', 'PENDING', '1', '3');
 
 
@@ -84,6 +84,6 @@ INSERT INTO car_reservation(reservation_id, car_id) VALUES
     ('1', '1'),
     ('2', '1'),
     ('3', '1'),
-    ('4', '2'),
+    ('4', '1'),
     ('5', '3');
 

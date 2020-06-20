@@ -1,1 +1,39 @@
-<p>received works!</p>
+<div class="card">
+    <h5 class="card-header">Received reservations</h5>
+    <div class="card-body">
+        <div class='table-responsive-sm'>
+            <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+                class="table row-border hover table-bordered" *ngIf="reservations; else loading">
+                <tbody>
+                    <tr *ngFor="let reservation of reservations">
+                        <td>{{ reservation.id}}</td>
+                        <td>{{ reservation.fromDate }}</td>
+                        <td>{{ reservation.toDate}}</td>
+                        <td>
+                            <ng-container *ngFor="let car of reservation.cars">{{car.id}} </ng-container>
+                        </td>
+                        <td class="text-center"><button></button></td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th style="width: 5%;"><input type="text" class="bottom-border" placeholder="Search id"
+                                name="search-id" /></th>
+                        <th><input type="text" class="bottom-border" placeholder="Search from" name="search-name" />
+                        </th>
+                        <th><input type="text" class="bottom-border" placeholder="Search to" name="search-name" /></th>
+                        <th><input type="text" class="bottom-border" placeholder="Search ids" name="search-name" /></th>
+                        <th></th>
+                    </tr>
+                </tfoot>
+            </table>
+            <br>
+            <br>
+        </div>
+    </div>
+</div>
+
+
+<ng-template #loading>
+    Loading reservations...
+</ng-template>

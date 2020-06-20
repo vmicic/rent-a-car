@@ -32,7 +32,6 @@ public class Reservation extends BaseEntity {
     private List<Report> reports = new ArrayList<>();
 
 
-    @JsonIgnore
     @LazyCollection(LazyCollectionOption.FALSE)
     @ManyToMany
     @JoinTable(name = "car_reservation",
