@@ -7,10 +7,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/messages")
@@ -33,7 +32,13 @@ public class MessageController {
         Message message = this.messageService.createMessage(messageDTO);
 
         return new ResponseEntity<>(message, HttpStatus.CREATED);
+    }
 
+    @GetMapping
+    public ResponseEntity<?> getMessage() {
+        List<Message> messages = this.messageService.getAllMessages();
+
+        return new ResponseEntity<>(messages, HttpStatus.OK);
     }
 
 }

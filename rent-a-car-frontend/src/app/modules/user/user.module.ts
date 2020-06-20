@@ -20,6 +20,7 @@ import { CartComponent } from './cart/cart.component';
 import { ReceivedComponent } from './reservations/received/received.component';
 import { RequestedComponent } from './reservations/requested/requested.component';
 import { MessagesNewComponent } from './messages/messages-new/messages-new.component';
+import { ShowAllComponent } from './messages/show-all/show-all.component';
 
 
 @NgModule({
@@ -37,7 +38,8 @@ import { MessagesNewComponent } from './messages/messages-new/messages-new.compo
     SearchCarDetailsComponent,
     CartComponent,
     ReceivedComponent,
-    RequestedComponent],
+    RequestedComponent,
+    ShowAllComponent],
   imports: [
     CommonModule,
     UserRoutingModule,

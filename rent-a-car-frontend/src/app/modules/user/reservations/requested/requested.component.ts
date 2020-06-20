@@ -13,6 +13,8 @@ import { MessageService } from '../../services/message.service';
 })
 export class RequestedComponent implements OnInit {
 
+  notification: string;
+
   reservations: any[] = [];
   reservationsObs$: Subject<any[]> = new Subject<any[]>();
 
@@ -128,6 +130,9 @@ export class RequestedComponent implements OnInit {
     this.messageService.sendMessage(this.newMessageForm.value).subscribe(
       response => {
         console.log(response);
+      },
+      error => {
+        this.notification = error.error;
       }
     )
   }

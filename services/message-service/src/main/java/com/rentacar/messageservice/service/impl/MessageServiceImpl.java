@@ -3,6 +3,7 @@ package com.rentacar.messageservice.service.impl;
 import com.rentacar.messageservice.client.AdvertisementServiceClient;
 import com.rentacar.messageservice.client.UserServiceClient;
 import com.rentacar.messageservice.domain.Message;
+import com.rentacar.messageservice.domain.User;
 import com.rentacar.messageservice.domain.dto.MessageDTO;
 import com.rentacar.messageservice.repository.MessageRepository;
 import com.rentacar.messageservice.service.MessageService;
@@ -10,6 +11,7 @@ import com.rentacar.messageservice.service.UserService;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class MessageServiceImpl implements MessageService {
@@ -41,5 +43,12 @@ public class MessageServiceImpl implements MessageService {
         message.setReceiver(userService.findByEmail(messageDTO.getUsernameReceiver()));
 
         return this.messageRepository.save(message);
+    }
+
+    @Override
+    public List<Message> getAllMessages() {
+        User user = userServiceClient.getLoggedInUser();
+
+        return this.messageRepository.findAllBySenderEqualsOrReceiverEqualsOrderByLocalDateTime(user, user);
     }
 }

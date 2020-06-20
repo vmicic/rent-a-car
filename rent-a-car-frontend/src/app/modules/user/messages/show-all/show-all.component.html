@@ -1,0 +1,64 @@
+<aside class="page-aside">
+    <div class="aside-content">
+        <div class="aside-header">
+            <button class="navbar-toggle" data-target=".aside-nav" data-toggle="collapse" type="button"><span
+                    class="icon"><i class="fas fa-caret-down"></i></span></button><span class="title">Chats</span>
+        </div>
+        <div class="aside-nav collapse">
+            <ul *ngIf="(uniqueChattersObs$ | async) as uniqueChatters" class="nav">
+
+                <li *ngFor="let uniqueChatter of uniqueChatters"><a href="#" id={{uniqueChatter}}
+                        (click)="selectChat(event)"><span class="icon"><i
+                                class="fas fa-fw fa-file"></i></span>{{uniqueChatter}}</a></li>
+            </ul>
+
+        </div>
+    </div>
+</aside>
+
+<div class="main-content container-fluid p-0">
+    <div class="messages-div container-fluid overflow-auto">
+        <div class="col-10 px-0" *ngIf="(messagesToShowObs$ | async) as messages">
+            <div class="px-4 py-5 chat-box bg-white">
+                <div *ngFor="let message of messages">
+                    <!-- Sender Message-->
+                    <div class="media mb-3" *ngIf="username != message.sender.email">
+                        <div class="media-body ml-3">
+                            <div class="bg-light rounded py-2 px-3 mb-2">
+                                <p class="text-small mb-0 text-muted">{{message.content}}</p>
+                            </div>
+                            <p class="small text-muted">{{message.localDateTime | date: 'medium'}}</p>
+
+                        </div>
+                    </div>
+                    <!--RECIEVEr message-->
+                    <div class="media ml-auto mb-3" *ngIf="username == message.sender.email">
+                        <div class="media-body">
+                            <div class="bg-primary rounded py-2 px-3 mb-2">
+                                <p class="text-small mb-0 text-white text-right">{{message.content}}</p>
+                            </div>
+                            <p class="small text-muted float-right">{{message.localDateTime | date: 'medium'}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <hr>
+    <form [formGroup]="newMessageForm" (ngSubmit)="sendMessage()">
+        <div class="form-group">
+            <label for="name">Receiver:</label>
+            <input type="text" class="form-control" id="name" formControlName="usernameReceiver">
+        </div>
+
+        <div class="form-group">
+            <label for="content">Content:</label>
+            <textarea type="text" class="form-control" id="content" formControlName="content" rows="1"></textarea>
+        </div>
+
+
+        <button type="submit" class="btn btn-primary">Send</button>
+
+    </form>
+</div>

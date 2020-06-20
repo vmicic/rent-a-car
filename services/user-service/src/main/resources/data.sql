@@ -88,3 +88,10 @@ INSERT INTO car_reservation(reservation_id, car_id) VALUES
     ('4', '1'),
     ('5', '3');
 
+INSERT INTO message("content", "local_date_time", "receiver_id", "sender_id") VALUES
+    ('cao ja sam dragan', '2020-05-10 12:00:00', '1', '3'),
+    ('cao ja sam dragan hehe', '2020-05-10 11:00:10', '4', '3'),
+    ('cao ja sam pera', '2020-05-10 12:00:10', '3', '1'),
+    ('jel smem da slupam auto', '2020-05-10 12:00:20', '1', '3'),
+    ('ne. pozdravne. pozdravne. pozdravne. pozdravne. pozdravne. pozdravne. pozdravne. pozdravne. pozdravne. pozdravne. pozdravozdravne. pozdravne. pozdravne. pozdravne. pozdravne. pozdravne. pozdravne. pozdravne. pozdravne. pozdravne. pozdravozdravne. pozdravne. pozdravne. pozdravne. pozdravne. pozdravne. pozdravne. pozdravne. pozdravne. pozdravne. pozdravozdravne. pozdravne. pozdravne. pozdravne. pozdravne. pozdravne. pozdravne. pozdravne. pozdravne. pozdravne. pozdravozdravne. pozdravne. pozdravne. pozdravne. pozdravne. pozdravne. pozdravne. pozdravne. pozdravne. pozdravne. pozdravozdravne. pozdravne. pozdravne. pozdravne. pozdravne. pozdravne. pozdravne. pozdravne. pozdravne. pozdravne. pozdravozdravne. pozdravne. pozdravne. pozdravne. pozdravne. pozdravne. pozdravne. pozdravne. pozdravne. pozdravne. pozdravozdravne. pozdravne. pozdravne. pozdravne. pozdravne. pozdravne. pozdravne. pozdravne. pozdravne. pozdravne. pozdravne. pozdravne. pozdravne. pozdravne. pozdravne. pozdravne. pozdravne. pozdravne. pozdravne. pozdravne. pozdravne. pozdravne. pozdravne. pozdravne. pozdravne. pozdravne. pozdravne. pozdravne. pozdravne. pozdravne. pozdravne. pozdravne. pozdravne. pozdravne. pozdravne. pozdravne. pozdravne. pozdravne. pozdravne. pozdravne. pozdravne. pozdravne. pozdravne. pozdravne. pozdravne. pozdravne. pozdravne. pozdrav', '2020-05-10 12:00:30', '3', '1');
+

@@ -15,6 +15,7 @@ import { CartComponent } from './cart/cart.component';
 import { ReceivedComponent } from './reservations/received/received.component';
 import { RequestedComponent } from './reservations/requested/requested.component';
 import { MessagesNewComponent } from './messages/messages-new/messages-new.component';
+import { ShowAllComponent } from './messages/show-all/show-all.component';
 
 
 const routes: Routes = [
@@ -41,7 +42,8 @@ const routes: Routes = [
           { path: 'search', component: SearchFormComponent},
           { path: 'cart', component: CartComponent},
           { path: 'reservations/received', component: ReceivedComponent},
-          { path: 'reservations', component: RequestedComponent}
+          { path: 'reservations', component: RequestedComponent},
+          { path: 'messages', component:ShowAllComponent}
         ]
       }
     ]

@@ -80,8 +80,6 @@ export class NewApprovedComponent implements OnInit {
       },
       error => {
         this.notification = error.error;
-        console.log(error);
-        console.log(this.notification);
       }
     )
   }

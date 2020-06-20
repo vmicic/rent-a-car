@@ -1,5 +1,6 @@
 package com.rentacar.messageservice.domain;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
@@ -16,6 +17,7 @@ public class Message extends BaseEntity{
     @JoinColumn(name = "receiver_id", referencedColumnName = "id")
     private User receiver;
 
+    @Column(columnDefinition = "TEXT")
     private String content;
 
     private LocalDateTime localDateTime;
