@@ -1,5 +1,7 @@
 package com.rentacar.advertisementservice.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -18,20 +20,26 @@ public class User extends BaseEntity{
 
     private String lastName;
 
+    @JsonIgnore
     private LocalDateTime dateRegistered;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<Reservation> reservationsRequested = new ArrayList<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "userOwnerCar")
     private List<Reservation> reservationReceived = new ArrayList<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<Advertisement> advertisements = new ArrayList<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<PriceList> priceLists = new ArrayList<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<Car> cars = new ArrayList<>();
 

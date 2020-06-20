@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { CarsService } from '../cars.service';
 import {switchMap} from 'rxjs/operators';
+import { AuthService } from 'src/app/shared/auth/auth.service';
 
 @Component({
   selector: 'app-cars-details',
@@ -18,9 +19,12 @@ export class CarsDetailsComponent implements OnInit {
 
   imagesObs$: Observable<any>;
 
+  username: string;
+
   constructor(
     private router: ActivatedRoute,
-    private carService: CarsService
+    private carService: CarsService,
+    private authService: AuthService
   ) { }
 
   ngOnInit() {
@@ -37,6 +41,8 @@ export class CarsDetailsComponent implements OnInit {
         return this.carService.getImages(this.carId);
       })
     )
+
+    this.username = this.authService.getUsername();
 
 
   }

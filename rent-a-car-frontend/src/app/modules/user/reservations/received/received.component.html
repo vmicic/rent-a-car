@@ -7,8 +7,8 @@
                 <tbody>
                     <tr *ngFor="let reservation of reservations">
                         <td>{{ reservation.id}}</td>
-                        <td>{{ reservation.fromDate }}</td>
-                        <td>{{ reservation.toDate}}</td>
+                        <td>{{ reservation.fromDate  | date:'medium' }}</td>
+                        <td>{{ reservation.toDate  | date:'medium' }}</td>
                         <td>
                             <ng-container *ngFor="let car of reservation.cars">{{car.id}} </ng-container>
                         </td>

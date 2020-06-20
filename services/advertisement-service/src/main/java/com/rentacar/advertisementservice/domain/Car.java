@@ -35,11 +35,11 @@ public class Car extends BaseEntity {
 
     private Integer seatsForKids;
 
-    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "company_id", referencedColumnName = "id")
     private Company company;
