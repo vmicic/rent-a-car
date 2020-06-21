@@ -1,4 +1,4 @@
-package com.rentacar.agentbackend.domain;
+package com.rentacar.administratorservice.domain;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;

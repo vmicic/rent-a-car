@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="http://www.administratorservice.rentacar.com/ws/company"
+    xmlns="http://www.administratorservice.rentacar.com/ws/company">
+
+    <xs:element name="registerCompanyRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="company" type="company"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="registerCompanyResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="response" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:complexType name="address">
+        <xs:sequence>
+            <xs:element minOccurs="0" name="id" type="xs:ID"/>
+            <xs:element name="country" type="xs:string"/>
+            <xs:element minOccurs="0" name="state" type="xs:string"/>
+            <xs:element name="city" type="xs:string"/>
+            <xs:element minOccurs="0" name="postalCode" type="xs:string"/>
+            <xs:element name="street" type="xs:string"/>
+            <xs:element name="number" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="company">
+        <xs:sequence>
+            <xs:element minOccurs="0" name="id" nillable="false" type="xs:ID"/>
+            <xs:element name="firstName" type="xs:string"/>
+            <xs:element name="lastName" type="xs:string"/>
+            <xs:element minOccurs="1" name="name" type="xs:string"/>
+            <xs:element name="email" type="xs:string"/>
+            <xs:element name="password" type="xs:string"/>
+            <xs:element name="businessIdNumber" type="xs:string"/>
+            <xs:element name="address" type="address"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

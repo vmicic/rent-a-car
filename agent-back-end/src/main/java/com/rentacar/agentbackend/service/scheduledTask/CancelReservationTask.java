@@ -13,7 +13,8 @@ import javax.annotation.PreDestroy;
 
 @Component
 public class CancelReservationTask {
-
+	//Functionality moved to the ReservationServiceImpl class
+	/*
     private static final Integer HOURS_AFTER_CANCELING_RESERVATION = 24;
     private boolean shuttingDown = false;
 
@@ -29,7 +30,7 @@ public class CancelReservationTask {
     	shuttingDown = true;
     }
 
-    @Scheduled(fixedDelay = 5000)
+    //@Scheduled(fixedDelay = 5000)
     public void deleteReservations() {
         LocalDateTime timeAfterDeletes = LocalDateTime.now().minusHours(HOURS_AFTER_CANCELING_RESERVATION);
         if(!shuttingDown) {
@@ -41,4 +42,5 @@ public class CancelReservationTask {
     public void preDestroy() {
     	shutdown();
     }
+    */
 }

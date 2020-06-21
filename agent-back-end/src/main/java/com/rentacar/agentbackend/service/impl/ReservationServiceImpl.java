@@ -17,6 +17,7 @@ import com.rentacar.agentbackend.service.scheduledTask.CancelReservationTask;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -27,6 +28,8 @@ import javax.annotation.PreDestroy;
 
 @Service
 public class ReservationServiceImpl implements ReservationService {
+	
+	private static final Integer HOURS_AFTER_CANCELING_RESERVATION = 24;
 
     private static final Logger logger = LoggerFactory.getLogger(ReservationServiceImpl.class);
 
@@ -34,6 +37,8 @@ public class ReservationServiceImpl implements ReservationService {
     private final AdvertisementService advertisementService;
     private final CarService carService;
     private final UserService userService;
+    
+    private boolean shuttingDown = false;
 
     public ReservationServiceImpl(ReservationRepository reservationRepository, AdvertisementService advertisementService, CarService carService, 
     		UserService userService) {
@@ -238,7 +243,7 @@ public class ReservationServiceImpl implements ReservationService {
     //find all reservations older then some time and with state pending and cancel them
     public void cancelReservationOlderThen(LocalDateTime time) {
         List<Reservation> reservations = this.reservationRepository.findAllByCreationDateTimeBeforeAndStateEquals(time, ReservationState.PENDING);
-
+        
         for(Reservation reservation : reservations) {
             reservation.setState(ReservationState.CANCELED);
             this.reservationRepository.save(reservation);
@@ -279,5 +284,18 @@ public class ReservationServiceImpl implements ReservationService {
         logger.info("Car id: " + car.getId() + ", overlaps: " + overlaps + ", inside: " + inside);
 
         return !(overlaps || inside);
+    }
+    
+    @Scheduled(fixedDelay = 5000)
+    public void deleteReservations() {
+    	if(!shuttingDown) {
+    		LocalDateTime timeAfterDeletes = LocalDateTime.now().minusHours(HOURS_AFTER_CANCELING_RESERVATION);
+        	this.cancelReservationOlderThen(timeAfterDeletes);
+        }
+    }
+    
+    @PreDestroy
+    public void shutdown() {
+    	shuttingDown = true;
     }
 }

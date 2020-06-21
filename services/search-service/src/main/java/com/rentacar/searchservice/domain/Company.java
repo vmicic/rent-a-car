@@ -2,11 +2,17 @@ package com.rentacar.searchservice.domain;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 public class Company extends BaseEntity {
+	
+	private String firstName;
+	
+	private String lastName;
 
     private String name;
 
@@ -14,9 +20,12 @@ public class Company extends BaseEntity {
 
     private String password;
 
-    private String address;
-
     private String businessIdNumber;
+    
+    private CompanyRegistrationState registrationState;
+    
+    @OneToOne
+    private Address address;
 
     @OneToMany(mappedBy = "user")
     private List<Reservation> reservations = new ArrayList<>();
@@ -33,7 +42,23 @@ public class Company extends BaseEntity {
     public Company() {
     }
 
-    public String getName() {
+    public String getFirstName() {
+		return firstName;
+	}
+    
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+	
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+	
+	public String getName() {
         return name;
     }
 
@@ -57,11 +82,11 @@ public class Company extends BaseEntity {
         this.password = password;
     }
 
-    public String getAddress() {
+    public Address getAddress() {
         return address;
     }
 
-    public void setAddress(String address) {
+    public void setAddress(Address address) {
         this.address = address;
     }
 
@@ -72,4 +97,12 @@ public class Company extends BaseEntity {
     public void setBusinessIdNumber(String businessIdNumber) {
         this.businessIdNumber = businessIdNumber;
     }
+
+	public CompanyRegistrationState getRegistrationState() {
+		return registrationState;
+	}
+
+	public void setRegistrationState(CompanyRegistrationState registrationState) {
+		this.registrationState = registrationState;
+	}
 }
