@@ -38,9 +38,6 @@ public class Car extends BaseEntity {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
-    @ManyToOne
-    @JoinColumn(name = "company_id", referencedColumnName = "id")
-    private Company company;
 
     @JsonIgnore
     @OneToMany(mappedBy = "car", fetch = FetchType.EAGER)
@@ -116,14 +113,6 @@ public class Car extends BaseEntity {
         this.user = user;
     }
 
-    public Company getCompany() {
-        return company;
-    }
-
-    public void setCompany(Company company) {
-        this.company = company;
-    }
-
 	public List<Image> getImage() {
 		return image;
 	}
@@ -153,13 +142,12 @@ public class Car extends BaseEntity {
                 Objects.equals(carClass, car.carClass) &&
                 Objects.equals(kmTraveled, car.kmTraveled) &&
                 Objects.equals(seatsForKids, car.seatsForKids) &&
-                Objects.equals(user, car.user) &&
-                Objects.equals(company, car.company);
+                Objects.equals(user, car.user);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.getId(), carModel, carBrand, fuelType, transmissionType, carClass, kmTraveled, seatsForKids, user, company);
+        return Objects.hash(this.getId(), carModel, carBrand, fuelType, transmissionType, carClass, kmTraveled, seatsForKids, user);
     }
 
     @Override
