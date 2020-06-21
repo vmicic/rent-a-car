@@ -16,6 +16,9 @@ import java.util.List;
 @RequestMapping("/ratings")
 public class RatingController {
 
+    private static final Integer MIN_RATING = 1;
+    private static final Integer MAX_RATING = 5;
+
     private final RatingService ratingService;
     private final ReservationService reservationService;
     private final CarService carService;
@@ -40,6 +43,10 @@ public class RatingController {
 
         if(!this.carService.exists(ratingDTO.getCarId())) {
             return new ResponseEntity<>("Requested car doesn't exist", HttpStatus.BAD_REQUEST);
+        }
+
+        if(ratingDTO.getRating() > MAX_RATING || ratingDTO.getRating() < MIN_RATING) {
+            return new ResponseEntity<>("Rating should be between " + MIN_RATING + " and " + MAX_RATING, HttpStatus.BAD_REQUEST);
         }
 
         //this method check if there is reservation which is paid and was before so user can rate it
