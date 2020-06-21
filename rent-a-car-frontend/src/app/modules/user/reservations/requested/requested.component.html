@@ -83,14 +83,17 @@
         </button>
 
     </div>
+    <div class="text-center text-danger" *ngIf="notification2">
+        {{notification2}}
+    </div>
     <div class="modal-body">
         <form [formGroup]="newRatingForm" (ngSubmit)="submitRating()">
             <div class="form-group">
                 <label>Car Id: </label>
                 <select class="form-control" formControlName="carId">
                     <option hidden>Please choose performative</option>
-                    <option *ngFor="let carId of carIdsToRate; let i = index" [value]="carId">
-                        {{carId}}
+                    <option *ngFor="let car of carIdsToRate; let i = index" [value]="car.id">
+                        {{car.id}} - {{car.carBrand.name}} {{car.carModel.name}}
                     </option>
                 </select>
             </div>

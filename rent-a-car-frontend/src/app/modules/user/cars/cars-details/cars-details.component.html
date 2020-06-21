@@ -1,7 +1,8 @@
 <div *ngIf="selectedCar$ | async as car; else loading" class="main-div">
     <div class="card">
         <h5 class="card-header text-center">Car details</h5>
-        <div *ngIf="car.user.email == username" class="float-right mr-3 mt-2"><button class="btn btn-primary float-right" routerLink="reservations/new">Reserve car</button></div>
+        <div *ngIf="car.user.email == username" class="float-right mr-3 mt-2"><button
+                class="btn btn-primary float-right" routerLink="reservations/new">Reserve car</button></div>
         <div class="card-body text-center">
             <div class="row text-center">
                 <div class="card-text container-fluid">Car Brand: {{car.carBrand.name}}</div>
@@ -39,11 +40,13 @@
                             <div class="card-body">
                                 <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
                                     <ol class="carousel-indicators">
-                                        <li *ngIf="imagesObs[0] != null"  data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                                        <li *ngIf="imagesObs[0] != null" data-target="#carouselExampleIndicators"
+                                            data-slide-to="0" class="active"></li>
                                         <ng-container *ngFor="let image of imagesObs; let i = index">
-                                            <li *ngIf="i != 0"  data-target="#carouselExampleIndicators" data-slide-to="i"></li>
+                                            <li *ngIf="i != 0" data-target="#carouselExampleIndicators"
+                                                data-slide-to="i"></li>
                                         </ng-container>
-                                      </ol>
+                                    </ol>
 
                                     <div class="carousel-inner">
                                         <div *ngIf="imagesObs[0] != null" class="carousel-item active">
@@ -71,6 +74,26 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h5 class="card-header">Ratings</h5>
+                <div class="card-body">
+                    <ng-container *ngFor="let rating of car.ratings">
+                        <div class="row text-center">
+                            <div class="card-text container-fluid">Author: {{rating.ratingPosted.firstName}} {{rating.ratingPosted.lastName}}</div>
+                        </div>
+                        <div class="row text-center">
+                            <div class="card-text container-fluid">Rating: {{rating.rating}}</div>
+                        </div>
+
+                        <div class="row text-center">
+                            <div class="card-text container-fluid">Comment: {{rating.comment}}</div>
+                        </div>
+
+                        <hr>
+                    </ng-container>
                 </div>
             </div>
         </div>

@@ -15,6 +15,7 @@ import { RatingService } from 'src/app/modules/admin/services/rating.service';
 export class RequestedComponent implements OnInit {
 
   notification: string;
+  notification2: string;
 
   reservations: any[] = [];
   reservationsObs$: Subject<any[]> = new Subject<any[]>();
@@ -118,12 +119,13 @@ export class RequestedComponent implements OnInit {
         this.openModal();
 
       } else if(event.target.hasAttribute("rate-clicked-id")) {
+        this.carIdsToRate = [];
         let id: number = event.target.getAttribute("rate-clicked-id");
 
         let reservation = this.reservations.filter(reservation => reservation.id == id);
         
         for(let i = 0; i < reservation[0].cars.length; i++) {
-          this.carIdsToRate.push(reservation[0].cars[i].id);
+          this.carIdsToRate.push(reservation[0].cars[i]);
         }
 
         this.openModalEdit();
@@ -189,6 +191,9 @@ export class RequestedComponent implements OnInit {
     this.ratingService.createRating(this.newRatingForm.value).subscribe(
       response => {
         console.log(response);
+      },
+      error => {
+        this.notification2 = error.error;
       }
     )
   }
