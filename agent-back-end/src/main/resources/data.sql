@@ -77,3 +77,9 @@ INSERT INTO reservation(from_date, to_date, state, user_requested_id, user_recei
 INSERT INTO car_reservation(reservation_id, car_id) VALUES
     ('1', '1'),
     ('2', '1');
+    
+INSERT INTO address(city, country, number, postal_code, state, street) VALUES
+	('Novi Sad', 'Serbia', '12', '21000', null, 'Bulevar Oslobodjenja');
+	
+INSERT INTO company(business_id_number, email, first_name, last_name, name, password, registration_state, address_id) VALUES
+	('00012345', 'rent-a-car-agency@gmail.com', 'Marko', 'A', 'Rent-a-car', '132456', 0, 1);

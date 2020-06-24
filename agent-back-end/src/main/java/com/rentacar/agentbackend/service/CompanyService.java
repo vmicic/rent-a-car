@@ -16,4 +16,6 @@ public interface CompanyService {
     Company updateCompany(Long id, CompanyDTO companyDTO);
 
     void deleteCompany(Long id);
+    
+    String registerCompany();
 }
