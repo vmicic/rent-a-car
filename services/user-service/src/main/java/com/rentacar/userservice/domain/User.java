@@ -26,6 +26,12 @@ public class User extends BaseEntity implements UserDetails {
     private String firstName;
 
     private String lastName;
+    
+    private String companyName;
+    
+    private String businessIdNumber;
+    
+    private String address;
 
     @JsonIgnore
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -84,7 +90,7 @@ public class User extends BaseEntity implements UserDetails {
     }
 
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
+    public Collection<Authority> getAuthorities() {
         return this.authorities;
     }
 
@@ -185,4 +191,30 @@ public class User extends BaseEntity implements UserDetails {
     public void setCars(List<Car> cars) {
         this.cars = cars;
     }
+
+	public String getCompanyName() {
+		return companyName;
+	}
+
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
+	}
+
+	public String getBusinessIdNumber() {
+		return businessIdNumber;
+	}
+
+	public void setBusinessIdNumber(String businessIdNumber) {
+		this.businessIdNumber = businessIdNumber;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+    
+    
 }

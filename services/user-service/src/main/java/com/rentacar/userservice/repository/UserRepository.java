@@ -12,6 +12,8 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<User> findOneByEmailIgnoreCase(String email);
+    
+    Optional<User> findOneByBusinessIdNumber(String businessIdNumber);
 
     List<User> findAllByAuthoritiesContainsOrAuthoritiesContainsOrAuthoritiesContains(Authority authority, Authority authority2, Authority authority3);
 }
