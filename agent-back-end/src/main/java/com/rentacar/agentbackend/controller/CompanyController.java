@@ -3,6 +3,7 @@ package com.rentacar.agentbackend.controller;
 import com.rentacar.agentbackend.domain.dto.CompanyDTO;
 import com.rentacar.agentbackend.service.CompanyService;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -41,6 +42,7 @@ public class CompanyController {
     }
     
     @PostMapping("/register")
+    @PreAuthorize("hasRole('ROLE_ADMINISTRATOR')")
     public String registerCompany() {
     	return companyService.registerCompany();
     }

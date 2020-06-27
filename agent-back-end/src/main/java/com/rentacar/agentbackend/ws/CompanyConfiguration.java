@@ -21,7 +21,7 @@ public class CompanyConfiguration {
 	@Bean
 	public RegisterCompanyClient countryClient(Jaxb2Marshaller marshaller) {
 		RegisterCompanyClient client = new RegisterCompanyClient();
-		client.setDefaultUri("http://localhost:8080/administrator-service/ws");
+		client.setDefaultUri("http://localhost:8080/user-service/ws");
 		client.setMarshaller(marshaller);
 		client.setUnmarshaller(marshaller);
 		return client;

@@ -2,6 +2,8 @@ package com.rentacar.userservice.domain;
 
 import org.springframework.security.core.GrantedAuthority;
 
+import java.util.Objects;
+
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
@@ -27,4 +29,14 @@ public class Authority extends BaseEntity implements GrantedAuthority {
     public String getAuthority() {
         return this.name;
     }
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Authority authority = (Authority) obj;
+        return Objects.equals(name, authority.getName());
+	}
+    
+    
 }

@@ -111,9 +111,15 @@
 				<configuration>
 					<schemaLanguage>WSDL</schemaLanguage>
 					<generatePackage>com.rentacar.agentbackend.ws.wsdl</generatePackage>
+					<!--
+					<schemaDirectory>${basedir}/src/main/resources/WSDLs/</schemaDirectory>
+					<schemaIncludes>
+						<include>*.wsdl</include>
+					</schemaIncludes>
+					-->
 					<schemas>
 						<schema>
-							<url>http://localhost:8080/administrator-service/ws/company.wsdl</url>
+							<url>http://localhost:8080/user-service/ws/company.wsdl</url>
 						</schema>
 					</schemas>
 				</configuration>

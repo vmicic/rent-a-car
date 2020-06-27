@@ -45,10 +45,6 @@ public class Reservation extends BaseEntity {
     @JoinColumn(name = "user_received_id", referencedColumnName = "id")
     private User userOwnerCar;
 
-    @ManyToOne
-    @JoinColumn(name = "company_id", referencedColumnName = "id")
-    private Company company;
-
     public Reservation() {
     }
 
@@ -114,14 +110,6 @@ public class Reservation extends BaseEntity {
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-    public Company getCompany() {
-        return company;
-    }
-
-    public void setCompany(Company company) {
-        this.company = company;
     }
 
     public User getUserOwnerCar() {

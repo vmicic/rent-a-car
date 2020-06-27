@@ -12,7 +12,7 @@ public interface UserService {
 
     User createUser(UserDTO userDTO);
     
-    User createCompany(CompanyDTO companyDTO);
+    User createCompany(CompanyDTO companyDTO, boolean automaticallyEnabled);
 
     boolean emailExists(String email);
 
@@ -28,9 +28,9 @@ public interface UserService {
 
     void suspendUserFromRenting(Long id);
 
-    void activateUser(Long id);
+    User activateUser(Long id);
 
-    void deactivateUser(Long id);
+    User deactivateUser(Long id);
 
     List<User> getAllUsersNoAdmin();
 

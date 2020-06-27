@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:sch="http://www.userservice.rentacar.com/ws/company" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.userservice.rentacar.com/ws/company" targetNamespace="http://www.userservice.rentacar.com/ws/company">
+  <wsdl:types>
+    <xs:schema xmlns="http://www.userservice.rentacar.com/ws/company" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.userservice.rentacar.com/ws/company">
+
+    <xs:element name="registerCompanyRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="company" type="company"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="registerCompanyResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="response" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:complexType name="company">
+        <xs:sequence>
+            <xs:element minOccurs="1" name="companyName" type="xs:string"/>
+            <xs:element name="firstName" type="xs:string"/>
+            <xs:element name="lastName" type="xs:string"/>
+            <xs:element name="email" type="xs:string"/>
+            <xs:element name="password" type="xs:string"/>
+            <xs:element name="address" type="xs:string"/>
+            <xs:element name="businessIdNumber" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="registerCompanyRequest">
+    <wsdl:part element="tns:registerCompanyRequest" name="registerCompanyRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="registerCompanyResponse">
+    <wsdl:part element="tns:registerCompanyResponse" name="registerCompanyResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="CompanyPort">
+    <wsdl:operation name="registerCompany">
+      <wsdl:input message="tns:registerCompanyRequest" name="registerCompanyRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:registerCompanyResponse" name="registerCompanyResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="CompanyPortSoap11" type="tns:CompanyPort">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="registerCompany">
+      <soap:operation soapAction=""/>
+      <wsdl:input name="registerCompanyRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="registerCompanyResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="CompanyPortService">
+    <wsdl:port binding="tns:CompanyPortSoap11" name="CompanyPortSoap11">
+      <soap:address location="http://192.168.56.1:8081/ws"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

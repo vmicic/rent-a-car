@@ -23,10 +23,6 @@ public class PriceList extends BaseEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne
-    @JoinColumn(name = "company_id", referencedColumnName = "id")
-    private Company company;
-
     public PriceList() {
     }
 
@@ -68,13 +64,5 @@ public class PriceList extends BaseEntity {
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-    public Company getCompany() {
-        return company;
-    }
-
-    public void setCompany(Company company) {
-        this.company = company;
     }
 }

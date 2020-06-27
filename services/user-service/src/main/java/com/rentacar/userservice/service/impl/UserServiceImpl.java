@@ -1,5 +1,6 @@
 package com.rentacar.userservice.service.impl;
 
+import com.rentacar.userservice.domain.Authority;
 import com.rentacar.userservice.domain.User;
 import com.rentacar.userservice.domain.dto.CompanyDTO;
 import com.rentacar.userservice.domain.dto.UserDTO;
@@ -40,7 +41,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findById(Long id) {
-        return null;
+    	return userRepository.findById(id).orElse(null);
     }
 
     @Override
@@ -53,23 +54,28 @@ public class UserServiceImpl implements UserService {
 
     }
 
-    @Override
-    public void activateUser(Long id) {
+
+	@Override
+    public User activateUser(Long id) {
         User user = userRepository.findById(id).orElse(null);
 
         if(user != null) {
             user.setEnabled(true);
-            this.userRepository.save(user);
+            return this.userRepository.save(user);
+        }else {
+        	return null;
         }
     }
 
     @Override
-    public void deactivateUser(Long id) {
+    public User deactivateUser(Long id) {
         User user = userRepository.findById(id).orElse(null);
 
         if(user != null) {
             user.setEnabled(false);
-            this.userRepository.save(user);
+            return this.userRepository.save(user);
+        }else {
+        	return null;
         }
     }
 
@@ -101,7 +107,7 @@ public class UserServiceImpl implements UserService {
     
 
     @Override
-	public User createCompany(CompanyDTO companyDTO) {
+	public User createCompany(CompanyDTO companyDTO, boolean automaticallyEnabled) {
     	User user = new User();
 
         user.setFirstName(companyDTO.getFirstName());
@@ -113,7 +119,7 @@ public class UserServiceImpl implements UserService {
         user.setAddress(companyDTO.getAddress());
         user.getAuthorities().add(authorityService.findByName("ROLE_COMPANY"));
         user.setDateRegistered(LocalDateTime.now());
-        user.setEnabled(true);
+        user.setEnabled(automaticallyEnabled);
 
         return this.userRepository.save(user);
 	}
